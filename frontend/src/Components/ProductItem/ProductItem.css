@@ -1,0 +1,30 @@
+.product-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  background-color: white;
+  transition: transform 0.3s;
+  width: 200px;
+}
+
+.product-item img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.product-item h3 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.product-item p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.product-item:hover {
+  transform: scale(1.05);
+}

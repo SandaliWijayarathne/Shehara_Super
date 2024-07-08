@@ -1,0 +1,78 @@
+.footer {
+  margin-top: 100px;
+  background-color: #003366;
+  color: white;
+  padding: 20px 0;
+}
+
+.footer-top {
+  background-color: #002244;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+}
+
+.footer-main {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 50px;
+}
+
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 14px;
+}
+
+.footer-logo img {
+  width: 150px;
+}
+
+.footer-contact p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-around;
+  width: 60%;
+}
+
+.footer-links div {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-links h4 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.footer-links ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin: 5px 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.footer-links li a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-links li a:hover {
+  text-decoration: underline;
+}
+
+.google-play-icon {
+  width: 150px;
+  margin-top: 10px;
+}

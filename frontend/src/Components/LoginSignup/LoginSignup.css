@@ -1,0 +1,77 @@
+/* Reset default margins and paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Existing styles */
+  .loginsignup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e0e6ed;
+    padding-top: 50px; 
+  }
+  
+  .loginsignup-container {
+    background-color: #e0e6ed;
+    padding: 3rem;
+    border-radius: 8px;
+    text-align: center;
+    width: 100%;
+    max-width: 550px; 
+  }
+  
+  .loginsignup h1 {
+    margin-bottom: 0.5rem;
+    font-size: 2.8rem; 
+    letter-spacing: 0.05em;
+    color: #333;
+  }
+  
+  .loginsignup p {
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+  
+  .loginsignup-fields {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .loginsignup-fields input {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 1rem;
+  }
+  
+  button {
+    background-color: #003366;
+    color: white;
+    padding: 1rem 2rem; 
+    border: none;
+    border-radius: 10px;
+    font-size: 1.5rem; 
+    cursor: pointer;
+    margin-bottom: 1rem;
+    width: 100%; 
+    max-width: 300px; 
+  }
+  
+  button:hover {
+    background-color: #0055cc;
+  }
+  
+  .loginsignup-login {
+    color: #666;
+    margin-top: 1rem;
+  }
+  
+  .loginsignup-login span {
+    color: #003366;
+    cursor: pointer;
+  }
