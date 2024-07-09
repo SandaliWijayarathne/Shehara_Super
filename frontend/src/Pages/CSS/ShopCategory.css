@@ -24,8 +24,27 @@
 
 .shopcategory-sort button {
   margin-left: 10px; /* Adjust spacing between buttons */
+<<<<<<< Updated upstream
   padding: 8px 8px; /* Adjust button padding */
   font-size: 14px; /* Adjust button font size */
+=======
+  padding: 8px 12px; /* Adjust button padding */
+  font-size: 14px; /* Adjust button font size */
+  color: white; /* Change text color */
+  background-color: #007bff; /* Change button background color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Add border radius */
+  cursor: pointer; /* Change cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+.shopcategory-sort button:hover {
+  background-color: #0056b3; /* Change button color on hover */
+}
+
+.shopcategory-sort button.active {
+  background-color: #0056b3; /* Active button color */
+>>>>>>> Stashed changes
 }
 
 .shopcategory-products {
