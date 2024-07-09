@@ -15,9 +15,14 @@ import UserProfile from './Components/UserProfile/UserProfile';
 import CartItems from './Components/CartItems/CartItems';
 import Checkout from './Components/PaymentPage/PaymentPage'; 
 import PaymentForm from './Components/Paytype/Paytype'; 
+<<<<<<< Updated upstream
 import TermsConditions from './Components/Terms&Conditions/Terms&Conditions';
 import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy';
 import FAQ from './Components/FAQ/FAQ';
+=======
+import Selection from './Components/Selection/Selection';
+//
+>>>>>>> Stashed changes
 
 function App() {
   return (
