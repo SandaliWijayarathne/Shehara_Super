@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './AddProduct.css';
 import upload_area from '../../assets/upload_area.svg';
 
@@ -9,7 +9,8 @@ const AddProduct = () => {
         name:"",
         image:"",
         category:"Bakery",
-        price:""
+        new_price:"",
+        old_price:""
     })
 
     const imageHandler = (e) => {
@@ -64,17 +65,20 @@ const AddProduct = () => {
             <p>Price</p>
             <input value={productDetails.old_price} onChange={changeHandler} type="text" name='old_price' placeholder='Type here' />
         </div>
-        <div className="addproduct-itemfields">
-            <p>Offer Price</p>
-            <input value={productDetails.new_price} onChange={changeHandler} type="text" name='new_price' placeholder='Type here' />
-        </div>
       </div>
       <div className="addproduct-itemfield">
         <p>Product Category</p>
         <select value={productDetails.category} onChange={changeHandler} name='category' className='add-product-selector'>
-            <option value="Cakes">Cakes</option>
-            <option value="Celebration Cakes">Celebration Cakes</option>
-            <option value="Cup Cakes">Cup Cakes</option>
+            <option value="Vegetables">Vegetables</option>
+            <option value="Celebration Cakes">Bakery</option>
+            <option value="Spices">Spices</option>
+            <option value="Household">Household</option>
+            <option value="BabyProducts">Baby Products</option>
+            <option value="Canned">Canned Products</option>
+            <option value="Snacks">Snacks and Confectionary</option>
+            <option value="Beverages">Beverages</option>
+            <option value="FrozenFoods">Frozen Food</option>
+            <option value="Fruits">Fruits</option>
         </select>
       </div>
       <div className="addproduct-itemfield">

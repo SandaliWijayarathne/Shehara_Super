@@ -37,7 +37,7 @@
 
 .addproduct-btn {
   padding: 10px 20px;
-  background-color: #360724;
+  background-color: #170938;
   color: white;
   border: none;
   cursor: pointer;
@@ -48,7 +48,7 @@
 }
 
 .addproduct-btn:hover {
-  background-color: #6a246d;
+  background-color: #26246d;
 }
 
 .addproduct-btn:active {

@@ -5,7 +5,7 @@
     padding: 15px 60px;
     box-shadow: 0 1px 3px -2px #000;
     margin-bottom: 1px;
-    background: white;
+    background: #022c5c;
     font-family: 'Arial', sans-serif;
 }
 
@@ -15,14 +15,14 @@
 }
 
 .nav-logo {
-    width: 50px;
+    width: 200px;
     margin-right: 10px;
 }
 
 .nav-company-name {
     font-size: 24px;
     font-weight: 700;
-    color: #333;
+    color: #fff;
 }
 
 .nav-right {
@@ -31,7 +31,7 @@
 }
 
 .nav-profile {
-    width: 50px;
+    width: 80px;
     border-radius: 50%;
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;

@@ -15,6 +15,7 @@ import UserProfile from './Components/UserProfile/UserProfile';
 import CartItems from './Components/CartItems/CartItems';
 import Checkout from './Components/PaymentPage/PaymentPage'; 
 import PaymentForm from './Components/Paytype/Paytype'; 
+import Selection from './Components/Selection/Selection';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path='/cart-items' element={<CartItems />} />
           <Route path='/checkout' element={<Checkout />} />  
           <Route path='/paytype' element={<PaymentForm />} /> 
+          <Route path='/selection' element={<Selection />} /> 
         </Routes>
         <Footer />
       </BrowserRouter>

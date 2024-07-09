@@ -1,36 +1,126 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import './CSS/Login.css';
-import loginIcon from '../Components/Assets/login_icon.png'
 
-const Login = () => {
-  const navigate = useNavigate();
 
-  const handleSignUpClick = () => {
-    navigate('/signup'); // Navigate to the LogginSignup page
+const LogginSignup = () => {
+  const [state, setState] = useState("Login");
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    email: ""
+  });
+  const [errors, setErrors] = useState({});
+
+  const changeHandler = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
   };
 
-  const handleLoginClick = () => {
-    navigate('/user-profile'); // Navigate to the UserProfile page after logging in
+  const validateForm = () => {
+    const newErrors = {};
+    if (state === "Sign Up" && !formData.username) newErrors.username = "Username is required.";
+    if (!formData.email) newErrors.email = "Email is required.";
+    if (!formData.password) newErrors.password = "Password is required.";
+    return newErrors;
+  };
+
+  const login = async () => {
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
+    console.log("Login Function Executed", formData);
+    let responseData;
+    await fetch('http://localhost:4000/login', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/formData',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    }).then((response) => response.json()).then((data) => responseData = data);
+    if (responseData.success) {
+      localStorage.setItem('auth-token', responseData.token);
+      window.location.replace("/");
+    } else {
+      alert(responseData.errors);
+    }
+  };
+
+  const signup = async () => {
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
+    console.log("Signup Function Executed", formData);
+    let responseData;
+    await fetch('http://localhost:4000/signup', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/formData',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    }).then((response) => response.json()).then((data) => responseData = data);
+    if (responseData.success) {
+      localStorage.setItem('auth-token', responseData.token);
+      window.location.replace("/");
+    } else {
+      alert(responseData.errors);
+    }
   };
 
   return (
-    <div className='login'>
-      <div className="login-container">
-        <div className="login-icon">
-            <img src={loginIcon} alt="" />
+    <div className='loginsignup'>
+      <div className="loginsignup-container">
+        <h1>{state}</h1>
+        <div className="loginsignup-fields">
+          {state === "Sign Up" ? (
+            <>
+              <input
+                name='username'
+                value={formData.username}
+                onChange={changeHandler}
+                type="text"
+                placeholder='Your Name'
+              />
+              {errors.username && <p className="error">{errors.username}</p>}
+            </>
+          ) : null}
+          <input
+            name='email'
+            value={formData.email}
+            onChange={changeHandler}
+            type="email"
+            placeholder='Email Address'
+          />
+          {errors.email && <p className="error">{errors.email}</p>}
+          <input
+            name='password'
+            value={formData.password}
+            onChange={changeHandler}
+            type="password"
+            placeholder='Password'
+          />
+          {errors.password && <p className="error">{errors.password}</p>}
         </div>
-        <div className="login-fields">
-          <input type="text" placeholder='USERNAME' />
-          <input type="password" placeholder='PASSWORD' />
+        <button onClick={() => { state === "Login" ? login() : signup() }}>Continue</button>
+        {state === "Sign Up" ? (
+          <p className="loginsignup-login">Already have an account? <span onClick={() => { setState("Login") }}>Login here</span></p>
+        ) : (
+          <p className="loginsignup-login">Create an account? <span onClick={() => { setState("Sign Up") }}>Click here</span></p>
+        )}
+        <div className="loginsignup-agree">
+          <input type="checkbox" name='' id='' />
+          <p>I agree to the terms and conditions</p>
         </div>
-        <button onClick={handleLoginClick}>LOGIN</button>
-        <p className="login-signup">
-          Do not have an account? <span onClick={handleSignUpClick}>Sign Up</span>
-        </p>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default LogginSignup;

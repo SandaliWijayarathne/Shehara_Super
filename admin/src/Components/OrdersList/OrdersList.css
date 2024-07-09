@@ -58,7 +58,7 @@
 
 .remove-order-button {
   padding: 10px 20px;
-  background-color: #d9534f;
+  background-color: #3e32c6;
   color: white;
   border: none;
   border-radius: 5px;
@@ -68,11 +68,11 @@
 }
 
 .remove-order-button:hover {
-  background-color: #c9302c;
+  background-color: #462cc9;
   transform: scale(1.05);
 }
 
 .remove-order-button:active {
-  background-color: #b52b27;
+  background-color: #2225aa;
   transform: scale(0.95);
 }
