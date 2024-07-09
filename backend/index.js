@@ -56,11 +56,7 @@ const Product = mongoose.model("Product", {
         type: String,
         required: true,
     },
-    new_price: {
-        type: Number,
-        required: true,
-    },
-    old_price: {
+    price: {
         type: Number,
         required: true,
     },
