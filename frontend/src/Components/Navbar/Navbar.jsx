@@ -45,6 +45,7 @@ const Navbar = () => {
           onChange={(e) => setQuery(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
         />
+        
         <button onClick={handleSearch} className="search-button">Search</button>
         {results.length > 0 && (
           <ul className="search-results">
