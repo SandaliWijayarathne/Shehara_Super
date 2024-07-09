@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import './AddProduct.css';
 import upload_area from '../../assets/upload_area.svg';
-<<<<<<< Updated upstream
-=======
-//
->>>>>>> Stashed changes
+
+
 
 const AddProduct = () => {
 
@@ -85,10 +83,7 @@ const AddProduct = () => {
             <option value="Fruits">Fruits</option>
         </select>
       </div>
-<<<<<<< Updated upstream
-      //
-=======
->>>>>>> Stashed changes
+
       <div className="addproduct-itemfield">
         <label htmlFor="file-input">
             <img src={image?URL.createObjectURL(image):upload_area} className='addproduct-thumbnail-img' alt="Upload Area" />

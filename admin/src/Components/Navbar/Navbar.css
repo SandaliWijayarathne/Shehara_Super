@@ -1,0 +1,43 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 60px;
+    box-shadow: 0 1px 3px -2px #000;
+    margin-bottom: 1px;
+    background: #022c5c;
+    font-family: 'Arial', sans-serif;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo {
+    width: 200px;
+    margin-right: 10px;
+}
+
+.nav-company-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-profile {
+    width: 80px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.nav-profile:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}

@@ -1,0 +1,72 @@
+.list-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1000px;
+    height: 780px;
+    padding: 10px 50px;
+    margin: 30px;
+    border-radius: 6px;
+    background: white;
+}
+
+.listproduct-format-main {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
+    width: 100%;
+    padding: 20px 0px;
+    color: #454545;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.listproduct-format {
+    align-items: center;
+    font-weight: 500;
+}
+
+.listproduct-product-icon {
+    height: 80px;
+}
+
+.listproduct-remove-icon {
+    cursor: pointer;
+    margin: auto;
+}
+
+.listproduct-allproducts {
+    overflow-y: auto;
+}
+
+.listproduct-input {
+    width: 80px;
+    padding: 5px;
+    margin: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.listproduct-input:focus {
+    border-color: #4b0a47;
+    box-shadow: 0 0 5px rgba(75, 10, 71, 0.5);
+}
+
+.listproduct-update-button {
+    padding: 5px 10px;
+    color: white;
+    background-color: #4b0a47;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+    margin-top: 5px;
+}
+
+.listproduct-update-button:hover {
+    background-color: #cf359c;
+}
+
+.listproduct-update-button:active {
+    transform: scale(0.95);
+}
