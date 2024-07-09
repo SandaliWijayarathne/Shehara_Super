@@ -13,8 +13,9 @@ import Login from './Pages/Login';
 import LoginSignup from './Components/LoginSignup/LoginSignup';
 import UserProfile from './Components/UserProfile/UserProfile';
 import CartItems from './Components/CartItems/CartItems';
-import Checkout from './Components/PaymentPage/PaymentPage'; 
-import PaymentForm from './Components/Paytype/Paytype'; 
+import Checkout from './Components/PaymentPage/PaymentPage';
+import PaymentForm from './Components/Paytype/Paytype';
+import CategoryPage from './Components/CategoryPage/CategoryPage';
 
 function App() {
   return (
@@ -22,19 +23,20 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path='/' element={<Shop />} />
-          <Route path='/cart' element={<Cart />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/location' element={<Location />} />
-          <Route path='/category/:category' element={<ShopCategory />} />
-          <Route path='/product/:productId' element={<Product />} />
-          <Route path='/delivery' element={<Delivery />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<LoginSignup />} />
-          <Route path='/user-profile' element={<UserProfile />} />
-          <Route path='/cart-items' element={<CartItems />} />
-          <Route path='/checkout' element={<Checkout />} />  
-          <Route path='/paytype' element={<PaymentForm />} /> 
+          <Route path="/" element={<Shop />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/location" element={<Location />} />
+          <Route path="/category/:category" element={<ShopCategory />} />
+          <Route path="/product/:productId" element={<Product />} />
+          <Route path="/delivery" element={<Delivery />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<LoginSignup />} />
+          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/cart-items" element={<CartItems />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/paytype" element={<PaymentForm />} />
+          <Route path="/category/:category" element={<CategoryPage />} />
         </Routes>
         <Footer />
       </BrowserRouter>

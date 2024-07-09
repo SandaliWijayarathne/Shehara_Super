@@ -7,6 +7,7 @@
 .shopcategory-indexSort {
   display: flex;
   justify-content: space-between;
+  align-items: center; /* Center items vertically */
   margin-bottom: 20px;
 }
 
@@ -18,10 +19,13 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  justify-content: flex-end; /* Align items to the right */
 }
 
-.shopcategory-sort img {
-  margin-left: 10px;
+.shopcategory-sort button {
+  margin-left: 10px; /* Adjust spacing between buttons */
+  padding: 8px 8px; /* Adjust button padding */
+  font-size: 14px; /* Adjust button font size */
 }
 
 .shopcategory-products {
@@ -35,5 +39,5 @@
   text-align: center;
   margin-top: 20px;
   cursor: pointer;
-  color: #007BFF;
+  color: #007bff;
 }
