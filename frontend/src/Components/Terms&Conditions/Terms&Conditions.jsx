@@ -10,7 +10,7 @@ const TermsAndConditions = () => {
             </p>
             <h2>1. Use of the Site</h2>
             <p>
-                The Site is provided to you free of charge for your personal use, subject to these Terms and Conditions. By using the Site you agree to be bound by these SMSL Terms and Conditions. These Terms and Conditions govern your use of the Site and all services provided in connection with these. All orders and purchases made on the Site will also be governed by the terms and conditions of John Keells Holdings Limited and that of the Hatton National Bank (HNB), Nations Trust Bank (NTB) relating to online payments.
+                The Site is provided to you free of charge for your personal use, subject to these Terms and Conditions.
             </p>
             <p>THESE TERMS AND CONDITIONS DO NOT AFFECT YOUR STATUTORY RIGHTS.</p>
 
@@ -138,7 +138,7 @@ const TermsAndConditions = () => {
             <h2>25. Deals and Promotions on the website</h2>
             <p>
                 The Deals and promotions made available for you through this website will adhere to the following conditions. These might be subject to change without prior notification to Customer’s based on the sole discretion of the Business and the business policies.
-                Nexus Deals apply to only a maximum of 3 numbers or 3Kg (as applicable) only of the promotional product and for Shehara Deals it is 5 numbers or 5Kg (as applicable). Prices and offers communicated/displayed may change without prior notice. Offers on products are subject to availability. All discounts apply on a net value basis To be eligible for Nexus offers through the website, your Nexus number should be registered on the Web/Mobile App when placing the order. Discount value will not be credited as points at any stage after the purchase is done. All promotions available in-store may not apply for purchases online.
+                Loyalty Deals apply to only a maximum of 3 numbers or 3Kg (as applicable) only of the promotional product and for Shehara Deals it is 5 numbers or 5Kg (as applicable). Prices and offers communicated/displayed may change without prior notice. Offers on products are subject to availability. All discounts apply on a net value basis To be eligible for Loyalty offers through the website, your Loyalty number should be registered on the Web/Mobile App when placing the order. Discount value will not be credited as points at any stage after the purchase is done. All promotions available in-store may not apply for purchases online.
             </p>
 
             <h2>26. Saved carts and temporary shopping carts</h2>
@@ -162,7 +162,7 @@ const TermsAndConditions = () => {
             <p>
                 We may offer Liquor and Tobacco Products for sale on the Site in accordance with applicable laws and licenses. It is an offence to supply Liquor or Tobacco Products to a person under 21 years of age or for a person under 21 years of age to purchase Liquor or Tobacco Products.
                 For customers placing an order for Liquor or Tobacco Products on this Site, such customers are deemed to – acknowledge that it is against the law to sell or supply Liquor or Tobacco Products to, or obtain Liquor or Tobacco Products on behalf of, a person under the age of 21 years; warrant that the date of birth disclosed to us is true and accurate; warrant that they are not obtaining Liquor or Tobacco Products on behalf of a person under the age of 21 years; agree to defend, indemnify and hold harmless us, our officers, directors, employees, suppliers and agents from and against any and all claims, liabilities, damages, losses or expenses, including reasonable attorneys' fees and costs, arising out of or in any way connected with the purchase of any Liquor or Tobacco Products on this Site.
-                We reserve the following rights in relation to Liquor and Tobacco Products offered for sale on the Site – to refuse confirmation of or limit the quantum of any order placed for Liquor and Tobacco Products at our discretion or as required in terms of applicable laws and licenses; to limit the hours during which Liquor and Tobacco Products are offered for sale on the Site and delivered in accordance with applicable laws and licenses; require certification / identification upon delivery of Liquor or Tobacco Products as evidence of the age of the recipient. as directed by the National Alcohol and Tobacco Authority, purchases of liquor and tobacco products in-store and online will not be eligible to earn Nexus points and accumulated points cannot be redeemed against purchases of liquor or tobacco products.
+                We reserve the following rights in relation to Liquor and Tobacco Products offered for sale on the Site – to refuse confirmation of or limit the quantum of any order placed for Liquor and Tobacco Products at our discretion or as required in terms of applicable laws and licenses; to limit the hours during which Liquor and Tobacco Products are offered for sale on the Site and delivered in accordance with applicable laws and licenses; require certification / identification upon delivery of Liquor or Tobacco Products as evidence of the age of the recipient. as directed by the National Alcohol and Tobacco Authority, purchases of liquor and tobacco products in-store and online will not be eligible to earn Loyalty points and accumulated points cannot be redeemed against purchases of liquor or tobacco products.
             </p>
 
             <h2>30. Some important points to note regarding orders placed as home deliveries during this time.</h2>
@@ -200,28 +200,28 @@ const TermsAndConditions = () => {
                 We will use our best endeavors to meet the dietary and health requirement recommended by the Ministry of Health and other relevant regulatory authorities, for children of the selected age group.
                 We pledge to provide one meal for every 5 meals contributed by our customers and donors.
                 The Meal Card is nontransferable, nonrefundable, nonexchangeable (whether for cash, items or otherwise) and is not a gift voucher save for being a contribution in terms of ii. above.
-                This card is not eligible for any credit card or total bill offers. Earning or utilizing Nexus points will not be applicable for this campaign.
+                This card is not eligible for any credit card or total bill offers. Earning or utilizing Loyalty points will not be applicable for this campaign.
                 No representations and warranties other than those expressly stated herein are made by us.
                 These Terms and Conditions may be updated or amended by us at our discretion and shall be read in conjunction with our website Terms and Conditions and Privacy Policy found at www.sheharasuper.com, which shall form part of these Terms and Conditions. We recommend that you review the same, including any updates which shall be available on www.sheharasuper.com or contact the Shehara Customer Care Center via 0112303500 for more information.
             </p>
 
-            <h2>33. Shehara Nexus Points</h2>
+            <h2>33. Shehara Loyalty Points</h2>
             <p>
-                1 Nexus point equals to Rs. 1
-                Nexus Mobile takes no responsibility for points earned, redeemed or any transactions associated with it, if the user of the Mobile number as registered with Nexus Mobile or as registered with the mobile provider; differs from the individual in possession of the number/mobile device at the time of registration (including number changes).
+                1 Loyalty point equals to Rs. 1
+                Loyalty Mobile takes no responsibility for points earned, redeemed or any transactions associated with it, if the user of the Mobile number as registered with Loyalty Mobile or as registered with the mobile provider; differs from the individual in possession of the number/mobile device at the time of registration (including number changes).
                 Member shall enter and verify the authorization code (One-Time Password) to complete the transaction.
                 Redemptions cannot be combined with bank offers.
-                As directed by the National Alcohol and Tobacco Authority, purchases of liquor and tobacco products in-store and online will not be eligible to earn Nexus points and accumulated points cannot be redeemed against purchases of liquor or tobacco products.
-                Members shall provide their Nexus number at the time of purchasing gift vouchers and the points will be awarded at the end of the month. Points will be awarded only at the time of purchasing gift vouchers and not at the point of redemption.
-                Any refund value will be transfer back to the registered number at the occasions of Nexus refunds.
-                Refund amounts transferred as Nexus points will not be expired under any circumstances.
+                As directed by the National Alcohol and Tobacco Authority, purchases of liquor and tobacco products in-store and online will not be eligible to earn Loyalty points and accumulated points cannot be redeemed against purchases of liquor or tobacco products.
+                Members shall provide their Loyalty number at the time of purchasing gift vouchers and the points will be awarded at the end of the month. Points will be awarded only at the time of purchasing gift vouchers and not at the point of redemption.
+                Any refund value will be transfer back to the registered number at the occasions of Loyalty refunds.
+                Refund amounts transferred as Loyalty points will not be expired under any circumstances.
             </p>
             <p>
                 Definitions
-                "Member" shall mean the registered Nexus Mobile member
-                "Nexus Mobile" shall mean Shehara Marketing Services (Pvt) Ltd. who owns and operates the loyalty program called Nexus Mobile
-                "Nexus Mobile" shall mean the mobile based loyalty program of Shehara Marketing Services (Pvt) Ltd.
-                "Nexus Mobile Points" shall mean the loyalty points accumulated by a Member under Nexus Mobile and is based on the purchase of qualifying goods and services.
+                "Member" shall mean the registered Loyalty Mobile member
+                "Loyalty Mobile" shall mean Shehara Marketing Services (Pvt) Ltd. who owns and operates the loyalty program called Loyalty Mobile
+                "Loyalty Mobile" shall mean the mobile based loyalty program of Shehara Marketing Services (Pvt) Ltd.
+                "Loyalty Mobile Points" shall mean the loyalty points accumulated by a Member under Loyalty Mobile and is based on the purchase of qualifying goods and services.
             </p>
 
             <h2>34. Shehara Products</h2>
