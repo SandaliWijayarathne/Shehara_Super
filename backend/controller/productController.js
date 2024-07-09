@@ -1,7 +1,7 @@
-import Product from '../model/productModel.js'
+const Product = require('../model/productModel');
 
-//add product
-app.post('/addproduct', async (req, res) => {
+// Add product
+const create = async (req, res) => {
     let products = await Product.find({});
     let id = products.length > 0 ? products[products.length - 1].id + 1 : 1;
 
@@ -21,10 +21,10 @@ app.post('/addproduct', async (req, res) => {
         success: true,
         name: req.body.name,
     });
-});
+};
 
 // Creating API for deleting products
-app.post('/removeproduct', async (req, res) => {
+const deleteProduct = async (req, res) => {
     await Product.findOneAndDelete({ id: req.body.id });
     console.log("Removed");
 
@@ -32,9 +32,14 @@ app.post('/removeproduct', async (req, res) => {
         success: true,
         name: req.body.name
     });
-});
+};
 
+module.exports = {
+    create,
+    deleteProduct
+};
 
+/*
 // Creating API for getting all products
 app.get('/allproducts', async (req, res) => {
     try {
@@ -72,5 +77,15 @@ app.put('/updateprice/:id', async (req, res) => {
     }
 });
 
-
-
+app.get('/newcollections', async (req, res) => {
+    try {
+        let products = await Product.find({});
+        let newcollections = products.slice(1).slice(-8);
+        console.log("New Collection Fetched");
+        res.json(newcollections);
+    } catch (error) {
+        console.error("Error fetching new collections:", error);
+        res.status(500).json({ error: "Failed to fetch new collections" });
+    }
+});
+*/
