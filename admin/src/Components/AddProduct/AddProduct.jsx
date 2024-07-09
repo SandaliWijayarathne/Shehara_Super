@@ -2,6 +2,8 @@ import { useState } from 'react';
 import './AddProduct.css';
 import upload_area from '../../assets/upload_area.svg';
 
+
+
 const AddProduct = () => {
 
     const [image,setImage] = useState(false);
@@ -81,6 +83,7 @@ const AddProduct = () => {
             <option value="Fruits">Fruits</option>
         </select>
       </div>
+
       <div className="addproduct-itemfield">
         <label htmlFor="file-input">
             <img src={image?URL.createObjectURL(image):upload_area} className='addproduct-thumbnail-img' alt="Upload Area" />
