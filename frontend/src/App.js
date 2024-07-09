@@ -15,6 +15,7 @@ import UserProfile from './Components/UserProfile/UserProfile';
 import CartItems from './Components/CartItems/CartItems';
 import Checkout from './Components/PaymentPage/PaymentPage'; 
 import PaymentForm from './Components/Paytype/Paytype'; 
+import TermsConditions from './Components/Terms&Conditions/Terms&Conditions';
 
 function App() {
   return (
@@ -34,7 +35,8 @@ function App() {
           <Route path='/user-profile' element={<UserProfile />} />
           <Route path='/cart-items' element={<CartItems />} />
           <Route path='/checkout' element={<Checkout />} />  
-          <Route path='/paytype' element={<PaymentForm />} /> 
+          <Route path='/paytype' element={<PaymentForm />} />
+          <Route path='/termsconditions' element={<TermsConditions />} />  
         </Routes>
         <Footer />
       </BrowserRouter>
