@@ -79,8 +79,7 @@ app.post('/addproduct', async (req, res) => {
         name: req.body.name,
         image: req.body.image,
         category: req.body.category,
-        new_price: req.body.new_price,
-        old_price: req.body.old_price,
+        price: req.body.price,
     });
 
     await product.save();
@@ -122,10 +121,6 @@ app.put('/updateprice/:id', async (req, res) => {
         if (!product) {
             return res.status(404).json({ success: false, message: "Product not found" });
         }
-
-        // Set old_price to the current new_price before updating new_price
-        product.old_price = product.new_price;
-        product.new_price = req.body.new_price;
 
         await product.save();
         console.log("Prices updated");

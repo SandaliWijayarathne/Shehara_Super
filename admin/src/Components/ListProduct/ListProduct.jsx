@@ -18,7 +18,6 @@ const ListProduct = () => {
     }
   };
 
-
   useEffect(() => {
     fetchAllProducts();
   }, []);
@@ -38,7 +37,7 @@ const ListProduct = () => {
   const updateProductPrices = async (id, newPrice) => {
     try {
       const response = await axios.put(`http://localhost:4000/updateprice/${id}`, {
-        new_price: newPrice
+        price: newPrice
       });
       console.log('Update response:', response.data);
       fetchAllProducts(); // Refresh the list after update
@@ -61,8 +60,8 @@ const ListProduct = () => {
       <div className="listproduct-format-main">
         <p>Products</p>
         <p>Title</p>
-        <p>Old Price</p>
-        <p>New Price</p>
+        <p>Price</p>
+        <p>Update Price</p>
         <p>Category</p>
         <p>Remove</p>
         <p>Update</p>
@@ -74,10 +73,10 @@ const ListProduct = () => {
             <div className="listproduct-format-main listproduct-format">
               <img src={product.image} alt="" className="listproduct-product-icon" />
               <p>{product.name}</p>
-              <div>Rs.{product.old_price}</div>
+              <div>Rs.{product.price}</div>
               <input
                 type="number"
-                defaultValue={product.new_price}
+                defaultValue={product.price}
                 onChange={(e) => handlePriceChange(product.id, e.target.value)}
                 className="listproduct-input"
               />
