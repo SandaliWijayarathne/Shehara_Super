@@ -17,6 +17,7 @@ import Checkout from './Components/PaymentPage/PaymentPage';
 import PaymentForm from './Components/Paytype/Paytype'; 
 import TermsConditions from './Components/Terms&Conditions/Terms&Conditions';
 import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy';
+import FAQ from './Components/FAQ/FAQ';
 
 function App() {
   return (
@@ -38,7 +39,8 @@ function App() {
           <Route path='/checkout' element={<Checkout />} />  
           <Route path='/paytype' element={<PaymentForm />} />
           <Route path='/termsconditions' element={<TermsConditions />} />  
-          <Route path='/privacy-policy' element={<PrivacyPolicy />} />  
+          <Route path='/privacy-policy' element={<PrivacyPolicy />} /> 
+          <Route path='/faq' element={<FAQ />} />  
         </Routes>
         <Footer />
       </BrowserRouter>
