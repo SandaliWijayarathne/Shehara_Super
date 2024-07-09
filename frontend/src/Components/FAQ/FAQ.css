@@ -1,0 +1,51 @@
+.faq-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.accordion-item {
+    background: white;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+
+.accordion-question {
+    width: calc(100% - 40px); /* Adjusted width to account for the new padding */
+    padding: 15px 40px; /* Increased padding to 40px */
+    font-size: 18px;
+    text-align: left;
+    border: none;
+    background: #e9ecef;
+    color: #333;
+    cursor: pointer;
+    position: relative;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.accordion-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.accordion-answer {
+    padding: 15px 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    background: white;
+    color: #666;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.accordion-question:hover {
+    background-color: #ddd;
+}
