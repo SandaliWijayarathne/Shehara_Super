@@ -1,15 +1,14 @@
 const port = 4000;
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const path = require("path");
 const cors = require("cors");
-const connectDB = require('./config/db');
-
-// Connect to MongoDB
-connectDB();
 
 app.use(express.json());
 app.use(cors());
-
 
 // Database connection with MongoDB
 mongoose.connect("mongodb+srv://sanda:TVRS1234%23@cluster0.r6puny8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
@@ -97,15 +96,24 @@ app.post('/removeproduct', async (req, res) => {
     await Product.findOneAndDelete({ id: req.body.id });
     console.log("Removed");
 
+    res.json({
+        success: true,
+        name: req.body.name
+    });
+});
 
-// Use Routes
-app.use('/products', productRoutes);
-app.use('/orders', orderRoutes);
-app.use('/users', userRoutes);
-app.use('/cart', cartRoutes);
-app.use('/search', searchRoutes);
+// Creating API for getting all products
+app.get('/allproducts', async (req, res) => {
+    try {
+        let products = await Product.find({});
+        console.log("All products Fetched");
+        res.json(products);
+    } catch (error) {
+        console.error("Error fetching all products:", error);
+        res.status(500).json({ error: "Failed to fetch products" });
+    }
+});
 
-<<<<<<< HEAD
 // Creating API for updating product price
 app.put('/updateprice/:id', async (req, res) => {
     try {
@@ -351,10 +359,6 @@ app.post('/api/removeorder', async (req, res) => {
         console.error('Error removing order:', error);
         res.status(500).json({ error: "Failed to remove order" });
     }
-=======
-app.get("/", (req, res) => {
-    res.send("Express App is Running");
->>>>>>> 56b558f60219018fd6b0d0aaa6da4496852dc768
 });
 
 app.listen(port, (error) => {

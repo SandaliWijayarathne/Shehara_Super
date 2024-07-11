@@ -16,10 +16,9 @@ import CartItems from './Components/CartItems/CartItems';
 import Checkout from './Components/PaymentPage/PaymentPage'; 
 import PaymentForm from './Components/Paytype/Paytype'; 
 import Selection from './Components/Selection/Selection';
-import TermsConditions from './Components/Terms&Conditions/Terms&Conditions';
-import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy';
 import FAQ from './Components/FAQ/FAQ';
-
+import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy';
+import TermsConditions from './Components/Terms&Conditions/Terms&Conditions'
 
 function App() {
   return (
@@ -39,13 +38,11 @@ function App() {
           <Route path='/user-profile' element={<UserProfile />} />
           <Route path='/cart-items' element={<CartItems />} />
           <Route path='/checkout' element={<Checkout />} />  
-
+          <Route path='/paytype' element={<PaymentForm />} /> 
           <Route path='/selection' element={<Selection />} /> 
-          <Route path='/paytype' element={<PaymentForm />} />
-          <Route path='/termsconditions' element={<TermsConditions />} />  
-          <Route path='/privacy-policy' element={<PrivacyPolicy />} /> 
-          <Route path='/faq' element={<FAQ />} />  
-
+          <Route path='/faq' element={<FAQ />} />
+          <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+          <Route path='/terms-conditions' element={<TermsConditions />} />
         </Routes>
         <Footer />
       </BrowserRouter>
