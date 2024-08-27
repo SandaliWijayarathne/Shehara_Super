@@ -31,16 +31,33 @@ const upload = multer({ storage: storage });
 // Serve images statically
 app.use('/images', express.static('upload/images'));
 
-// Endpoint to upload product images
-app.post("/upload", upload.single('product'), (req, res) => {
+
+//upload image
+app.post("/bannerupload", upload.single('banner'), async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ success: 0, message: 'No file uploaded' });
     }
-    res.json({
-        success: 1,
-        image_url: `http://localhost:${port}/images/${req.file.filename}`
+
+    const imageUrl = `http://localhost:${port}/images/${req.file.filename}`;
+
+    const banner = new Banner({
+        url: imageUrl
     });
+
+    try {
+        await banner.save();
+        console.log("Banner uploaded and saved");
+        res.json({
+            success: 1,
+            image_url: imageUrl,
+            banner
+        });
+    } catch (error) {
+        console.error("Error saving banner:", error);
+        res.status(500).json({ error: "Failed to save banner" });
+    }
 });
+
 
 // Endpoint to upload banner images
 app.post("/bannerupload", upload.single('banner'), (req, res) => {
@@ -52,6 +69,46 @@ app.post("/bannerupload", upload.single('banner'), (req, res) => {
         image_url: `http://localhost:${port}/images/${req.file.filename}`
     });
 });                 
+
+//banner Schema
+const Banner = mongoose.model("Banner", {
+    url: {
+        type: String,
+        required: true,
+    },
+    date: {
+        type: Date,
+        default: Date.now,
+    }
+});
+
+//get all banners
+
+app.get('/allbanners', async (req, res) => {
+    try {
+        const banners = await Banner.find({});
+        console.log("All banners fetched");
+        res.json(banners);
+    } catch (error) {
+        console.error("Error fetching banners:", error);
+        res.status(500).json({ error: "Failed to fetch banners" });
+    }
+});
+
+
+//remove banner
+
+app.post('/removebanner', async (req, res) => {
+    try {
+        const bannerId = req.body.id;
+        await Banner.findByIdAndDelete(bannerId);
+        console.log(`Banner removed with ID: ${bannerId}`);
+        res.json({ success: true, message: `Banner with ID ${bannerId} removed` });
+    } catch (error) {
+        console.error("Error removing banner:", error);
+        res.status(500).json({ error: "Failed to remove banner" });
+    }
+});
 
 
 

@@ -1,11 +1,26 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Upload, Button, message } from 'antd';
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+import { Upload, Button, message, List, Image, Popconfirm } from 'antd';
+import { UploadOutlined, InboxOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const AddBanner = () => {
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
+  const [banners, setBanners] = useState([]);
+
+  const fetchBanners = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/allbanners');
+      const data = await response.json();
+      setBanners(data);
+    } catch (error) {
+      console.error('Error fetching banners:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBanners(); // Fetch banners on component mount
+  }, []);
 
   const onDrop = useCallback(acceptedFiles => {
     setFiles(acceptedFiles.map(file => Object.assign(file, {
@@ -25,7 +40,7 @@ const AddBanner = () => {
     }
 
     const formData = new FormData();
-    formData.append('banner', files[0]); // Append the file for banner
+    formData.append('banner', files[0]);
 
     setUploading(true);
 
@@ -40,6 +55,7 @@ const AddBanner = () => {
       if (result.success === 1) {
         message.success('Image uploaded successfully!');
         setFiles([]); // Clear the file after successful upload
+        fetchBanners(); // Refresh the list of banners
       } else {
         message.error('Failed to upload image');
       }
@@ -48,6 +64,26 @@ const AddBanner = () => {
       message.error('An error occurred during image upload');
     } finally {
       setUploading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:4000/api/banner/${id}`, {
+        method: 'DELETE',
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        message.success('Banner deleted successfully!');
+        fetchBanners(); // Refresh the list of banners
+      } else {
+        message.error('Failed to delete banner');
+      }
+    } catch (error) {
+      console.error('Error deleting banner:', error);
+      message.error('An error occurred while deleting the banner');
     }
   };
 
@@ -67,11 +103,37 @@ const AddBanner = () => {
         type="primary"
         onClick={handleSubmit}
         icon={<UploadOutlined />}
-        loading={uploading} // Show loading spinner when uploading
+        loading={uploading}
         style={{ marginTop: '20px' }}
       >
         Submit
       </Button>
+
+      <div style={{ marginTop: '40px' }}>
+        <h2>Uploaded Banners</h2>
+        <List
+          dataSource={banners}
+          renderItem={item => (
+            <List.Item
+              actions={[
+                <Popconfirm
+                  title="Are you sure you want to delete this banner?"
+                  onConfirm={() => handleDelete(item._id)}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button danger icon={<DeleteOutlined />} />
+                </Popconfirm>
+              ]}
+            >
+              <List.Item.Meta
+                avatar={<Image width={100} src={item.url} />}
+                title={<a href={item.url} target="_blank" rel="noopener noreferrer">{item.url}</a>}
+              />
+            </List.Item>
+          )}
+        />
+      </div>
     </div>
   );
 };
