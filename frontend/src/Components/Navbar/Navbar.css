@@ -1,11 +1,26 @@
 /* Navbar.css */
 .navbar {
+<<<<<<< Updated upstream
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+=======
+  position: fixed; /* Fixes the navbar to the top of the viewport */
+  top: 0; /* Aligns it at the top */
+  left: 0; /* Aligns it to the left of the viewport */
+  width: 100%; /* Ensures it spans the full width of the viewport */
+  z-index: 1000; /* Keeps the navbar above other elements */
+  background-color: #fff; /* Sets the background color */
+  padding: 10px; /* Adds padding */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a shadow for depth */
+}
+
+.main-content {
+  padding-top: 60px; /* Adds padding to prevent content from being hidden under the navbar */
+>>>>>>> Stashed changes
 }
 
 .navbar-content {
