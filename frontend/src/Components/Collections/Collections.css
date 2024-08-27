@@ -5,6 +5,7 @@
 }
 
 .banner-container {
+  margin-top: 200px;
   position: relative;
   width: 100%;
   height: 400px; /* Set the height for your banner */

@@ -42,6 +42,9 @@ const Navbar = () => {
         <input type="text" className="search-input" placeholder="Search products..." />
         <button className="search-button">
           <span role="img" aria-label="search">SEARCH PRODUCTS🔍</span>
+=======
+          <span role="img" aria-label="search">SEARCH PRODUCTS 🔍</span>
+>>>>>>> Stashed changes
         </button>
       </div>
     </div>
