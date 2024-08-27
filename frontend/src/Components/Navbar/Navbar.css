@@ -7,7 +7,14 @@
   background-color: #022c5c;
   padding: 10px 20px;
   color: white;
+<<<<<<< Updated upstream
   width: 100%;
+=======
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000; /* Ensure the navbar stays on top of other elements */
+>>>>>>> Stashed changes
 }
 
 .navbar-content {
@@ -24,7 +31,12 @@
   display: flex;
   list-style: none;
   gap: 20px;
+<<<<<<< Updated upstream
   margin-left: auto; /* Adjust margin for alignment */
+=======
+  margin-left: auto;
+  margin-top: 0;
+>>>>>>> Stashed changes
 }
 
 .nav-menu li a {
@@ -53,12 +65,25 @@
   text-align: center; /* Center text horizontally */
   display: flex;
   justify-content: center;
+<<<<<<< Updated upstream
   align-items: center;
   transition: background 0.3s ease;
 }
 
 .login-button:hover {
   background: #23185e; /* Darker shade or different color on hover */
+=======
+  width: 100%;
+  margin-top: 10px;
+}
+
+.search-bar {
+  width: 420px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  margin-left: auto;
+>>>>>>> Stashed changes
 }
 
 .menu-toggle {
