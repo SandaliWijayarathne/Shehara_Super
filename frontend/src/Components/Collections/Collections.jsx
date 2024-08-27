@@ -2,30 +2,84 @@ import React, { useState, useEffect } from 'react';
 import './Collections.css';
 import collections from '../Assets/collections';
 import Item from '../Item/Item';
-import bannerImages from '../Assets/banner_images'
 
 const NewCollections = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [bannerImages, setBannerImages] = useState([]);
+  const [direction, setDirection] = useState('forward');
 
   useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/allbanners');
+        const data = await response.json();
+        setBannerImages(data);
+      } catch (error) {
+        console.error('Error fetching banners:', error);
+      }
+    };
+
+    fetchBanners();
+  }, []);
+
+  useEffect(() => {
+    if (bannerImages.length === 0) return;
+
     const intervalId = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % bannerImages.length);
-    }, 4000); 
+      setCurrentIndex((prevIndex) => {
+        if (direction === 'forward') {
+          if (prevIndex === bannerImages.length - 1) {
+            setDirection('backward');
+            return prevIndex - 1;
+          }
+          return prevIndex + 1;
+        } else {
+          if (prevIndex === 0) {
+            setDirection('forward');
+            return prevIndex + 1;
+          }
+          return prevIndex - 1;
+        }
+      });
+    }, 15000);
 
     return () => clearInterval(intervalId); // Cleanup on component unmount
-  }, []);
+  }, [bannerImages, direction]);
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === bannerImages.length - 1 ? 0 : prevIndex + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? bannerImages.length - 1 : prevIndex - 1));
+  };
 
   return (
     <div className="new-collections">
       <div className="banner-container">
         <div className="banner-slider" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-          {bannerImages.map((image, index) => (
+          {bannerImages.map((banner) => (
             <img
-              key={index}
-              src={image}
-              alt={`Banner ${index}`}
+              key={banner._id}
+              src={banner.url}
+              alt={`Banner ${banner._id}`}
               className="banner-image"
             />
+          ))}
+        </div>
+        <button className="nav-button prev" onClick={prevSlide}>‹</button>
+        <button className="nav-button next" onClick={nextSlide}>›</button>
+        <div className="dots-container">
+          {bannerImages.map((_, index) => (
+            <span
+              key={index}
+              className={`dot ${currentIndex === index ? 'active' : ''}`}
+              onClick={() => goToSlide(index)}
+            ></span>
           ))}
         </div>
       </div>

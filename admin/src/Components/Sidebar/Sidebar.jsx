@@ -20,7 +20,13 @@ const Sidebar = () => {
           <p>Orders List</p>
         </div>
       </Link>
+      <Link to={'/addbanner'} className='sidebar-link'>
+        <div className="sidebar-item">
+          <p>Banners</p>
+        </div>
+      </Link>
     </div>
+    
   );
 }
 
