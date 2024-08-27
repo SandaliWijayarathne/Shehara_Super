@@ -41,7 +41,7 @@ const NewCollections = () => {
           return prevIndex - 1;
         }
       });
-    }, 10000);
+    }, 15000);
 
     return () => clearInterval(intervalId); // Cleanup on component unmount
   }, [bannerImages, direction]);

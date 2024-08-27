@@ -38,10 +38,12 @@
 }
 
 .prev {
+  width: 50px;
   left: 10px;
 }
 
 .next {
+  width: 50px;
   right: 10px;
 }
 
