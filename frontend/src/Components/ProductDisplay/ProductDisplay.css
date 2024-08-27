@@ -54,6 +54,17 @@
     margin-bottom: 20px;
 }
 
+/* Override the default toast icon color */
+.toastify-custom .Toastify__toast--success .Toastify__progress-bar {
+    background-color: blue; /* Change the progress bar color */
+}
+
+/* Change the tick icon color */
+.toastify-custom .Toastify__toast--success .Toastify__toast-icon svg {
+    fill: blue; /* Change the color of the tick circle */
+}
+
+
 .productdisplay-right-weight select {
     padding: 5px;
     font-size: 16px;
