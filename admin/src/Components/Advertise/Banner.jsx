@@ -1,17 +1,16 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Upload, Button, message, Card, Row, Col } from 'antd';
-import { UploadOutlined, InboxOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Upload, Button, message } from 'antd';
+import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 
 const AddBanner = () => {
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
 
   const onDrop = useCallback(acceptedFiles => {
-    const newFiles = acceptedFiles.map(file => Object.assign(file, {
+    setFiles(acceptedFiles.map(file => Object.assign(file, {
       preview: URL.createObjectURL(file)
-    }));
-    setFiles(prevFiles => [...prevFiles, ...newFiles]);
+    })));
   }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -52,36 +51,24 @@ const AddBanner = () => {
     }
   };
 
-  const handleRemove = (fileToRemove) => {
-    setFiles(prevFiles => prevFiles.filter(file => file.preview !== fileToRemove.preview));
-  };
-
   return (
     <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px', border: '1px solid #d9d9d9', borderRadius: '10px', textAlign: 'center' }}>
       <div {...getRootProps()} style={{ border: '2px dashed #d9d9d9', padding: '20px', cursor: 'pointer' }}>
         <input {...getInputProps()} />
         <InboxOutlined style={{ fontSize: '48px', color: '#1890ff' }} />
         <p style={{ marginTop: '10px', color: '#595959' }}>Drag & drop banner images here, or click to select files</p>
+        {files.length > 0 && (
+          <div style={{ marginTop: '20px' }}>
+            <img src={files[0].preview} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px', borderRadius: '10px' }} />
+          </div>
+        )}
       </div>
-
-      <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
-        {files.slice(0, 4).map((file, index) => (
-          <Col span={12} key={index}>
-            <Card
-              cover={<img src={file.preview} alt="Preview" style={{ maxHeight: '150px', objectFit: 'cover' }} />}
-              actions={[<DeleteOutlined key="delete" onClick={() => handleRemove(file)} />]}
-            />
-          </Col>
-        ))}
-      </Row>
-
       <Button
         type="primary"
         onClick={handleSubmit}
         icon={<UploadOutlined />}
         loading={uploading} // Show loading spinner when uploading
         style={{ marginTop: '20px' }}
-        disabled={files.length === 0}
       >
         Submit
       </Button>
