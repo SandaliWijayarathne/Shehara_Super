@@ -28,15 +28,32 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Creating Upload Endpoint for images
+// Serve images statically
 app.use('/images', express.static('upload/images'));
 
+// Endpoint to upload product images
 app.post("/upload", upload.single('product'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ success: 0, message: 'No file uploaded' });
+    }
     res.json({
         success: 1,
         image_url: `http://localhost:${port}/images/${req.file.filename}`
     });
 });
+
+// Endpoint to upload banner images
+app.post("/bannerupload", upload.single('banner'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ success: 0, message: 'No file uploaded' });
+    }
+    res.json({
+        success: 1,
+        image_url: `http://localhost:${port}/images/${req.file.filename}`
+    });
+});                 
+
+
 
 // Schema for Creating Products
 const Product = mongoose.model("Product", {
