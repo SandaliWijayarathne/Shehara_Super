@@ -1,11 +1,20 @@
 /* Navbar.css */
 
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #022c5c;
+}
+
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: #022c5c;
-  padding: 10px 20px;
+  padding: 8px 15px; /* Reduced padding */
   color: white;
   width: 100%;
 }
@@ -23,7 +32,7 @@
 .nav-menu {
   display: flex;
   list-style: none;
-  gap: 20px;
+  gap: 15px; /* Reduced gap */
   margin-left: auto; /* Adjust margin for alignment */
 }
 
@@ -37,7 +46,7 @@
 .nav-login-cart {
   display: flex;
   align-items: center;
-  gap: 20px; /* Adjust gap between login button and cart */
+  gap: 15px; /* Reduced gap */
 }
 
 .login-button {
@@ -71,6 +80,54 @@
   background-color: white;
 }
 
+/* Search bar styles */
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 15px; /* Reduced padding */
+  background-color: #fcfcfc;
+  border-top: 1px solid #fff;
+}
+
+.search-input {
+  width: 500px;
+  height: 40px;
+  padding: 10px 15px;
+  border-radius: 0 0 0 20px; /* Rounded corners for left side */
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 16px;
+  box-sizing: border-box;
+  margin-top: 3px;
+}
+
+.search-button {
+  background-color: #1b3b5f; /* Match the button color with the image */
+  color: white;
+  border: 1px solid #1b3b5f;
+  border-radius: 0 20px 0 0; /* Rounded corners for right side */
+  height: 42px;
+  width: 250px;
+  margin-top: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-left: -1px; /* To avoid double border */
+}
+
+.search-button:hover {
+  background-color: #022c5c; /* Slightly darker on hover */
+}
+
+.search-button span {
+  margin-left: 8px;
+  font-size: 11px;
+}
+
 @media (max-width: 768px) {
   .nav-menu {
     display: none;
@@ -95,5 +152,22 @@
     justify-content: center;
     gap: 5px;
     margin-right: 20px; /* Adjust margin for alignment */
+  }
+
+  .search-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .search-input {
+    width: 100%;
+    border-radius: 20px; /* Make it fully rounded for mobile */
+  }
+
+  .search-button {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 20px; /* Make it fully rounded for mobile */
+    margin-left: 0; /* Remove margin for mobile */
   }
 }
