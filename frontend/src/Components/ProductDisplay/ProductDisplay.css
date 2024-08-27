@@ -54,15 +54,6 @@
     margin-bottom: 20px;
 }
 
-/* Override the default toast icon color */
-.toastify-custom .Toastify__toast--success .Toastify__progress-bar {
-    background-color: blue; /* Change the progress bar color */
-}
-
-/* Change the tick icon color */
-.toastify-custom .Toastify__toast--success .Toastify__toast-icon svg {
-    fill: blue; /* Change the color of the tick circle */
-}
 
 
 .productdisplay-right-weight select {
@@ -90,3 +81,12 @@
 .productdisplay-right button:hover {
     background: #555;
 }
+
+.toastify-custom .Toastify__progress-bar {
+    background-color: rgb(15, 245, 11) !important; 
+}
+
+.toastify-custom .Toastify__toast-icon svg {
+    fill: rgb(15, 245, 11) !important; 
+}
+
