@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
+import './Shopping.css'; // Make sure to import the CSS file
 
 const Shopping = () => {
   const location = useLocation();
@@ -35,7 +36,10 @@ const Shopping = () => {
       {filteredProducts.length > 0 ? (
         filteredProducts.map(product => (
           <div key={product.id} className="product-item">
-            <img src={product.image} alt={product.name} />
+            {/* Link to the Product page with the product's ID */}
+            <Link to={`/product/${product.id}`}>
+              <img src={product.image} alt={product.name} />
+            </Link>
             <h3>{product.name}</h3>
             <p>Category: {product.category}</p>
             <p>Price: ${product.price}</p>
