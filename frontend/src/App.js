@@ -2,6 +2,7 @@ import './App.css';
 import Navbar from './Components/Navbar/Navbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Shop from './Pages/Shop';
+import Shopping from './Components/Shopping/Shopping';
 import Cart from './Pages/Cart';
 import Footer from './Components/Footer/Footer';
 import About from './Pages/AboutUs';
@@ -18,7 +19,7 @@ import PaymentForm from './Components/Paytype/Paytype';
 import Selection from './Components/Selection/Selection';
 import FAQ from './Components/FAQ/FAQ';
 import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy';
-import TermsConditions from './Components/Terms&Conditions/Terms&Conditions'
+import TermsConditions from './Components/Terms&Conditions/Terms&Conditions';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/' element={<Shop />} />
+          <Route path='/shopping' element={<Shopping />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/about' element={<About />} />
           <Route path='/location' element={<Location />} />
