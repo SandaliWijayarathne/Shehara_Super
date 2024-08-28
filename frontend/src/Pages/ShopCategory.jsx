@@ -5,6 +5,7 @@ import { ShopContext } from '../Context/ShopContext';
 import ProductItem from '../Components/ProductItem/ProductItem';
 import UpImage from '../Components/Assets/BG.png';
 import Sort from '../Components/Sort/Sort';
+import Breadcrum from '../Components/Breadcrum/Breadcrum';  // Import the Breadcrum component
 
 const ShopCategory = () => {
   const { category } = useParams();
@@ -25,7 +26,10 @@ const ShopCategory = () => {
       <div className="up-image">
         <img src={UpImage} alt="" />
       </div>
-      <h1>{category}</h1>
+
+      {/* Replace the category title with the Breadcrum component */}
+      <Breadcrum product={{ category, name: '' }} />
+
       <div className="shopcategory-indexSort">
         <p>
           <span>Showing 1-{sortedProducts.length}</span> out of {sortedProducts.length} products
