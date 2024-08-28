@@ -25,6 +25,16 @@ const Sidebar = () => {
           <p>Banners</p>
         </div>
       </Link>
+      <Link to={'/superdeals'} className='sidebar-link'>
+        <div className="sidebar-item">
+          <p>SuperDeals</p>
+        </div>
+      </Link>
+      <Link to={'/deals'} className='sidebar-link'>
+        <div className="sidebar-item">
+          <p>Deals</p>
+        </div>
+      </Link>
     </div>
     
   );
