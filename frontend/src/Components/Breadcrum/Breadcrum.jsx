@@ -8,7 +8,7 @@ const Breadcrum = (props) => {
     return (
         <div className='breadcrum'>
             <Link to="/">HOME</Link> <img src={arrow_icon} alt="Arrow" /> 
-            <Link to="/shop">SHOP</Link> <img src={arrow_icon} alt="Arrow" /> 
+            <Link to="/shopping">SHOP</Link> <img src={arrow_icon} alt="Arrow" /> 
             <Link to={`/category/${product.category}`}>{product.category}</Link> <img src={arrow_icon} alt="Arrow" /> 
             <span>{product.name}</span>
         </div>

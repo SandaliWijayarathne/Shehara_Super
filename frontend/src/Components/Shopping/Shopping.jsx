@@ -42,7 +42,7 @@ const Shopping = () => {
             </Link>
             <h3>{product.name}</h3>
             <p>Category: {product.category}</p>
-            <p>Price: ${product.price}</p>
+            <p>Price: Rs.{product.price}</p>
           </div>
         ))
       ) : (

@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import './CSS/ProductCategory.css'; 
 import { ShopContext } from '../Context/ShopContext';
 import ProductItem from '../Components/ProductItem/ProductItem';
-import UpImage from '../Components/Assets/BG.png';
 import Sort from '../Components/Sort/Sort';
 import Breadcrum from '../Components/Breadcrum/Breadcrum';  // Import the Breadcrum component
 
@@ -23,9 +22,6 @@ const ShopCategory = () => {
 
   return (
     <div className='product-category'>
-      <div className="up-image">
-        <img src={UpImage} alt="" />
-      </div>
 
       {/* Replace the category title with the Breadcrum component */}
       <Breadcrum product={{ category, name: '' }} />
