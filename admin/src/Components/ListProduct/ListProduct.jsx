@@ -6,15 +6,20 @@ import axios from 'axios';
 const ListProduct = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [editedPrices, setEditedPrices] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Fetch all products
   const fetchAllProducts = async () => {
+    setLoading(true);
+    setError(null);
+
     try {
-      const response = await axios.get('http://localhost:4000/allproducts');
-      console.log('Fetched products:', response.data);
-      setAllProducts(response.data);
+      const { data } = await axios.get('http://localhost:4000/allproducts');
+      setAllProducts(data);
     } catch (error) {
-      console.error('Error fetching products:', error);
+      setError('Error fetching products');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -22,31 +27,24 @@ const ListProduct = () => {
     fetchAllProducts();
   }, []);
 
-  // Remove a product
   const removeProduct = async (id) => {
     try {
       await axios.post('http://localhost:4000/removeproduct', { id });
-      console.log(`Removed product with ID: ${id}`);
-      fetchAllProducts(); // Refresh the list after removal
+      fetchAllProducts();
     } catch (error) {
-      console.error('Error removing product:', error);
+      setError('Error removing product');
     }
   };
 
-  // Update product price
   const updateProductPrices = async (id, newPrice) => {
     try {
-      const response = await axios.put(`http://localhost:4000/updateprice/${id}`, {
-        price: newPrice
-      });
-      console.log('Update response:', response.data);
-      fetchAllProducts(); // Refresh the list after update
+      await axios.put(`http://localhost:4000/updateprice/${id}`, { price: newPrice });
+      fetchAllProducts();
     } catch (error) {
-      console.error('Error updating price:', error);
+      setError('Error updating price');
     }
   };
 
-  // Handle price input change
   const handlePriceChange = (id, value) => {
     setEditedPrices({
       ...editedPrices,
@@ -57,6 +55,7 @@ const ListProduct = () => {
   return (
     <div className='list-product'>
       <h1>All Products List</h1>
+      {error && <p className="error">{error}</p>}
       <div className="listproduct-format-main">
         <p>Products</p>
         <p>Title</p>
@@ -67,26 +66,29 @@ const ListProduct = () => {
         <p>Update</p>
       </div>
       <div className="listproduct-allproducts">
-        <hr />
-        {allProducts.map((product, index) => (
-          <React.Fragment key={index}>
-            <div className="listproduct-format-main listproduct-format">
-              <img src={product.image} alt="" className="listproduct-product-icon" />
-              <p>{product.name}</p>
-              <div>Rs.{product.price}</div>
-              <input
-                type="number"
-                defaultValue={product.price}
-                onChange={(e) => handlePriceChange(product.id, e.target.value)}
-                className="listproduct-input"
-              />
-              <p>{product.category}</p>
-              <img onClick={() => removeProduct(product.id)} src={cross_icon} alt="" className="listproduct-remove-icon" />
-              <button onClick={() => updateProductPrices(product.id, editedPrices[product.id])} className="listproduct-update-button">Update</button>
-            </div>
-            <hr />
-          </React.Fragment>
-        ))}
+        {loading ? <p>Loading...</p> : (
+          <>
+            {allProducts.map((product, index) => (
+              <React.Fragment key={product.id}>
+                <div className="listproduct-format-main listproduct-format">
+                  <img src={product.image} alt={product.name} className="listproduct-product-icon" />
+                  <p>{product.name}</p>
+                  <div>Rs.{product.price}</div>
+                  <input
+                    type="number"
+                    value={editedPrices[product.id] || product.price}
+                    onChange={(e) => handlePriceChange(product.id, e.target.value)}
+                    className="listproduct-input"
+                  />
+                  <p>{product.category}</p>
+                  <img onClick={() => removeProduct(product.id)} src={cross_icon} alt="Remove" className="listproduct-remove-icon" />
+                  <button onClick={() => updateProductPrices(product.id, editedPrices[product.id] || product.price)} className="listproduct-update-button">Update</button>
+                </div>
+                <hr />
+              </React.Fragment>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

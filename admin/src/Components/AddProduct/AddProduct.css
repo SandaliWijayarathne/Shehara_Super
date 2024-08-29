@@ -3,54 +3,94 @@
   flex-direction: column;
   max-width: 600px;
   margin: 0 auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.addproduct-itemfield,
-.addproduct-itemfields {
+.add-product-title {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.form-group {
   display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+  flex-direction: column;
+  margin-bottom: 15px;
 }
 
-.addproduct-itemfield p,
-.addproduct-itemfields p {
-  margin: 0;
-  margin-right: 10px;
-  white-space: nowrap;
-  width: 150px;
-  text-align: left;
+.form-group label {
+  font-size: 1em;
+  margin-bottom: 5px;
+  color: #555;
 }
 
-.addproduct-itemfield input,
-.addproduct-itemfields input,
-.addproduct-itemfield select {
-  flex: 1;
-  padding: 8px;
+.form-group input,
+.form-group select {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ddd;
+  border-radius: 5px;
   box-sizing: border-box;
 }
 
-.addproduct-thumbnail-img {
+.product-category-selector {
   cursor: pointer;
-  width: 100px;
-  height: 100px;
 }
 
-.addproduct-btn {
-  padding: 10px 20px;
-  background-color: #170938;
-  color: white;
-  border: none;
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: pointer;
-  align-self: flex-start;
+}
+
+.thumbnail-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px dashed #ddd;
+  margin-bottom: 10px;
+}
+
+.upload-label p {
   margin-top: 10px;
+  font-size: 1em;
+  color: #777;
+}
+
+.add-product-btn {
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
   border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
   transition: background-color 0.3s ease, transform 0.2s;
 }
 
-.addproduct-btn:hover {
-  background-color: #26246d;
+.add-product-btn:hover {
+  background-color: #0056b3;
 }
 
-.addproduct-btn:active {
-  transform: scale(0.95);
+.add-product-btn:active {
+  transform: scale(0.98);
+}
+
+.error {
+  color: red;
+  font-size: 1em;
+  margin-bottom: 20px;
+  text-align: center;
 }

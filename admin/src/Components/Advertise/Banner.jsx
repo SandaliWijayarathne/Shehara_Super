@@ -1,7 +1,8 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { useDropzone } from 'react-dropzone';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Upload, Button, message, List, Image, Popconfirm } from 'antd';
 import { UploadOutlined, InboxOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useDropzone } from 'react-dropzone';
+import axios from 'axios';
 
 const AddBanner = () => {
   const [files, setFiles] = useState([]);
@@ -10,16 +11,15 @@ const AddBanner = () => {
 
   const fetchBanners = async () => {
     try {
-      const response = await fetch('http://localhost:4000/allbanners');
-      const data = await response.json();
+      const { data } = await axios.get('http://localhost:4000/allbanners');
       setBanners(data);
     } catch (error) {
-      console.error('Error fetching banners:', error);
+      message.error('Error fetching banners');
     }
   };
 
   useEffect(() => {
-    fetchBanners(); // Fetch banners on component mount
+    fetchBanners();
   }, []);
 
   const onDrop = useCallback(acceptedFiles => {
@@ -39,28 +39,22 @@ const AddBanner = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('banner', files[0]);
-
     setUploading(true);
 
     try {
-      const response = await fetch('http://localhost:4000/bannerupload', {
-        method: 'POST',
-        body: formData,
-      });
+      const formData = new FormData();
+      formData.append('banner', files[0]);
 
-      const result = await response.json();
+      const { data } = await axios.post('http://localhost:4000/bannerupload', formData);
 
-      if (result.success === 1) {
+      if (data.success) {
         message.success('Image uploaded successfully!');
-        setFiles([]); // Clear the file after successful upload
-        fetchBanners(); // Refresh the list of banners
+        setFiles([]);
+        fetchBanners();
       } else {
         message.error('Failed to upload image');
       }
     } catch (error) {
-      console.error('Error uploading image:', error);
       message.error('An error occurred during image upload');
     } finally {
       setUploading(false);
@@ -69,20 +63,14 @@ const AddBanner = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:4000/removebanner/${id}`, {
-        method: 'DELETE',
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
+      const { data } = await axios.delete(`http://localhost:4000/removebanner/${id}`);
+      if (data.success) {
         message.success('Banner deleted successfully!');
-        fetchBanners(); // Refresh the list of banners
+        fetchBanners();
       } else {
         message.error('Failed to delete banner');
       }
     } catch (error) {
-      console.error('Error deleting banner:', error);
       message.error('An error occurred while deleting the banner');
     }
   };
