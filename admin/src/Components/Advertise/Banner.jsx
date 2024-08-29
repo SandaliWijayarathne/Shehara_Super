@@ -69,7 +69,7 @@ const AddBanner = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/banner/${id}`, {
+      const response = await fetch(`http://localhost:4000/removebanner/${id}`, {
         method: 'DELETE',
       });
 
