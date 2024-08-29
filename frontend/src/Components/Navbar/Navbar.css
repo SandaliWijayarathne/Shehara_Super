@@ -84,9 +84,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 15px; /* Reduced padding */
+  padding: 0px 15px; /* Reduced padding */
   background-color: #fcfcfc;
-  border-top: 1px solid #fff;
 }
 
 .search-input {
@@ -146,6 +145,21 @@
   font-size: 12px;
 }
 
+/* Profile icon styles */
+.profile-icon {
+  font-size: 24px; /* Set the size of the profile icon */
+  color: white; /* Set color of the profile icon */
+  text-decoration: none; /* Remove underline */
+  margin-left: 15px; /* Add space between cart and profile icon */
+  cursor: pointer; /* Change cursor on hover */
+  display: flex;
+  align-items: center;
+}
+
+.profile-icon:hover {
+  color: #007bff; /* Change color on hover */
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .nav-menu {
@@ -188,5 +202,10 @@
     margin-top: 10px;
     border-radius: 20px; /* Make it fully rounded for mobile */
     margin-left: 0; /* Remove margin for mobile */
+  }
+
+  .profile-icon {
+    font-size: 22px; /* Adjust size for mobile */
+    margin-left: 10px; /* Adjust margin for mobile */
   }
 }
