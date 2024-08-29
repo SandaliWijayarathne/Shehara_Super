@@ -3,8 +3,7 @@ import React from 'react'
 const superDeals = () => {
   return (
     <div>
-        <p>this</p>
-      
+      <p>this is super deals</p>
     </div>
   )
 }

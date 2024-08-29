@@ -27,12 +27,7 @@ const Sidebar = () => {
       </Link>
       <Link to={'/superdeals'} className='sidebar-link'>
         <div className="sidebar-item">
-          <p>SuperDeals</p>
-        </div>
-      </Link>
-      <Link to={'/deals'} className='sidebar-link'>
-        <div className="sidebar-item">
-          <p>Deals</p>
+          <p>Super Deals</p>
         </div>
       </Link>
     </div>
