@@ -1,40 +1,44 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './OrdersList.css';
 import axios from 'axios';
 
 const OrdersList = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Fetch all orders
   const fetchOrders = async () => {
+    setLoading(true);
+    setError(null);
+
     try {
-      const response = await axios.get('http://localhost:4000/api/orders');
-      console.log('Fetched orders:', response.data);
-      setOrders(response.data);
+      const { data } = await axios.get('http://localhost:4000/api/orders');
+      setOrders(data);
     } catch (error) {
-      console.error('Error fetching orders:', error);
+      setError('Error fetching orders');
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Remove an order
-  const removeOrder = async (id) => {
-    try {
-      const response = await axios.post('http://localhost:4000/api/removeorder', { id });
-      console.log('Remove response:', response.data);
-      fetchOrders(); // Refresh the list after removal
-    } catch (error) {
-      console.error('Error removing order:', error);
-    }
-  };
-
-  // Fetch orders on component mount
   useEffect(() => {
     fetchOrders();
   }, []);
 
+  const removeOrder = async (id) => {
+    try {
+      await axios.post('http://localhost:4000/api/removeorder', { id });
+      fetchOrders();
+    } catch (error) {
+      setError('Error removing order');
+    }
+  };
+
   return (
     <div className='orders-list'>
       <h1>All Orders</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p className="error">{error}</p>}
       {orders.map((order, index) => (
         <div key={index} className="order-item">
           <h2>Order {index + 1}</h2>
