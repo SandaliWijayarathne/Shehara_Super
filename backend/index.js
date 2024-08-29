@@ -23,16 +23,16 @@ app.get("/", (req, res) => {
 const fetchUser = async (req, res, next) => {
     const token = req.header('auth-token');
     if (!token) {
-        return res.status(401).send({ errors: "Please authenticate using valid token" });
+      return res.status(401).send({ errors: "Please authenticate using valid token" });
     }
     try {
-        const data = jwt.verify(token, 'secret_cake');
-        req.user = data.user;
-        next();
+      const data = jwt.verify(token, 'secret_cake');
+      req.user = data.user;
+      next();
     } catch (error) {
-        res.status(401).send({ errors: "Invalid token. Please authenticate again." });
+      res.status(401).send({ errors: "Invalid token. Please authenticate again." });
     }
-};
+  };
 
 // Image Storage Engine
 const storage = multer.diskStorage({
@@ -278,34 +278,34 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Update User Profile
+// Update User Profile Endpoint
 app.put('/updateprofile', fetchUser, async (req, res) => {
-    try {
-        const userId = req.user.id;
+  try {
+    const userId = req.user.id;
 
-        // Update the user with the new profile details
-        const updatedUser = await Users.findByIdAndUpdate(
-            userId,
-            {
-                name: req.body.name,
-                address: req.body.address,
-                contactNumber: req.body.contactNumber,
-                cardNumber: req.body.cardNumber,
-                profileImage: req.body.profileImage,
-            },
-            { new: true } // Return the updated document
-        );
+    // Update the user with the new profile details
+    const updatedUser = await Users.findByIdAndUpdate(
+      userId,
+      {
+        name: req.body.name,
+        address: req.body.address,
+        contactNumber: req.body.contactNumber,
+        cardNumber: req.body.cardNumber,
+        profileImage: req.body.profileImage,
+      },
+      { new: true } // Return the updated document
+    );
 
-        if (!updatedUser) {
-            return res.status(404).json({ success: false, message: "User not found" });
-        }
-
-        console.log("User profile updated:", updatedUser);
-        res.json({ success: true, updatedUser });
-    } catch (error) {
-        console.error("Error updating profile:", error);
-        res.status(500).json({ error: "Failed to update profile" });
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
     }
+
+    console.log("User profile updated:", updatedUser);
+    res.json({ success: true, updatedUser });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({ error: "Failed to update profile" });
+  }
 });
 
 // Fetch New Collections
@@ -379,8 +379,8 @@ app.post('/api/removeorder', async (req, res) => {
 // Start the Server
 app.listen(port, (error) => {
     if (!error) {
-        console.log("Server running on Port " + port);
+      console.log("Server running on Port " + port);
     } else {
-        console.log("Error: " + error);
+      console.log("Error: " + error);
     }
-});
+  });
