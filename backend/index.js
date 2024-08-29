@@ -19,6 +19,21 @@ app.get("/", (req, res) => {
     res.send("Express App is Running");
 });
 
+// Middleware to Fetch User
+const fetchUser = async (req, res, next) => {
+    const token = req.header('auth-token');
+    if (!token) {
+        return res.status(401).send({ errors: "Please authenticate using valid token" });
+    }
+    try {
+        const data = jwt.verify(token, 'secret_cake');
+        req.user = data.user;
+        next();
+    } catch (error) {
+        res.status(401).send({ errors: "Invalid token. Please authenticate again." });
+    }
+};
+
 // Image Storage Engine
 const storage = multer.diskStorage({
     destination: './upload/images',
@@ -199,6 +214,10 @@ const Users = mongoose.model('Users', {
     email: { type: String, unique: true },
     password: { type: String },
     cartData: { type: Object },
+    address: { type: String }, // New field for address
+    contactNumber: { type: String }, // New field for contact number
+    cardNumber: { type: String }, // New field for card number
+    profileImage: { type: String }, // New field for profile image
     date: { type: Date, default: Date.now },
 });
 
@@ -220,6 +239,10 @@ app.post('/signup', async (req, res) => {
             email: req.body.email,
             password: req.body.password,
             cartData: cart,
+            address: '', // Initialize with empty value
+            contactNumber: '', // Initialize with empty value
+            cardNumber: '', // Initialize with empty value
+            profileImage: '', // Initialize with empty value
         });
 
         await user.save();
@@ -255,6 +278,36 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Update User Profile
+app.put('/updateprofile', fetchUser, async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        // Update the user with the new profile details
+        const updatedUser = await Users.findByIdAndUpdate(
+            userId,
+            {
+                name: req.body.name,
+                address: req.body.address,
+                contactNumber: req.body.contactNumber,
+                cardNumber: req.body.cardNumber,
+                profileImage: req.body.profileImage,
+            },
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        console.log("User profile updated:", updatedUser);
+        res.json({ success: true, updatedUser });
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        res.status(500).json({ error: "Failed to update profile" });
+    }
+});
+
 // Fetch New Collections
 app.get('/newcollections', async (req, res) => {
     try {
@@ -267,21 +320,6 @@ app.get('/newcollections', async (req, res) => {
         res.status(500).json({ error: "Failed to fetch new collections" });
     }
 });
-
-// Middleware to Fetch User
-const fetchUser = async (req, res, next) => {
-    const token = req.header('auth-token');
-    if (!token) {
-        return res.status(401).send({ errors: "Please authenticate using valid token" });
-    }
-    try {
-        const data = jwt.verify(token, 'secret_cake');
-        req.user = data.user;
-        next();
-    } catch (error) {
-        res.status(401).send({ errors: "Invalid token. Please authenticate again." });
-    }
-};
 
 // Add to Cart
 app.post('/addtocart', fetchUser, async (req, res) => {

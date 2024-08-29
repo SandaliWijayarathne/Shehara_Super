@@ -81,7 +81,7 @@ const Navbar = () => {
           onChange={handleInputChange}
         />
         <button className="search-button" onClick={handleSearch}>
-          <span role="img" aria-label="search">SEARCH PRODUCTS 🔍</span>
+          <span role="img" aria-label="search">SEARCH PRODUCTS</span>
         </button>
       </div>
     </div>

@@ -40,6 +40,35 @@ const UserProfile = () => {
     fileInputRef.current.click();
   };
 
+  const handleSaveProfile = () => {
+    const authToken = localStorage.getItem('auth-token'); // Get the auth token from localStorage or wherever you store it
+
+    // Fetch request to update profile
+    fetch('/updateprofile', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': authToken, // Include the JWT token here
+      },
+      body: JSON.stringify({
+        name: name,
+        address: address,
+        contactNumber: number,
+        cardNumber: cardNumber,
+        profileImage: profileImage, // Base64 string or URL
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Profile updated:', data);
+      alert('Profile updated successfully!');
+    })
+    .catch(error => {
+      console.error('Error updating profile:', error);
+      alert('Error updating profile');
+    });
+  };
+
   return (
     <div className="user-profile-page App">
       <main className="main">
@@ -95,12 +124,15 @@ const UserProfile = () => {
             <span>Credit Card: </span>
             <input
               type="text"
-              placeholder=' 2344 xxxx xxxx 8880'
+              placeholder="2344 xxxx xxxx 8880"
               value={cardNumber}
               onChange={(e) => setCardNumber(e.target.value)}
             />
           </div>
         </section>
+        <button className="save-button" onClick={handleSaveProfile}>
+          Save
+        </button>
         <section className="order-section">
           <div>
             <img src={ipad} alt="To Pay" />
