@@ -1,6 +1,5 @@
-import React, { createContext, useState,useEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import all_product from '../Components/Assets/all_product';
-
 
 export const ShopContext = createContext(null);
 
@@ -15,6 +14,7 @@ const getDefaultCart = () => {
 const ShopContextProvider = (props) => {
     const [all_product, setAll_Product] = useState([]);
     const [cartItems, setCartItems] = useState(getDefaultCart());
+    const [cartCount, setCartCount] = useState(0); // New state for cart count
 
     const fetchAllProducts = async () => {
         try {
@@ -48,13 +48,29 @@ const ShopContextProvider = (props) => {
                     }
                     return response.json();
                 })
-                .then((data) => setCartItems(data))
+                .then((data) => {
+                    setCartItems(data);
+                    updateCartCount(data); // Update cart count when fetching cart items
+                })
                 .catch((error) => console.error('Fetch error:', error));
         }
     }, []);
 
+    const updateCartCount = (cart) => {
+        let count = 0;
+        for (const item in cart) {
+            count += cart[item];
+        }
+        setCartCount(count);
+    };
+
     const addToCart = (itemId) => {
-        setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+        setCartItems((prev) => {
+            const updatedCart = { ...prev, [itemId]: prev[itemId] + 1 };
+            updateCartCount(updatedCart);
+            return updatedCart;
+        });
+
         if (localStorage.getItem('auth-token')) {
             fetch('http://localhost:4000/addtocart', {
                 method: 'POST',
@@ -77,7 +93,12 @@ const ShopContextProvider = (props) => {
     };
 
     const removeFromCart = (itemId) => {
-        setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+        setCartItems((prev) => {
+            const updatedCart = { ...prev, [itemId]: Math.max(prev[itemId] - 1, 0) };
+            updateCartCount(updatedCart);
+            return updatedCart;
+        });
+
         if (localStorage.getItem('auth-token')) {
             fetch('http://localhost:4000/removefromcart', {
                 method: 'POST',
@@ -101,6 +122,7 @@ const ShopContextProvider = (props) => {
 
     const clearCart = () => {
         setCartItems(getDefaultCart());
+        setCartCount(0); // Reset cart count
     };
 
     const getTotalCartAmount = () => {
@@ -114,7 +136,14 @@ const ShopContextProvider = (props) => {
         return totalAmount;
     };
 
-    const contextValue = { getTotalCartAmount, all_product, cartItems, addToCart, removeFromCart };
+    const contextValue = { 
+        getTotalCartAmount, 
+        all_product, 
+        cartItems, 
+        cartCount, // Provide cart count in context 
+        addToCart, 
+        removeFromCart 
+    };
 
     return (
         <ShopContext.Provider value={contextValue}>

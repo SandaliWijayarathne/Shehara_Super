@@ -1,5 +1,4 @@
-/* Navbar.css */
-
+/* Existing styles */
 .navbar-container {
   position: fixed;
   top: 0;
@@ -128,6 +127,26 @@
   font-size: 11px;
 }
 
+/* Cart icon and count styles */
+.cart-icon {
+  position: relative;
+  font-size: 24px;
+  color: white; /* Set color of the cart icon */
+  text-decoration: none; /* Remove underline */
+}
+
+.cart-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: rgb(159, 206, 224);
+  color: rgb(3, 3, 3);
+  border-radius: 50%;
+  padding: 1px 6px;
+  font-size: 12px;
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
   .nav-menu {
     display: none;

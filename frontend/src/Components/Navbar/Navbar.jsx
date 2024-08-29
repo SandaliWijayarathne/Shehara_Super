@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaShoppingCart } from 'react-icons/fa';
 import logo from '../Assets/logo.png';
+import { ShopContext } from '../../Context/ShopContext'; // Import ShopContext
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const { cartCount } = useContext(ShopContext); // Get cart count from context
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -39,7 +42,12 @@ const Navbar = () => {
             <li><Link to="/shopping">Shop</Link></li>
             <li><Link to="/location">Location</Link></li>
             <li><Link to="/delivery">Delivery</Link></li>
-            <li><Link to="/cart">Cart</Link></li>
+            <li>
+              <Link to="/cart" className="cart-icon">
+                <FaShoppingCart />
+                {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+              </Link>
+            </li>
             <li>
               <div className="nav-login-cart">
                 {localStorage.getItem('auth-token')

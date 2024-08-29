@@ -1,3 +1,4 @@
+// Server Setup and Middleware
 const port = 4000;
 const express = require("express");
 const app = express();
@@ -13,7 +14,7 @@ app.use(cors());
 // Database connection with MongoDB
 mongoose.connect("mongodb+srv://sanda:TVRS1234%23@cluster0.r6puny8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 
-// API Creation
+// Root Endpoint
 app.get("/", (req, res) => {
     res.send("Express App is Running");
 });
@@ -27,12 +28,9 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-// Serve images statically
 app.use('/images', express.static('upload/images'));
 
-
-//upload image
+// Upload Banner Endpoint
 app.post("/bannerupload", upload.single('banner'), async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ success: 0, message: 'No file uploaded' });
@@ -40,50 +38,25 @@ app.post("/bannerupload", upload.single('banner'), async (req, res) => {
 
     const imageUrl = `http://localhost:${port}/images/${req.file.filename}`;
 
-    const banner = new Banner({
-        url: imageUrl
-    });
+    const banner = new Banner({ url: imageUrl });
 
     try {
         await banner.save();
         console.log("Banner uploaded and saved");
-        res.json({
-            success: 1,
-            image_url: imageUrl,
-            banner
-        });
+        res.json({ success: 1, image_url: imageUrl, banner });
     } catch (error) {
         console.error("Error saving banner:", error);
         res.status(500).json({ error: "Failed to save banner" });
     }
 });
 
-
-// Endpoint to upload banner images
-app.post("/bannerupload", upload.single('banner'), (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ success: 0, message: 'No file uploaded' });
-    }
-    res.json({
-        success: 1,
-        image_url: `http://localhost:${port}/images/${req.file.filename}`
-    });
-});                 
-
-//banner Schema
+// Banner Schema
 const Banner = mongoose.model("Banner", {
-    url: {
-        type: String,
-        required: true,
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    }
+    url: { type: String, required: true },
+    date: { type: Date, default: Date.now },
 });
 
-//get all banners
-
+// Get All Banners
 app.get('/allbanners', async (req, res) => {
     try {
         const banners = await Banner.find({});
@@ -95,9 +68,7 @@ app.get('/allbanners', async (req, res) => {
     }
 });
 
-
-//remove banner
-
+// Remove Banner
 app.delete('/removebanner/:id', async (req, res) => {
     try {
         const bannerId = req.params.id;
@@ -110,41 +81,18 @@ app.delete('/removebanner/:id', async (req, res) => {
     }
 });
 
-
-
-
-// Schema for Creating Products
+// Product Schema
 const Product = mongoose.model("Product", {
-    id: {
-        type: Number,
-        required: true,
-    },
-    name: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
-        required: true,
-    },
-    category: {
-        type: String,
-        required: true,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    },
-    available: {
-        type: Boolean,
-        default: true,
-    },
+    id: { type: Number, required: true },
+    name: { type: String, required: true },
+    image: { type: String, required: true },
+    category: { type: String, required: true },
+    price: { type: Number, required: true },
+    date: { type: Date, default: Date.now },
+    available: { type: Boolean, default: true },
 });
 
+// Add Product
 app.post('/addproduct', async (req, res) => {
     let products = await Product.find({});
     let id = products.length > 0 ? products[products.length - 1].id + 1 : 1;
@@ -160,24 +108,18 @@ app.post('/addproduct', async (req, res) => {
     await product.save();
     console.log("Saved");
 
-    res.json({
-        success: true,
-        name: req.body.name,
-    });
+    res.json({ success: true, name: req.body.name });
 });
 
-// Creating API for deleting products
+// Remove Product
 app.post('/removeproduct', async (req, res) => {
     await Product.findOneAndDelete({ id: req.body.id });
     console.log("Removed");
 
-    res.json({
-        success: true,
-        name: req.body.name
-    });
+    res.json({ success: true, name: req.body.name });
 });
 
-// Creating API for getting all products
+// Get All Products
 app.get('/allproducts', async (req, res) => {
     try {
         let products = await Product.find({});
@@ -189,7 +131,7 @@ app.get('/allproducts', async (req, res) => {
     }
 });
 
-// Creating API for updating product price
+// Update Product Price
 app.put('/updateprice/:id', async (req, res) => {
     try {
         const product = await Product.findOne({ id: req.params.id });
@@ -200,47 +142,29 @@ app.put('/updateprice/:id', async (req, res) => {
         await product.save();
         console.log("Prices updated");
 
-        res.json({
-            success: true,
-            product
-        });
+        res.json({ success: true, product });
     } catch (error) {
         console.error("Error updating prices:", error);
         res.status(500).json({ error: "Failed to update prices" });
     }
 });
 
-// Schema for creating orders
+// Order Schema
 const orderSchema = new mongoose.Schema({
-    address: {
-        type: String,
-        required: true,
-    },
-    contactNumber: {
-        type: String,
-        required: true,
-    },
-    items: {
-        type: Array,
-        required: true,
-    },
-    totalAmount: {
-        type: Number,
-        required: true,
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    }
+    address: { type: String, required: true },
+    contactNumber: { type: String, required: true },
+    items: { type: Array, required: true },
+    totalAmount: { type: Number, required: true },
+    date: { type: Date, default: Date.now },
 });
 
 const Order = mongoose.model('Order', orderSchema);
 
-// Create Order Endpoint
+// Create Order
 app.post('/api/order', async (req, res) => {
     const { address, contactNumber, items, totalAmount } = req.body;
 
-    console.log('Received order data:', req.body); // Log the received data
+    console.log('Received order data:', req.body);
 
     const newOrder = new Order({
         address,
@@ -258,7 +182,7 @@ app.post('/api/order', async (req, res) => {
     }
 });
 
-// Get Orders Endpoint
+// Get Orders
 app.get('/api/orders', async (req, res) => {
     try {
         const orders = await Order.find();
@@ -269,28 +193,16 @@ app.get('/api/orders', async (req, res) => {
     }
 });
 
-// Schema creating for user model
+// User Schema
 const Users = mongoose.model('Users', {
-    name: {
-        type: String,
-    },
-    email: {
-        type: String,
-        unique: true,
-    },
-    password: {
-        type: String,
-    },
-    cartData: {
-        type: Object,
-    },
-    date: {
-        type: Date,
-        default: Date.now,
-    }
+    name: { type: String },
+    email: { type: String, unique: true },
+    password: { type: String },
+    cartData: { type: Object },
+    date: { type: Date, default: Date.now },
 });
 
-// Creating Endpoint for registering the user
+// Register User
 app.post('/signup', async (req, res) => {
     try {
         let check = await Users.findOne({ email: req.body.email });
@@ -312,12 +224,7 @@ app.post('/signup', async (req, res) => {
 
         await user.save();
 
-        const data = {
-            user: {
-                id: user.id
-            }
-        };
-
+        const data = { user: { id: user.id } };
         const token = jwt.sign(data, 'secret_cake');
         res.json({ success: true, token });
     } catch (error) {
@@ -326,7 +233,7 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-// Creating endpoint for user login
+// Login User
 app.post('/login', async (req, res) => {
     try {
         let user = await Users.findOne({ email: req.body.email });
@@ -336,12 +243,7 @@ app.post('/login', async (req, res) => {
 
         const passCompare = req.body.password === user.password;
         if (passCompare) {
-            const data = {
-                user: {
-                    id: user.id
-                }
-            };
-
+            const data = { user: { id: user.id } };
             const token = jwt.sign(data, 'secret_cake');
             res.json({ success: true, token });
         } else {
@@ -353,7 +255,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Creating endpoint for latest collection data
+// Fetch New Collections
 app.get('/newcollections', async (req, res) => {
     try {
         let products = await Product.find({});
@@ -366,7 +268,7 @@ app.get('/newcollections', async (req, res) => {
     }
 });
 
-// Middleware to fetch user
+// Middleware to Fetch User
 const fetchUser = async (req, res, next) => {
     const token = req.header('auth-token');
     if (!token) {
@@ -381,7 +283,7 @@ const fetchUser = async (req, res, next) => {
     }
 };
 
-// Creating endpoint to add products in cart data
+// Add to Cart
 app.post('/addtocart', fetchUser, async (req, res) => {
     try {
         console.log("Added", req.body.itemId);
@@ -395,7 +297,7 @@ app.post('/addtocart', fetchUser, async (req, res) => {
     }
 });
 
-// Creating endpoint to remove product from cart data
+// Remove from Cart
 app.post('/removefromcart', fetchUser, async (req, res) => {
     try {
         console.log("Removed", req.body.itemId);
@@ -411,7 +313,7 @@ app.post('/removefromcart', fetchUser, async (req, res) => {
     }
 });
 
-// Creating endpoint to get cart data
+// Get Cart Data
 app.post('/getcart', fetchUser, async (req, res) => {
     try {
         console.log("GetCart");
@@ -423,7 +325,7 @@ app.post('/getcart', fetchUser, async (req, res) => {
     }
 });
 
-// Creating API for deleting orders
+// Remove Order
 app.post('/api/removeorder', async (req, res) => {
     try {
         const orderId = req.body.id;
@@ -436,6 +338,7 @@ app.post('/api/removeorder', async (req, res) => {
     }
 });
 
+// Start the Server
 app.listen(port, (error) => {
     if (!error) {
         console.log("Server running on Port " + port);
@@ -443,4 +346,3 @@ app.listen(port, (error) => {
         console.log("Error: " + error);
     }
 });
-

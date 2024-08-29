@@ -18,7 +18,7 @@ const ProductDisplay = (props) => {
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            className: 'toastify-custom', // Add custom class here
+            className: 'toastify-custom',
         });
     }
 
@@ -31,7 +31,7 @@ const ProductDisplay = (props) => {
             </div>
             <div className="productdisplay-right">
                 <h1>{product.name}</h1>
-                <div className="productdisplay-right-price">Rs. {product.Price}</div>
+                <div className="productdisplay-right-price">Rs. {product.price}</div>
                 <div className="productdisplay-right-weight">
                     <select>
                         <option value="500g">500 g</option>
