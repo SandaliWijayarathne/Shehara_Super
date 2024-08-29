@@ -98,9 +98,9 @@ app.get('/allbanners', async (req, res) => {
 
 //remove banner
 
-app.post('/removebanner', async (req, res) => {
+app.delete('/removebanner/:id', async (req, res) => {
     try {
-        const bannerId = req.body.id;
+        const bannerId = req.params.id;
         await Banner.findByIdAndDelete(bannerId);
         console.log(`Banner removed with ID: ${bannerId}`);
         res.json({ success: true, message: `Banner with ID ${bannerId} removed` });
@@ -109,6 +109,7 @@ app.post('/removebanner', async (req, res) => {
         res.status(500).json({ error: "Failed to remove banner" });
     }
 });
+
 
 
 
