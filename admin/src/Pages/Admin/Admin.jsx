@@ -6,7 +6,6 @@ import AddProduct from '../../Components/AddProduct/AddProduct';
 import ListProduct from '../../Components/ListProduct/ListProduct';
 import OrderList from '../../Components/OrdersList/OrdersList'
 import AddBanner from '../../Components/Advertise/Banner';
-import Deals from '../../Components/Deals/Deals';
 
 
 const Admin = () => {
@@ -19,7 +18,6 @@ const Admin = () => {
           <Route path='/listproduct' element={<ListProduct />} />
           <Route path='/orders' element={<OrderList />} />
           <Route path='/addbanner' element={<AddBanner/>}/>
-          <Route path='/deals' elements={<Deals/>}/>
         </Routes>
       </div>
     </div>
