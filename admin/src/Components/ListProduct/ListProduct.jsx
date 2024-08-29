@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ListProduct.css';
-import cross_icon from '../../assets/cross_icon.png';
+import { DeleteOutlined } from '@ant-design/icons';
+import { Modal } from 'antd';
 import axios from 'axios';
 
 const ListProduct = () => {
@@ -8,6 +9,7 @@ const ListProduct = () => {
   const [editedPrices, setEditedPrices] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [deletingProductId, setDeletingProductId] = useState(null);
 
   const fetchAllProducts = async () => {
     setLoading(true);
@@ -26,6 +28,23 @@ const ListProduct = () => {
   useEffect(() => {
     fetchAllProducts();
   }, []);
+
+  const showConfirm = (id) => {
+    Modal.confirm({
+      title: 'Are you sure you want to delete this product?',
+      content: 'This action cannot be undone.',
+      okText: 'Yes',
+      cancelText: 'No',
+      centered: true,
+      style: { top: 20 },
+      bodyStyle: { textAlign: 'center' },
+      okButtonProps: { className: 'modal-ok-button' },
+      cancelButtonProps: { className: 'modal-cancel-button' },
+      onOk: () => removeProduct(id),
+      onCancel: () => setDeletingProductId(null),
+    });
+    setDeletingProductId(id);
+  };
 
   const removeProduct = async (id) => {
     try {
@@ -80,10 +99,8 @@ const ListProduct = () => {
                   className="listproduct-input"
                 />
                 <p>{product.category}</p>
-                <img
-                  onClick={() => removeProduct(product.id)}
-                  src={cross_icon}
-                  alt="Remove"
+                <DeleteOutlined
+                  onClick={() => showConfirm(product.id)}
                   className="listproduct-remove-icon"
                   aria-label="Remove product"
                 />

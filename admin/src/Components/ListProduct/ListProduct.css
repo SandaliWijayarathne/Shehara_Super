@@ -61,7 +61,7 @@
 
 .listproduct-allproducts {
     width: 100%;
-    max-height: 500px; /* Set a max-height for scrolling */
+    max-height: 500px; 
     overflow-y: auto;
     padding: 10px;
 }
@@ -101,7 +101,27 @@
 }
 
 .error {
-    color: #ff4d4d; /* Red color for error messages */
+    color: #ff4d4d; 
     font-size: 14px;
     font-weight: 500;
 }
+
+.modal-footer {
+    display: flex;
+    justify-content: left;
+  }
+  
+  .modal-footer .ant-btn {
+    margin: 0 8px; 
+  }
+  
+  .modal-ok-button {
+    background-color: #007bff; 
+    color: white;
+  }
+  
+  .modal-cancel-button {
+    background-color: #f0f0f0; 
+    color: #333;
+  }
+  
