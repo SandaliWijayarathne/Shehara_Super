@@ -68,30 +68,38 @@ const ListProduct = () => {
       <div className="listproduct-allproducts">
         {loading ? <p>Loading...</p> : (
           <>
-            {allProducts.map((product, index) => (
-              <React.Fragment key={product.id}>
-                <div className="listproduct-format-main listproduct-format">
-                  <img src={product.image} alt={product.name} className="listproduct-product-icon" />
-                  <p>{product.name}</p>
-                  <div>Rs.{product.price}</div>
-                  <input
-                    type="number"
-                    value={editedPrices[product.id] || product.price}
-                    onChange={(e) => handlePriceChange(product.id, e.target.value)}
-                    className="listproduct-input"
-                  />
-                  <p>{product.category}</p>
-                  <img onClick={() => removeProduct(product.id)} src={cross_icon} alt="Remove" className="listproduct-remove-icon" />
-                  <button onClick={() => updateProductPrices(product.id, editedPrices[product.id] || product.price)} className="listproduct-update-button">Update</button>
-                </div>
-                <hr />
-              </React.Fragment>
+            {allProducts.map((product) => (
+              <div className="listproduct-format" key={product.id}>
+                <img src={product.image} alt={product.name} className="listproduct-product-icon" />
+                <p>{product.name}</p>
+                <div>Rs.{product.price}</div>
+                <input
+                  type="number"
+                  value={editedPrices[product.id] || product.price}
+                  onChange={(e) => handlePriceChange(product.id, e.target.value)}
+                  className="listproduct-input"
+                />
+                <p>{product.category}</p>
+                <img
+                  onClick={() => removeProduct(product.id)}
+                  src={cross_icon}
+                  alt="Remove"
+                  className="listproduct-remove-icon"
+                  aria-label="Remove product"
+                />
+                <button
+                  onClick={() => updateProductPrices(product.id, editedPrices[product.id] || product.price)}
+                  className="listproduct-update-button"
+                >
+                  Update
+                </button>
+              </div>
             ))}
           </>
         )}
       </div>
     </div>
   );
-}
+};
 
 export default ListProduct;
