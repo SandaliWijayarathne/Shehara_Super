@@ -1,0 +1,14 @@
+.dashboard {
+    padding: 20px;
+    width: 100%;
+  }
+  
+  .dashboard .ant-card {
+    margin-bottom: 20px;
+  }
+  
+  .ant-card-title {
+    font-size: 1.5em;
+    font-weight: 600;
+  }
+  
