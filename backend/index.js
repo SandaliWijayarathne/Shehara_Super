@@ -143,6 +143,10 @@ const Product = mongoose.model("Product", {
         type: Boolean,
         default: true,
     },
+    discount:{
+        type:Number,
+        default:null,
+    }
 });
 
 app.post('/addproduct', async (req, res) => {
@@ -165,6 +169,11 @@ app.post('/addproduct', async (req, res) => {
         name: req.body.name,
     });
 });
+
+//create API for send super deals
+
+
+
 
 // Creating API for deleting products
 app.post('/removeproduct', async (req, res) => {
