@@ -1,5 +1,5 @@
 import React from 'react';
-import './SuperDeals.css';
+import './superDeals.css';
 
 const SuperDeals = () => {
   return (

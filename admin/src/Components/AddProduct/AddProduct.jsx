@@ -26,18 +26,21 @@ const AddProduct = () => {
       setError('Please fill in all fields and upload an image.');
       return;
     }
-
+  
     setLoading(true);
     setError(null);
-    
+  
     try {
       const formData = new FormData();
       formData.append('image', image);
   
+      const adminToken = localStorage.getItem('admin-auth-token');
+  
       const imageResponse = await fetch('http://localhost:4000/uploadproductimage', {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
+          'admin-auth-token': adminToken, // Add the token here
         },
         body: formData,
       }).then((resp) => resp.json());
@@ -47,8 +50,9 @@ const AddProduct = () => {
         const productResponse = await fetch('http://localhost:4000/addproduct', {
           method: 'POST',
           headers: {
-            Accept: 'application/json',
+            'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'admin-auth-token': adminToken, // Add the token here
           },
           body: JSON.stringify(productDetails),
         }).then((resp) => resp.json());
@@ -74,7 +78,7 @@ const AddProduct = () => {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className='add-product'>
       {error && <p className="error">{error}</p>}
