@@ -34,24 +34,35 @@ const fetchUser = async (req, res, next) => {
     }
 };
 
-// Image Storage Engine
-const storage = multer.diskStorage({
+// Image Storage Engine for Products
+const productStorage = multer.diskStorage({
     destination: './upload/images',
     filename: (req, file, cb) => {
         return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
     }
 });
 
-const upload = multer({ storage: storage });
+// Image Storage Engine for Banners
+const bannerStorage = multer.diskStorage({
+    destination: './upload/banners',
+    filename: (req, file, cb) => {
+        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
+    }
+});
+
+const uploadProductImage = multer({ storage: productStorage });
+const uploadBannerImage = multer({ storage: bannerStorage });
+
 app.use('/images', express.static('upload/images'));
+app.use('/banners', express.static('upload/banners'));
 
 // Upload Banner Endpoint
-app.post("/bannerupload", upload.single('banner'), async (req, res) => {
+app.post("/bannerupload", uploadBannerImage.single('banner'), async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ success: 0, message: 'No file uploaded' });
     }
 
-    const imageUrl = `http://localhost:${port}/images/${req.file.filename}`;
+    const imageUrl = `http://localhost:${port}/banners/${req.file.filename}`;
 
     const banner = new Banner({ url: imageUrl });
 
@@ -63,6 +74,17 @@ app.post("/bannerupload", upload.single('banner'), async (req, res) => {
         console.error("Error saving banner:", error);
         res.status(500).json({ error: "Failed to save banner" });
     }
+});
+
+// Upload Product Image Endpoint
+app.post("/uploadproductimage", uploadProductImage.single('product'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ success: 0, message: 'No file uploaded' });
+    }
+
+    const imageUrl = `http://localhost:${port}/images/${req.file.filename}`;
+
+    res.json({ success: 1, image_url: imageUrl });
 });
 
 // Banner Schema
@@ -319,31 +341,31 @@ app.post('/login', async (req, res) => {
 
 // Update User Profile Endpoint
 app.put('/updateprofile', fetchUser, async (req, res) => {
-  try {
-    const userId = req.user.id;
+    try {
+        const userId = req.user.id;
 
-    const updatedUser = await Users.findByIdAndUpdate(
-      userId,
-      {
-        name: req.body.name,
-        address: req.body.address,
-        contactNumber: req.body.contactNumber,
-        cardNumber: req.body.cardNumber,
-        profileImage: req.body.profileImage,
-      },
-      { new: true }
-    );
+        const updatedUser = await Users.findByIdAndUpdate(
+            userId,
+            {
+                name: req.body.name,
+                address: req.body.address,
+                contactNumber: req.body.contactNumber,
+                cardNumber: req.body.cardNumber,
+                profileImage: req.body.profileImage,
+            },
+            { new: true }
+        );
 
-    if (!updatedUser) {
-      return res.status(404).json({ success: false, message: "User not found" });
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        console.log("User profile updated:", updatedUser);
+        res.json({ success: true, updatedUser });
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        res.status(500).json({ error: "Failed to update profile" });
     }
-
-    console.log("User profile updated:", updatedUser);
-    res.json({ success: true, updatedUser });
-  } catch (error) {
-    console.error("Error updating profile:", error);
-    res.status(500).json({ error: "Failed to update profile" });
-  }
 });
 
 // Fetch New Collections
@@ -417,8 +439,8 @@ app.post('/api/removeorder', async (req, res) => {
 // Start the Server
 app.listen(port, (error) => {
     if (!error) {
-      console.log("Server running on Port " + port);
+        console.log("Server running on Port " + port);
     } else {
-      console.log("Error: " + error);
+        console.log("Error: " + error);
     }
-  });
+});
