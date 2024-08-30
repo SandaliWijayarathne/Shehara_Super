@@ -39,23 +39,36 @@ const OrdersList = () => {
       <h1>All Orders</h1>
       {loading && <p>Loading...</p>}
       {error && <p className="error">{error}</p>}
-      {orders.map((order, index) => (
-        <div key={index} className="order-item">
-          <h2>Order {index + 1}</h2>
-          <p><strong>Address:</strong> {order.address}</p>
-          <p><strong>Contact Number:</strong> {order.contactNumber}</p>
-          <p><strong>Total Amount:</strong> Rs.{order.totalAmount}</p>
-          <h3>Items:</h3>
-          <ul>
-            {order.items.map((item, i) => (
-              <li key={i}>
-                {item.name} - {item.quantity} x Rs.{item.price}
-              </li>
-            ))}
-          </ul>
-          <button className="remove-order-button" onClick={() => removeOrder(order._id)}>Remove Order</button>
+      <div className="orders-table">
+        <div className="orders-header">
+          <div>Order ID</div>
+          <div>Address</div>
+          <div>Contact Number</div>
+          <div>Total Amount</div>
+          <div>Items</div>
+          <div>Actions</div>
         </div>
-      ))}
+        {orders.map((order) => (
+          <div key={order._id} className="orders-row">
+            <div>{order._id}</div>
+            <div>{order.address}</div>
+            <div>{order.contactNumber}</div>
+            <div>Rs.{order.totalAmount}</div>
+            <div>
+              <ul>
+                {order.items.map((item, i) => (
+                  <li key={i}>
+                    {item.name} - {item.quantity} x Rs.{item.price}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <button className="remove-order-button" onClick={() => removeOrder(order._id)}>Remove Order</button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

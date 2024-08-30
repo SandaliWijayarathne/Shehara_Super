@@ -1,72 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
 .list-product {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 1000px;
-    height: 780px;
-    padding: 10px 50px;
-    margin: 30px;
-    border-radius: 6px;
-    background: white;
+    padding: 20px;
+    margin: 30px auto;
+    border-radius: 8px;
+    background: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
 }
 
 .listproduct-format-main {
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
     width: 100%;
-    padding: 20px 0px;
-    color: #454545;
-    font-size: 15px;
+    padding: 8px 0;
+    color: #333;
+    font-size: 14px;
     font-weight: 600;
+    border-bottom: 2px solid #ddd;
+    background: #eee;
+    border-radius: 8px;
 }
 
 .listproduct-format {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
-    font-weight: 500;
+    padding: 8px;
+    font-weight: 400;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    transition: background 0.3s;
+}
+
+.listproduct-format:hover {
+    background: #f5f5f5;
 }
 
 .listproduct-product-icon {
-    height: 80px;
+    height: 50px;
+    width: auto;
+    border-radius: 4px;
 }
 
 .listproduct-remove-icon {
     cursor: pointer;
-    margin: auto;
+    width: 20px;
+    height: 20px;
+    transition: opacity 0.3s, transform 0.2s;
+}
+
+.listproduct-remove-icon:hover {
+    opacity: 0.7;
+    transform: scale(1.1);
 }
 
 .listproduct-allproducts {
+    width: 100%;
+    max-height: 500px; 
     overflow-y: auto;
+    padding: 10px;
 }
 
 .listproduct-input {
     width: 80px;
-    padding: 5px;
+    padding: 6px;
     margin: 0 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: #fafafa;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .listproduct-input:focus {
-    border-color: #0a134b;
-    box-shadow: 0 0 5px rgba(20, 10, 75, 0.5);
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
 
 .listproduct-update-button {
-    padding: 5px 10px;
+    padding: 6px 12px;
     color: white;
-    background-color: #0e1b5f;
+    background-color: #007bff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-    margin-top: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 12px;
 }
 
 .listproduct-update-button:hover {
-    background-color: #3578cf;
+    background-color: #0056b3;
 }
 
 .listproduct-update-button:active {
     transform: scale(0.95);
 }
+
+.error {
+    color: #ff4d4d; 
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: left;
+  }
+  
+  .modal-footer .ant-btn {
+    margin: 0 8px; 
+  }
+  
+  .modal-ok-button {
+    background-color: #007bff; 
+    color: white;
+  }
+  
+  .modal-cancel-button {
+    background-color: #f0f0f0; 
+    color: #333;
+  }
+  

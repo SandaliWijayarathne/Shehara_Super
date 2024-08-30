@@ -17,43 +17,208 @@
   color: #333333;
 }
 
-.order-item {
+.orders-table {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
   width: 100%;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 6px;
-  background: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.order-item h2 {
-  margin-bottom: 10px;
-  font-size: 1.5em;
-  color: #444444;
+.orders-header, .orders-row {
+  display: contents;
 }
 
-.order-item p {
-  margin: 5px 0;
-  font-size: 1em;
-  color: #666666;
+.orders-header div {
+  font-weight: bold;
+  padding: 10px;
+  background: #f2f2f2;
+  border-bottom: 2px solid #ddd;
 }
 
-.order-item ul {
+.orders-row {
+  display: contents;
+}
+
+.orders-row div {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+
+.orders-row ul {
   list-style-type: none;
   padding-left: 0;
+  margin: 0;
 }
 
-.order-item ul li {
-  margin: 5px 0;
-  padding: 10px;
+.orders-row ul li {
+  padding: 5px;
   background: #eeeeee;
   border-radius: 4px;
-  font-size: 1em;
+  font-size: 0.9em;
   color: #555555;
 }
 
-.order-item ul li:not(:last-child) {
-  margin-bottom: 10px;
+.remove-order-button {
+  padding: 10px 20px;
+  background-color: #3e32c6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.remove-order-button:hover {
+  background-color: #462cc9;
+  transform: scale(1.05);
+}
+
+.remove-order-button:active {
+  background-color: #2225aa;
+  transform: scale(0.95);
+}
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.orders-list h1 {
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #333333;
+}
+
+.orders-table {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.orders-header, .orders-row {
+  display: contents;
+}
+
+.orders-header div {
+  font-weight: bold;
+  padding: 10px;
+  background: #f2f2f2;
+  border-bottom: 2px solid #ddd;
+}
+
+.orders-row {
+  display: contents;
+}
+
+.orders-row div {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+
+.orders-row ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.orders-row ul li {
+  padding: 5px;
+  background: #eeeeee;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #555555;
+}
+
+.remove-order-button {
+  padding: 10px 20px;
+  background-color: #3e32c6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.remove-order-button:hover {
+  background-color: #462cc9;
+  transform: scale(1.05);
+}
+
+.remove-order-button:active {
+  background-color: #2225aa;
+  transform: scale(0.95);
+}
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.orders-list h1 {
+  margin-bottom: 20px;
+  font-size: 2em;
+  color: #333333;
+}
+
+.orders-table {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.orders-header, .orders-row {
+  display: contents;
+}
+
+.orders-header div {
+  font-weight: bold;
+  padding: 10px;
+  background: #f2f2f2;
+  border-bottom: 2px solid #ddd;
+}
+
+.orders-row {
+  display: contents;
+}
+
+.orders-row div {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+
+.orders-row ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.orders-row ul li {
+  padding: 5px;
+  background: #eeeeee;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #555555;
 }
 
 .remove-order-button {

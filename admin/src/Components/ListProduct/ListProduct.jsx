@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ListProduct.css';
-import cross_icon from '../../assets/cross_icon.png';
+import { DeleteOutlined } from '@ant-design/icons';
+import { Modal } from 'antd';
 import axios from 'axios';
 
 const ListProduct = () => {
@@ -8,6 +9,7 @@ const ListProduct = () => {
   const [editedPrices, setEditedPrices] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [deletingProductId, setDeletingProductId] = useState(null);
 
   const fetchAllProducts = async () => {
     setLoading(true);
@@ -26,6 +28,23 @@ const ListProduct = () => {
   useEffect(() => {
     fetchAllProducts();
   }, []);
+
+  const showConfirm = (id) => {
+    Modal.confirm({
+      title: 'Are you sure you want to delete this product?',
+      content: 'This action cannot be undone.',
+      okText: 'Yes',
+      cancelText: 'No',
+      centered: true,
+      style: { top: 20 },
+      bodyStyle: { textAlign: 'center' },
+      okButtonProps: { className: 'modal-ok-button' },
+      cancelButtonProps: { className: 'modal-cancel-button' },
+      onOk: () => removeProduct(id),
+      onCancel: () => setDeletingProductId(null),
+    });
+    setDeletingProductId(id);
+  };
 
   const removeProduct = async (id) => {
     try {
@@ -68,30 +87,36 @@ const ListProduct = () => {
       <div className="listproduct-allproducts">
         {loading ? <p>Loading...</p> : (
           <>
-            {allProducts.map((product, index) => (
-              <React.Fragment key={product.id}>
-                <div className="listproduct-format-main listproduct-format">
-                  <img src={product.image} alt={product.name} className="listproduct-product-icon" />
-                  <p>{product.name}</p>
-                  <div>Rs.{product.price}</div>
-                  <input
-                    type="number"
-                    value={editedPrices[product.id] || product.price}
-                    onChange={(e) => handlePriceChange(product.id, e.target.value)}
-                    className="listproduct-input"
-                  />
-                  <p>{product.category}</p>
-                  <img onClick={() => removeProduct(product.id)} src={cross_icon} alt="Remove" className="listproduct-remove-icon" />
-                  <button onClick={() => updateProductPrices(product.id, editedPrices[product.id] || product.price)} className="listproduct-update-button">Update</button>
-                </div>
-                <hr />
-              </React.Fragment>
+            {allProducts.map((product) => (
+              <div className="listproduct-format" key={product.id}>
+                <img src={product.image} alt={product.name} className="listproduct-product-icon" />
+                <p>{product.name}</p>
+                <div>Rs.{product.price}</div>
+                <input
+                  type="number"
+                  value={editedPrices[product.id] || product.price}
+                  onChange={(e) => handlePriceChange(product.id, e.target.value)}
+                  className="listproduct-input"
+                />
+                <p>{product.category}</p>
+                <DeleteOutlined
+                  onClick={() => showConfirm(product.id)}
+                  className="listproduct-remove-icon"
+                  aria-label="Remove product"
+                />
+                <button
+                  onClick={() => updateProductPrices(product.id, editedPrices[product.id] || product.price)}
+                  className="listproduct-update-button"
+                >
+                  Update
+                </button>
+              </div>
             ))}
           </>
         )}
       </div>
     </div>
   );
-}
+};
 
 export default ListProduct;

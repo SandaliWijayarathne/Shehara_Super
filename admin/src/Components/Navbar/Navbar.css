@@ -14,6 +14,12 @@
     align-items: center;
 }
 
+.nav-logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
 .nav-logo {
     width: 200px;
     margin-right: 10px;

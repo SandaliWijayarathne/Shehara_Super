@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 const Sidebar = () => {
   return (
     <div className='sidebar'>
+      <Link to={'/dashboard'} className='sidebar-link'>
+        <div className="sidebar-item">Dashboard</div>
+      </Link>
       <Link to={'/addproduct'} className='sidebar-link'>
         <div className="sidebar-item">Add Product</div>
       </Link>
@@ -15,12 +18,6 @@ const Sidebar = () => {
       </Link>
       <Link to={'/addbanner'} className='sidebar-link'>
         <div className="sidebar-item">Banners</div>
-      </Link>
-      <Link to={'/superdeals'} className='sidebar-link'>
-        <div className="sidebar-item">SuperDeals</div>
-      </Link>
-      <Link to={'/deals'} className='sidebar-link'>
-        <div className="sidebar-item">Deals</div>
       </Link>
     </div>
   );
