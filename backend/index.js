@@ -34,7 +34,7 @@ const fetchUser = async (req, res, next) => {
     }
 };
 
-// Image Storage Engine for Products
+// Image Storage Engine for Product
 const productStorage = multer.diskStorage({
     destination: './upload/images',
     filename: (req, file, cb) => {
