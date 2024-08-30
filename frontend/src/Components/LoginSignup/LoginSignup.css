@@ -13,6 +13,7 @@
     height: 100vh;
     background-color: #e0e6ed;
     padding-top: 50px; 
+    margin-top: 150px;
   }
   
   .loginsignup-container {
@@ -21,7 +22,7 @@
     border-radius: 8px;
     text-align: center;
     width: 100%;
-    max-width: 550px; 
+    max-width: 550px;
   }
   
   .loginsignup h1 {

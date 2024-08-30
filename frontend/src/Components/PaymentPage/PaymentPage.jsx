@@ -1,5 +1,3 @@
-///////// PaymentPage.js
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PaymentPage.css';
@@ -20,8 +18,33 @@ const Checkout = () => {
 
   const handlePayClick = () => {
     if (selectedPayment === 'cash') {
-      alert('Your Package is on the way');
+      // If cash on delivery is selected, submit the order
+      const authToken = localStorage.getItem('auth-token');
+      fetch('/submitOrder', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': authToken,
+        },
+        body: JSON.stringify({
+          address: deliveryAddress,
+          paymentMethod: 'Cash on Delivery',
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert(`Your order has been placed! Your tracking ID is ${data.trackingId}`);
+        } else {
+          alert('Failed to place the order. Please try again.');
+        }
+      })
+      .catch(error => {
+        console.error('Error submitting order:', error);
+        alert('Error submitting order. Please try again.');
+      });
     } else if (selectedPayment === 'visa' || selectedPayment === 'mastercard') {
+      // Navigate to the Paytype page for card payment
       navigate('/paytype');
     }
   };

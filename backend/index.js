@@ -19,24 +19,50 @@ app.get("/", (req, res) => {
     res.send("Express App is Running");
 });
 
-// Image Storage Engine
-const storage = multer.diskStorage({
+// Middleware to Fetch User
+const fetchUser = async (req, res, next) => {
+    const token = req.header('auth-token');
+    if (!token) {
+        return res.status(401).send({ errors: "Please authenticate using valid token" });
+    }
+    try {
+        const data = jwt.verify(token, 'secret_cake');
+        req.user = data.user;
+        next();
+    } catch (error) {
+        res.status(401).send({ errors: "Invalid token. Please authenticate again." });
+    }
+};
+
+// Image Storage Engine for Products
+const productStorage = multer.diskStorage({
     destination: './upload/images',
     filename: (req, file, cb) => {
         return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
     }
 });
 
-const upload = multer({ storage: storage });
+// Image Storage Engine for Banners
+const bannerStorage = multer.diskStorage({
+    destination: './upload/banners',
+    filename: (req, file, cb) => {
+        return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`);
+    }
+});
+
+const uploadProductImage = multer({ storage: productStorage });
+const uploadBannerImage = multer({ storage: bannerStorage });
+
 app.use('/images', express.static('upload/images'));
+app.use('/banners', express.static('upload/banners'));
 
 // Upload Banner Endpoint
-app.post("/bannerupload", upload.single('banner'), async (req, res) => {
+app.post("/bannerupload", uploadBannerImage.single('banner'), async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ success: 0, message: 'No file uploaded' });
     }
 
-    const imageUrl = `http://localhost:${port}/images/${req.file.filename}`;
+    const imageUrl = `http://localhost:${port}/banners/${req.file.filename}`;
 
     const banner = new Banner({ url: imageUrl });
 
@@ -48,6 +74,17 @@ app.post("/bannerupload", upload.single('banner'), async (req, res) => {
         console.error("Error saving banner:", error);
         res.status(500).json({ error: "Failed to save banner" });
     }
+});
+
+// Upload Product Image Endpoint
+app.post("/uploadproductimage", uploadProductImage.single('product'), async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ success: 0, message: 'No file uploaded' });
+    }
+
+    const imageUrl = `http://localhost:${port}/images/${req.file.filename}`;
+
+    res.json({ success: 1, image_url: imageUrl });
 });
 
 // Banner Schema
@@ -151,45 +188,84 @@ app.put('/updateprice/:id', async (req, res) => {
 
 // Order Schema
 const orderSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
     address: { type: String, required: true },
-    contactNumber: { type: String, required: true },
-    items: { type: Array, required: true },
-    totalAmount: { type: Number, required: true },
+    paymentMethod: { type: String, required: true },
+    trackingId: { type: String, unique: true },
     date: { type: Date, default: Date.now },
+    status: { type: String, default: 'Pending' }
 });
 
 const Order = mongoose.model('Order', orderSchema);
 
-// Create Order
-app.post('/api/order', async (req, res) => {
-    const { address, contactNumber, items, totalAmount } = req.body;
+// Payment Schema
+const paymentSchema = new mongoose.Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
+    cardNumber: { type: String, required: true },
+    expiryMonth: { type: String, required: true },
+    expiryYear: { type: String, required: true },
+    cardholderName: { type: String, required: true },
+    securityCode: { type: String, required: true },
+    date: { type: Date, default: Date.now }
+});
 
-    console.log('Received order data:', req.body);
+const Payment = mongoose.model('Payment', paymentSchema);
 
-    const newOrder = new Order({
-        address,
-        contactNumber,
-        items,
-        totalAmount,
-    });
+// POST /submitOrder
+app.post('/submitOrder', fetchUser, async (req, res) => {
+    const { address, paymentMethod } = req.body;
+    const trackingId = `TRK-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
     try {
-        const savedOrder = await newOrder.save();
-        res.status(201).json(savedOrder);
-    } catch (err) {
-        console.error('Error saving order:', err);
-        res.status(400).json({ message: err.message });
+        const newOrder = new Order({
+            userId: req.user.id,
+            address: address,
+            paymentMethod: paymentMethod,
+            trackingId: trackingId
+        });
+
+        await newOrder.save();
+        res.json({ success: true, message: 'Order placed successfully', trackingId: trackingId });
+    } catch (error) {
+        console.error('Error submitting order:', error);
+        res.status(500).json({ success: false, message: 'Failed to submit order' });
     }
 });
 
-// Get Orders
-app.get('/api/orders', async (req, res) => {
+// POST /processPayment
+app.post('/processPayment', fetchUser, async (req, res) => {
+    const { cardNumber, expiryMonth, expiryYear, cardholderName, securityCode } = req.body;
+
     try {
-        const orders = await Order.find();
-        res.json(orders);
-    } catch (err) {
-        console.error('Error fetching orders:', err);
-        res.status(500).json({ message: err.message });
+        const newPayment = new Payment({
+            userId: req.user.id,
+            cardNumber: cardNumber,
+            expiryMonth: expiryMonth,
+            expiryYear: expiryYear,
+            cardholderName: cardholderName,
+            securityCode: securityCode
+        });
+
+        await newPayment.save();
+        res.json({ success: true, message: 'Payment processed successfully' });
+    } catch (error) {
+        console.error('Error processing payment:', error);
+        res.status(500).json({ success: false, message: 'Failed to process payment' });
+    }
+});
+
+// GET /getUserAddress
+app.get('/getUserAddress', fetchUser, async (req, res) => {
+    try {
+        const user = await Users.findById(req.user.id);
+        if (user && user.address) {
+            res.json({ success: true, address: user.address });
+        } else {
+            res.json({ success: false, message: 'No saved address found' });
+        }
+    } catch (error) {
+        console.error('Error fetching address:', error);
+        res.status(500).json({ success: false, message: 'Failed to fetch address' });
     }
 });
 
@@ -199,6 +275,10 @@ const Users = mongoose.model('Users', {
     email: { type: String, unique: true },
     password: { type: String },
     cartData: { type: Object },
+    address: { type: String },
+    contactNumber: { type: String },
+    cardNumber: { type: String },
+    profileImage: { type: String },
     date: { type: Date, default: Date.now },
 });
 
@@ -220,6 +300,10 @@ app.post('/signup', async (req, res) => {
             email: req.body.email,
             password: req.body.password,
             cartData: cart,
+            address: '',
+            contactNumber: '',
+            cardNumber: '',
+            profileImage: '',
         });
 
         await user.save();
@@ -255,6 +339,35 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// Update User Profile Endpoint
+app.put('/updateprofile', fetchUser, async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        const updatedUser = await Users.findByIdAndUpdate(
+            userId,
+            {
+                name: req.body.name,
+                address: req.body.address,
+                contactNumber: req.body.contactNumber,
+                cardNumber: req.body.cardNumber,
+                profileImage: req.body.profileImage,
+            },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        console.log("User profile updated:", updatedUser);
+        res.json({ success: true, updatedUser });
+    } catch (error) {
+        console.error("Error updating profile:", error);
+        res.status(500).json({ error: "Failed to update profile" });
+    }
+});
+
 // Fetch New Collections
 app.get('/newcollections', async (req, res) => {
     try {
@@ -267,21 +380,6 @@ app.get('/newcollections', async (req, res) => {
         res.status(500).json({ error: "Failed to fetch new collections" });
     }
 });
-
-// Middleware to Fetch User
-const fetchUser = async (req, res, next) => {
-    const token = req.header('auth-token');
-    if (!token) {
-        return res.status(401).send({ errors: "Please authenticate using valid token" });
-    }
-    try {
-        const data = jwt.verify(token, 'secret_cake');
-        req.user = data.user;
-        next();
-    } catch (error) {
-        res.status(401).send({ errors: "Invalid token. Please authenticate again." });
-    }
-};
 
 // Add to Cart
 app.post('/addtocart', fetchUser, async (req, res) => {

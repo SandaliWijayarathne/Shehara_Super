@@ -1,3 +1,4 @@
+/* Existing styles */
 .user-profile-page body,
 .user-profile-page html,
 .user-profile-page div,
@@ -7,7 +8,7 @@
 .user-profile-page button,
 .user-profile-page ul,
 .user-profile-page li {
-  margin: 0;
+  margin: 10px;
   padding: 0;
   box-sizing: border-box;
 }
@@ -22,7 +23,7 @@
   text-align: center;
   background-color: white;
   max-width: 850px;
-  margin: 0 auto;
+  margin: 100px auto 0 auto; /* Added 100px margin-top */
   padding: 50px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -36,6 +37,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: -30px;
+  margin-top: 5px;
 }
 
 .navbar-logo {

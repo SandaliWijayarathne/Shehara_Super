@@ -7,11 +7,11 @@
 }
 
 .banner-container {
-  margin-top: 200px;
+  margin-top: 110px;
   position: relative;
   width: 100%;
   height: 500px; /* Set the height for your banner */
-  overflow: hidden;
+  overflow: hidden; /*dr*/
 }
 
 .banner-slider {
@@ -71,8 +71,7 @@
 
 .collections-container {
   width: 90%;
-  background: linear-gradient(135deg, #6edb64 0%, #88d56f 25%, #dff1e2 50%, #6ba4c6 75%, #4e86c5 100%);
-
+  background: linear-gradient(90deg, #00ff37 0%, #007bff 100%);
   padding: 40px;
   border-radius: 20px 0px 20px 0px;
   margin-bottom: 40px;

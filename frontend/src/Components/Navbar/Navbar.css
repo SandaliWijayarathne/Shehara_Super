@@ -24,6 +24,11 @@
   width: 100%;
 }
 
+/* Add this to shift content after navbar */
+.content-container {
+  margin-top: 100px; /* Shifts content 100px down */
+}
+
 .navbar-logo {
   height: 50px;
 }
@@ -84,21 +89,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 15px; /* Reduced padding */
+  padding: 0px 15px; /* Reduced padding */
   background-color: #fcfcfc;
-  border-top: 1px solid #fff;
 }
 
 .search-input {
   width: 500px;
-  height: 40px;
-  padding: 10px 15px;
+  height: 30px;
+  padding: 2px 15px;
   border-radius: 0 0 0 20px; /* Rounded corners for left side */
   border: 1px solid #ccc;
   outline: none;
-  font-size: 16px;
+  font-size: 12px;
   box-sizing: border-box;
-  margin-top: 3px;
+  margin-top: -7px;
 }
 
 .search-button {
@@ -106,9 +110,9 @@
   color: white;
   border: 1px solid #1b3b5f;
   border-radius: 0 20px 0 0; /* Rounded corners for right side */
-  height: 42px;
+  height: 10px;
   width: 250px;
-  margin-top: 20px;
+  margin-top: 1px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -123,8 +127,8 @@
 }
 
 .search-button span {
-  margin-left: 8px;
-  font-size: 11px;
+  margin-left: 4px;
+  font-size: 10px;
 }
 
 /* Cart icon and count styles */
@@ -144,6 +148,21 @@
   border-radius: 50%;
   padding: 1px 6px;
   font-size: 12px;
+}
+
+/* Profile icon styles */
+.profile-icon {
+  font-size: 24px; /* Set the size of the profile icon */
+  color: white; /* Set color of the profile icon */
+  text-decoration: none; /* Remove underline */
+  margin-left: 15px; /* Add space between cart and profile icon */
+  cursor: pointer; /* Change cursor on hover */
+  display: flex;
+  align-items: center;
+}
+
+.profile-icon:hover {
+  color: #007bff; /* Change color on hover */
 }
 
 /* Responsive styles */
@@ -188,5 +207,10 @@
     margin-top: 10px;
     border-radius: 20px; /* Make it fully rounded for mobile */
     margin-left: 0; /* Remove margin for mobile */
+  }
+
+  .profile-icon {
+    font-size: 22px; /* Adjust size for mobile */
+    margin-left: 10px; /* Adjust margin for mobile */
   }
 }

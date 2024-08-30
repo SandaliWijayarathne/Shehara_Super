@@ -1,29 +1,36 @@
 import React, { useContext, useState } from 'react';
 import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaShoppingCart, FaUserCircle } from 'react-icons/fa';
 import logo from '../Assets/logo.png';
-import { ShopContext } from '../../Context/ShopContext'; // Import ShopContext
+import { ShopContext } from '../../Context/ShopContext';
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
-  const { cartCount } = useContext(ShopContext); // Get cart count from context
+  const { cartCount } = useContext(ShopContext);
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
       navigate(`/shopping?search=${searchQuery}`);
     } else {
-      navigate('/'); // Navigate to the home page when search query is cleared
+      navigate('/');
     }
   };
 
   const handleInputChange = (e) => {
     setSearchQuery(e.target.value);
     if (e.target.value === '') {
-      navigate('/'); // Navigate to the home page if the input is cleared
-      window.location.reload(); // Refresh the page
+      navigate('/');
+      window.location.reload();
     }
+  };
+
+  const isLoggedIn = !!localStorage.getItem('auth-token'); // Check if user is logged in
+
+  const handleLogout = () => {
+    localStorage.removeItem('auth-token');
+    window.location.replace('/');
   };
 
   return (
@@ -48,10 +55,17 @@ const Navbar = () => {
                 {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
               </Link>
             </li>
+            {isLoggedIn && (
+              <li>
+                <Link to="/user-profile" className="profile-icon">
+                  <FaUserCircle />
+                </Link>
+              </li>
+            )}
             <li>
               <div className="nav-login-cart">
-                {localStorage.getItem('auth-token')
-                  ? <button className="login-button" onClick={() => { localStorage.removeItem('auth-token'); window.location.replace('/'); }}>Logout</button>
+                {isLoggedIn
+                  ? <button className="login-button" onClick={handleLogout}>Logout</button>
                   : <Link to='/login'><button className="login-button">Login</button></Link>}
               </div>
             </li>
@@ -67,7 +81,7 @@ const Navbar = () => {
           onChange={handleInputChange}
         />
         <button className="search-button" onClick={handleSearch}>
-          <span role="img" aria-label="search">SEARCH PRODUCTS 🔍</span>
+          <span role="img" aria-label="search">SEARCH PRODUCTS</span>
         </button>
       </div>
     </div>

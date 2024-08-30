@@ -25,7 +25,34 @@ const PaymentForm = () => {
       return;
     }
 
-    alert('Your Payment is Successful and package is on the way');
+    // Submit payment details to the backend
+    const authToken = localStorage.getItem('auth-token');
+    fetch('/processPayment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': authToken,
+      },
+      body: JSON.stringify({
+        cardNumber: cardNumber,
+        expiryMonth: expiryMonth,
+        expiryYear: expiryYear,
+        cardholderName: cardholderName,
+        securityCode: securityCode,
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert('Your Payment is Successful and package is on the way');
+      } else {
+        alert('Payment failed. Please try again.');
+      }
+    })
+    .catch(error => {
+      console.error('Error processing payment:', error);
+      alert('Error processing payment. Please try again.');
+    });
   };
 
   const handleInputChange = (setter, field) => (e) => {
