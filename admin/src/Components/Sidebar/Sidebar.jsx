@@ -19,6 +19,12 @@ const Sidebar = () => {
       <Link to={'/addbanner'} className='sidebar-link'>
         <div className="sidebar-item">Banners</div>
       </Link>
+      <Link to={'/superdeals'} className='sidebar-link'>
+        <div className="sidebar-item">
+          <p>Super Deals</p>
+        </div>
+      </Link>
+      
     </div>
   );
 }
