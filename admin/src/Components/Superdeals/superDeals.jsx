@@ -11,6 +11,8 @@ const AdminPanel = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [discount, setDiscount] = useState(0);
+  const [currentTab, setCurrentTab] = useState('allProducts');
+  const [flashDeals, setFlashDeals] = useState([]);
 
   // Fetch all products
   const fetchAllProducts = async () => {
@@ -23,8 +25,20 @@ const AdminPanel = () => {
     }
   };
 
+  // Fetch flash deals (products with a discount)
+  const fetchFlashDeals = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/allproducts'); // Assuming the same API is used
+      const flashDeals = response.data.filter(product => product.discount > 0);
+      setFlashDeals(flashDeals);
+    } catch (error) {
+      console.error('Error fetching flash deals:', error);
+    }
+  };
+
   useEffect(() => {
     fetchAllProducts();
+    fetchFlashDeals();
   }, []);
 
   // Search products by name
@@ -53,32 +67,66 @@ const AdminPanel = () => {
     });
   };
 
-  // Handle "All Products" menu item click
-  const handleAllProductsClick = () => {
-    setFilteredProducts(allProducts);
+  // Handle tab change
+  const handleMenuClick = ({ key }) => {
+    setCurrentTab(key);
+    if (key === 'allProducts') {
+      setFilteredProducts(allProducts);
+    } else if (key === 'flashDeals') {
+      fetchFlashDeals();
+    }
   };
 
   // Add product to Super Deals
-const addToSuperDeals = async () => {
+  const addToSuperDeals = async () => {
     if (selectedProduct) {
-        try {
-            const response = await axios.put(`http://localhost:4000/updatediscount/${selectedProduct.id}`, {
-                discount
-            });
+      try {
+        const response = await axios.put(`http://localhost:4000/updatediscount/${selectedProduct.id}`, {
+          discount
+        });
 
-            if (response.data.success) {
-                message.success('Product added to Super Deals successfully!');
-                fetchAllProducts(); // Update the product list to reflect the new discount
-            } else {
-                message.error('Failed to add product to Super Deals');
-            }
-        } catch (error) {
-            console.error('Error updating discount:', error);
-            message.error('Failed to update discount');
+        if (response.data.success) {
+          message.success('Product added to Super Deals successfully!');
+          fetchAllProducts(); // Update the product list to reflect the new discount
+          fetchFlashDeals(); // Update the Flash Deals list
+        } else {
+          message.error('Failed to add product to Super Deals');
         }
+      } catch (error) {
+        console.error('Error updating discount:', error);
+        message.error('Failed to update discount');
+      }
     }
-};
+  };
 
+  // Remove product from Super Deals (set discount to 0) with confirmation
+  const removeFromSuperDeals = async (record) => {
+    confirm({
+      title: 'Are you sure you want to remove this product from Super Deals?',
+      content: `${record.name} - Rs. ${record.price}`,
+      onOk: async () => {
+        try {
+          const response = await axios.put(`http://localhost:4000/updatediscount/${record.id}`, {
+            discount: 0
+          });
+
+          if (response.data.success) {
+            message.success('Product removed from Super Deals successfully!');
+            fetchAllProducts(); // Update the product list to reflect the change
+            fetchFlashDeals(); // Update the Flash Deals list
+          } else {
+            message.error('Failed to remove product from Super Deals');
+          }
+        } catch (error) {
+          console.error('Error removing discount:', error);
+          message.error('Failed to remove discount');
+        }
+      },
+      onCancel() {
+        console.log('Removal canceled');
+      },
+    });
+  };
 
   // Columns for the product table
   const columns = [
@@ -108,9 +156,15 @@ const addToSuperDeals = async () => {
       title: 'Action',
       key: 'action',
       render: (text, record) => (
-        <Button type="primary" onClick={() => handleProductSelect(record)}>
-          Select
-        </Button>
+        currentTab === 'allProducts' ? (
+          <Button type="primary" onClick={() => handleProductSelect(record)}>
+            Select
+          </Button>
+        ) : (
+          <Button type="danger" onClick={() => removeFromSuperDeals(record)}>
+            Remove
+          </Button>
+        )
       ),
     },
   ];
@@ -118,9 +172,12 @@ const addToSuperDeals = async () => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider width={200} className="site-layout-background">
-        <Menu mode="inline" style={{ height: '100%', borderRight: 0 }}>
-          <Menu.Item key="1" onClick={handleAllProductsClick}>
+        <Menu mode="inline" style={{ height: '100%', borderRight: 0 }} onClick={handleMenuClick} selectedKeys={[currentTab]}>
+          <Menu.Item key="allProducts">
             All Products
+          </Menu.Item>
+          <Menu.Item key="flashDeals">
+            Flash Deals
           </Menu.Item>
         </Menu>
       </Sider>
@@ -131,11 +188,11 @@ const addToSuperDeals = async () => {
         <Content style={{ padding: 24, margin: 0, minHeight: 280 }}>
           <Table
             columns={columns}
-            dataSource={filteredProducts}
+            dataSource={currentTab === 'allProducts' ? filteredProducts : flashDeals}
             rowKey="id"
             pagination={{ pageSize: 5 }}
           />
-          {selectedProduct && (
+          {selectedProduct && currentTab === 'allProducts' && (
             <div style={{ marginTop: 20 }}>
               <h2>Add to Super Deals</h2>
               <Form layout="vertical">
