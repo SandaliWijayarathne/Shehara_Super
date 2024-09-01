@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Collections.css';
 import collections from '../Assets/collections';
 import Item from '../Item/Item';
+import FlashDeals from '../FlashDeals/FlashDeals';
 
 const NewCollections = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -83,6 +84,7 @@ const NewCollections = () => {
           ))}
         </div>
       </div>
+      <div className='flashdeals'><FlashDeals/></div>
       <div className="collections-container">
         <div className="collections">
           {collections.map((item, i) => (
