@@ -26,11 +26,12 @@
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  width: 180px; /* Fixed width for consistent card size */
+  width: 200px; /* Fixed width for consistent card size */
   text-align: center;
   position: relative;
   transition: transform 0.3s ease-in-out;
   padding: 15px;
+  max-height: 350px;
 }
 
 .flash-deal-card:hover {

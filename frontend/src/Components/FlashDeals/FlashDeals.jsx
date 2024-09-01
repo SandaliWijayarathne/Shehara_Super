@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './FlashDeals.css';
 
 const FlashDeals = () => {
   const [flashDeals, setFlashDeals] = useState([]);
+  const navigate = useNavigate();
 
   // Fetch all products with discounts
   const fetchFlashDeals = async () => {
@@ -19,25 +21,16 @@ const FlashDeals = () => {
     }
   };
 
+  // Function to handle navigation to product detail page
+  const handleNavigateToProduct = (itemId) => {
+    navigate(`/product/${itemId}`);
+  };
+
   // Function to handle adding a product to the cart
-  const handleAddToCart = async (itemId) => {
-    try {
-      const response = await fetch('http://localhost:4000/addtocart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ itemId }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to add to cart');
-      }
-
-      console.log(`Product ${itemId} added to cart`);
-    } catch (error) {
-      console.error('Error adding product to cart:', error);
-    }
+  const handleAddToCart = (event, itemId) => {
+    event.stopPropagation(); // Prevent card click event from firing
+    // Add your add-to-cart logic here
+    console.log(`Add product ${itemId} to cart`);
   };
 
   useEffect(() => {
@@ -50,7 +43,11 @@ const FlashDeals = () => {
       <div className="flash-deals-container">
         {flashDeals.length > 0 ? (
           flashDeals.map(product => (
-            <div className="flash-deal-card" key={product.id}>
+            <div 
+              className="flash-deal-card" 
+              key={product.id}
+              onClick={() => handleNavigateToProduct(product.id)} // Handle click on the entire card
+            >
               <div className="discount-label">{product.discount}% OFF</div>
               <img 
                 src={product.image}
@@ -64,14 +61,14 @@ const FlashDeals = () => {
               </p>
               <button 
                 className="flash-deal-button"
-                onClick={() => handleAddToCart(product.id)}
+                onClick={() => handleNavigateToProduct(product.id)} 
               >
-                Add to Cart
+                View Product
               </button>
             </div>
           ))
         ) : (
-          <p>No flash deals available</p>
+          <p className="no-flash-deals-message">Sorry, currently no flash deals are available.</p>
         )}
       </div>
     </div>
