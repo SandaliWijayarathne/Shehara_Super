@@ -17,19 +17,3 @@ app.use(cors());
 app.use('/images', express.static('upload/images'));
 app.use('/banners', express.static('upload/banners'));
 
-app.use(bannerRoutes);
-app.use(productRoutes);
-app.use(orderRoutes);
-app.use(userRoutes);
-
-app.get("/", (req, res) => {
-    res.send("Express App is Running");
-});
-
-app.listen(port, (error) => {
-    if (!error) {
-        console.log("Server running on Port " + port);
-    } else {
-        console.log("Error: " + error);
-    }
-});
