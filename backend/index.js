@@ -127,26 +127,63 @@ const Product = mongoose.model("Product", {
     price: { type: Number, required: true },
     date: { type: Date, default: Date.now },
     available: { type: Boolean, default: true },
+    discount:{type: Number,default: 0},
 });
 
-// Add Product
+// Update Product Discount
+app.put('/updatediscount/:id', async (req, res) => {
+    try {
+        // Find the product by id
+        const product = await Product.findOne({ id: req.params.id });
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+
+        // Update the discount if provided in the request body
+        const { discount } = req.body;
+        if (discount !== undefined && discount >= 0 && discount <= 100) {
+            product.discount = discount;
+        } else {
+            return res.status(400).json({ success: false, message: "Valid discount is required (0-100)" });
+        }
+
+        // Save the updated product
+        await product.save();
+        console.log("Discount updated");
+
+        res.json({ success: true, product });
+    } catch (error) {
+        console.error("Error updating discount:", error);
+        res.status(500).json({ error: "Failed to update discount" });
+    }
+});
+
+//add product
+
 app.post('/addproduct', async (req, res) => {
-    let products = await Product.find({});
-    let id = products.length > 0 ? products[products.length - 1].id + 1 : 1;
+    try {
+        let products = await Product.find({});
+        let id = products.length > 0 ? products[products.length - 1].id + 1 : 1;
 
-    const product = new Product({
-        id: id,
-        name: req.body.name,
-        image: req.body.image,
-        category: req.body.category,
-        price: req.body.price,
-    });
+        const product = new Product({
+            id: id,
+            name: req.body.name,
+            image: req.body.image,
+            category: req.body.category,
+            price: req.body.price,
+            discount: req.body.discount || 0, // Ensure discount is included
+        });
 
-    await product.save();
-    console.log("Saved");
+        await product.save();
+        console.log("Product saved");
 
-    res.json({ success: true, name: req.body.name });
+        res.json({ success: true, name: req.body.name });
+    } catch (error) {
+        console.error("Error saving product:", error);
+        res.status(500).json({ error: "Failed to save product" });
+    }
 });
+
 
 // Remove Product
 app.post('/removeproduct', async (req, res) => {
@@ -171,20 +208,31 @@ app.get('/allproducts', async (req, res) => {
 // Update Product Price
 app.put('/updateprice/:id', async (req, res) => {
     try {
+        // Find the product by id
         const product = await Product.findOne({ id: req.params.id });
         if (!product) {
             return res.status(404).json({ success: false, message: "Product not found" });
         }
 
+        // Update the product price if provided in the request body
+        const { price } = req.body;
+        if (price !== undefined) {
+            product.price = price;
+        } else {
+            return res.status(400).json({ success: false, message: "Price is required" });
+        }
+
+        // Save the updated product
         await product.save();
-        console.log("Prices updated");
+        console.log("Price updated");
 
         res.json({ success: true, product });
     } catch (error) {
-        console.error("Error updating prices:", error);
-        res.status(500).json({ error: "Failed to update prices" });
+        console.error("Error updating price:", error);
+        res.status(500).json({ error: "Failed to update price" });
     }
 });
+
 
 // Order Schema
 const orderSchema = new mongoose.Schema({

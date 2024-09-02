@@ -32,7 +32,7 @@ const AddProduct = () => {
     
     try {
       const formData = new FormData();
-      formData.append('image', image);
+      formData.append('product', image);
   
       const imageResponse = await fetch('http://localhost:4000/uploadproductimage', {
         method: 'POST',
