@@ -4,7 +4,7 @@ import './CSS/ProductCategory.css';
 import { ShopContext } from '../Context/ShopContext';
 import ProductItem from '../Components/ProductItem/ProductItem';
 import Sort from '../Components/Sort/Sort';
-import Breadcrum from '../Components/Breadcrum/Breadcrum';  // Import the Breadcrum component
+import Breadcrum from '../Components/Breadcrum/Breadcrum';  
 
 const ShopCategory = () => {
   const { category } = useParams();
@@ -23,7 +23,6 @@ const ShopCategory = () => {
   return (
     <div className='product-category'>
 
-      {/* Replace the category title with the Breadcrum component */}
       <Breadcrum product={{ category, name: '' }} />
 
       <div className="shopcategory-indexSort">
