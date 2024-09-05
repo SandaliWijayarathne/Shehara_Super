@@ -8,13 +8,13 @@
   margin-top: 110px;
   position: relative;
   width: 100%;
-  height: 500px; /* Set the height for your banner */
+  height: 500px;
   overflow: hidden;
 }
 
 .banner-slider {
   display: flex;
-  transition: transform 1s ease-in-out; /* Smooth sliding transition */
+  transition: transform 1s ease-in-out; 
   width: 100%;
 }
 
@@ -81,7 +81,7 @@
   grid-template-columns: repeat(
     5,
     1fr
-  ); /* Updated to display 5 items per row */
+  ); 
   gap: 40px;
 }
 
@@ -90,7 +90,7 @@
     grid-template-columns: repeat(
       4,
       1fr
-    ); /* Show 4 items per row on medium screens */
+    ); 
   }
 }
 
@@ -99,7 +99,7 @@
     grid-template-columns: repeat(
       3,
       1fr
-    ); /* Show 3 items per row on smaller screens */
+    ); 
   }
 }
 
@@ -108,12 +108,12 @@
     grid-template-columns: repeat(
       2,
       1fr
-    ); /* Show 2 items per row on small screens */
+    ); 
   }
 }
 
 @media (max-width: 480px) {
   .collections {
-    grid-template-columns: 1fr; /* Show 1 item per row on extra small screens */
+    grid-template-columns: 1fr; 
   }
 }
