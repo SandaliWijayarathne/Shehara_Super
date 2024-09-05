@@ -28,7 +28,7 @@ const AdminPanel = () => {
   // Fetch flash deals (products with a discount)
   const fetchFlashDeals = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/allproducts'); // Assuming the same API is used
+      const response = await axios.get('http://localhost:4000/allproducts'); 
       const flashDeals = response.data.filter(product => product.discount > 0);
       setFlashDeals(flashDeals);
     } catch (error) {
