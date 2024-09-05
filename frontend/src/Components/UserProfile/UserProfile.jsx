@@ -55,7 +55,7 @@ const UserProfile = () => {
         address: address,
         contactNumber: number,
         cardNumber: cardNumber,
-        profileImage: profileImage,
+        profileImage: profileImage, 
       })
     })
     .then(response => {
@@ -73,8 +73,6 @@ const UserProfile = () => {
       alert('Error updating profile: ' + error.message);
     });
   };
-  
-  
 
   return (
     <div className="user-profile-page App">
