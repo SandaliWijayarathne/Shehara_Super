@@ -7,20 +7,20 @@ import ListProduct from '../../Components/ListProduct/ListProduct';
 import OrderList from '../../Components/OrdersList/OrdersList';
 import AddBanner from '../../Components/Advertise/Banner';
 import Dashboard from '../../Components/Dashboard/Dashboard';
-import Super from '../../Components/SuperDeals/superDeals'
-
+import AdminPanel from '../../Components/Superdeals/superDeals';
 const Admin = () => {
   return (
     <div className='admin'>
       <Sidebar />
       <div className='admin-content'>
+        
         <Routes>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/addproduct' element={<AddProduct />} />
           <Route path='/listproduct' element={<ListProduct />} />
           <Route path='/orders' element={<OrderList />} />
           <Route path='/addbanner' element={<AddBanner />} />
-          <Route path='/superdeals'element={<Super/>}/>
+          <Route path='/superdeals' element={<AdminPanel/>}/>
         </Routes>
       </div>
     </div>
