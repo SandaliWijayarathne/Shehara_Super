@@ -9,7 +9,7 @@
   align-items: flex-start;
   padding: 30px;
   border-radius: 60px 0px 0px 0px;
-  background-color: #10be2aad;
+  background-color:#05d131;
   gap: 20px; /* Space between the cards */
   flex-wrap: wrap; /* Allow wrapping to the next line if there are many cards */
 }
