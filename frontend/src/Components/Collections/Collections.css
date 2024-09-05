@@ -1,5 +1,3 @@
-/* Collections.css */
-
 .new-collections {
   display: flex;
   flex-direction: column;
@@ -10,8 +8,8 @@
   margin-top: 110px;
   position: relative;
   width: 100%;
-  height:500px; /* Set the height for your banner */
-  overflow: hidden; /*dr*/
+  height: 500px; /* Set the height for your banner */
+  overflow: hidden;
 }
 
 .banner-slider {
@@ -71,7 +69,7 @@
 
 .collections-container {
   width: 90%;
-  background: linear-gradient(90deg, #00ff37 0%, #007bff 100%);
+  background: linear-gradient(90deg, #05d131 0%, #033467 100%);
   padding: 40px;
   border-radius: 20px 0px 20px 0px;
   margin-bottom: 40px;
@@ -80,30 +78,30 @@
 
 .collections {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr); /* Updated to display 5 items per row */
   gap: 40px;
 }
 
 @media (max-width: 1280px) {
   .collections {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* Show 4 items per row on medium screens */
   }
 }
 
 @media (max-width: 1024px) {
   .collections {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* Show 3 items per row on smaller screens */
   }
 }
 
 @media (max-width: 768px) {
   .collections {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* Show 2 items per row on small screens */
   }
 }
 
 @media (max-width: 480px) {
   .collections {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Show 1 item per row on extra small screens */
   }
 }
