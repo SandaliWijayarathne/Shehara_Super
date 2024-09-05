@@ -5,7 +5,8 @@
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 20px;
-    background-color: #f4f4f4; /* Light background for the shopping page */
+    background-color: #f4f4f4; 
+    margin-top: 150px;
   }
   
   .product-item {
