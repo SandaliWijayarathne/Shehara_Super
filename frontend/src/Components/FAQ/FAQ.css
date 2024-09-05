@@ -15,8 +15,8 @@
 }
 
 .accordion-question {
-    width: calc(100% - 40px); /* Adjusted width to account for the new padding */
-    padding: 15px 40px; /* Increased padding to 40px */
+    width: calc(100% - 40px); 
+    padding: 15px 40px;
     font-size: 18px;
     text-align: left;
     border: none;
