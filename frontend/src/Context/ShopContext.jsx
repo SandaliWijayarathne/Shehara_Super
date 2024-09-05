@@ -122,7 +122,7 @@ const ShopContextProvider = (props) => {
 
     const clearCart = () => {
         setCartItems(getDefaultCart());
-        setCartCount(0); // Reset cart count
+        setCartCount(0); 
     };
 
     const getTotalCartAmount = () => {
@@ -140,7 +140,7 @@ const ShopContextProvider = (props) => {
         getTotalCartAmount, 
         all_product, 
         cartItems, 
-        cartCount, // Provide cart count in context 
+        cartCount,  
         addToCart, 
         removeFromCart 
     };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import './Shopping.css'; // Make sure to import the CSS file
+import './Shopping.css';
 
 const Shopping = () => {
   const location = useLocation();
