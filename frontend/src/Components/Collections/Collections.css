@@ -69,11 +69,7 @@
 
 .collections-container {
   width: 90%;
-<<<<<<< HEAD
   background: linear-gradient(90deg, #05d131 0%, #033467 100%);
-=======
-  background:#10be2aad;
->>>>>>> 3102ae1e9cb671afa721463cfa264e0e6591b30e
   padding: 40px;
   border-radius: 20px 0px 20px 0px;
   margin-bottom: 40px;
@@ -82,25 +78,37 @@
 
 .collections {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Updated to display 5 items per row */
+  grid-template-columns: repeat(
+    5,
+    1fr
+  ); /* Updated to display 5 items per row */
   gap: 40px;
 }
 
 @media (max-width: 1280px) {
   .collections {
-    grid-template-columns: repeat(4, 1fr); /* Show 4 items per row on medium screens */
+    grid-template-columns: repeat(
+      4,
+      1fr
+    ); /* Show 4 items per row on medium screens */
   }
 }
 
 @media (max-width: 1024px) {
   .collections {
-    grid-template-columns: repeat(3, 1fr); /* Show 3 items per row on smaller screens */
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ); /* Show 3 items per row on smaller screens */
   }
 }
 
 @media (max-width: 768px) {
   .collections {
-    grid-template-columns: repeat(2, 1fr); /* Show 2 items per row on small screens */
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* Show 2 items per row on small screens */
   }
 }
 
