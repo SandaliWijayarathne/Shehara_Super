@@ -6,7 +6,7 @@ const { Header, Content, Sider } = Layout;
 const { Search } = Input;
 const { confirm } = Modal;
 
-const Adminpanel = () => {
+const AdminPanel = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -229,4 +229,4 @@ const Adminpanel = () => {
   );
 };
 
-export default Adminpanel;
+export default AdminPanel;
