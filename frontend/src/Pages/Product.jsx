@@ -15,8 +15,8 @@ const Product = () => {
 
   return (
     <div>
-      <Breadcrum product={product} />  // Display breadcrumb navigation
-      <ProductDisplay product={product} />  // Display the product details
+      <Breadcrum product={product} /> 
+      <ProductDisplay product={product} />  
     </div>
   );
 };
