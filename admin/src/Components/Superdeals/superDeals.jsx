@@ -77,7 +77,7 @@ const Adminpanel = () => {
     }
   };
 
-  // Add product to Super Deals
+
   const addToSuperDeals = async () => {
     if (selectedProduct) {
       try {
@@ -87,8 +87,8 @@ const Adminpanel = () => {
 
         if (response.data.success) {
           message.success('Product added to Super Deals successfully!');
-          fetchAllProducts(); // Update the product list to reflect the new discount
-          fetchFlashDeals(); // Update the Flash Deals list
+          fetchAllProducts(); 
+          fetchFlashDeals(); 
         } else {
           message.error('Failed to add product to Super Deals');
         }
@@ -99,7 +99,7 @@ const Adminpanel = () => {
     }
   };
 
-  // Remove product from Super Deals (set discount to 0) with confirmation
+  
   const removeFromSuperDeals = async (record) => {
     confirm({
       title: 'Are you sure you want to remove this product from Super Deals?',
@@ -112,8 +112,8 @@ const Adminpanel = () => {
 
           if (response.data.success) {
             message.success('Product removed from Super Deals successfully!');
-            fetchAllProducts(); // Update the product list to reflect the change
-            fetchFlashDeals(); // Update the Flash Deals list
+            fetchAllProducts(); 
+            fetchFlashDeals(); 
           } else {
             message.error('Failed to remove product from Super Deals');
           }
@@ -128,7 +128,7 @@ const Adminpanel = () => {
     });
   };
 
-  // Columns for the product table
+  
   const columns = [
     {
       title: 'Product',

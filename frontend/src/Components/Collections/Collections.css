@@ -69,7 +69,11 @@
 
 .collections-container {
   width: 90%;
+<<<<<<< HEAD
   background: linear-gradient(90deg, #05d131 0%, #033467 100%);
+=======
+  background:#10be2aad;
+>>>>>>> 3102ae1e9cb671afa721463cfa264e0e6591b30e
   padding: 40px;
   border-radius: 20px 0px 20px 0px;
   margin-bottom: 40px;
