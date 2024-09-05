@@ -44,7 +44,7 @@ const NewCollections = () => {
       });
     }, 15000);
 
-    return () => clearInterval(intervalId); // Cleanup on component unmount
+    return () => clearInterval(intervalId); 
   }, [bannerImages, direction]);
 
   const goToSlide = (index) => {
