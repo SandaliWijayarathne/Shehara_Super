@@ -6,7 +6,7 @@ const { Header, Content, Sider } = Layout;
 const { Search } = Input;
 const { confirm } = Modal;
 
-const AdminPanel = () => {
+const Adminpanel = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -28,7 +28,7 @@ const AdminPanel = () => {
   // Fetch flash deals (products with a discount)
   const fetchFlashDeals = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/allproducts'); // Assuming the same API is used
+      const response = await axios.get('http://localhost:4000/allproducts'); 
       const flashDeals = response.data.filter(product => product.discount > 0);
       setFlashDeals(flashDeals);
     } catch (error) {
@@ -229,4 +229,4 @@ const AdminPanel = () => {
   );
 };
 
-export default AdminPanel;
+export default Adminpanel;
