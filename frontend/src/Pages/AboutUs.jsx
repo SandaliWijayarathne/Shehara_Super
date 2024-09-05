@@ -19,7 +19,7 @@ const About = () => {
   };
 
   const handleSuperDealsClick = () => {
-    navigate('/super-deals'); 
+    navigate('/'); 
   };
 
   return (
