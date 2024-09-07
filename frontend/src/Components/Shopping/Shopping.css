@@ -1,11 +1,10 @@
-/* Shopping.css */
-
 .shopping {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 20px;
-    background-color: #f4f4f4; /* Light background for the shopping page */
+    background-color: #f4f4f4; 
+    margin-top: 150px;
   }
   
   .product-item {
@@ -34,17 +33,17 @@
   
   .product-item h3 {
     font-size: 18px;
-    color: #022c5c; /* Dark blue color for the product name */
+    color: #022c5c; 
     margin-bottom: 8px;
   }
   
   .product-item p {
     font-size: 16px;
-    color: #555; /* Grey color for category and price */
+    color: #555; 
   }
   
   .product-item p:last-child {
     font-weight: bold;
-    color: #278d1a; /* Green color for the price */
+    color: #278d1a; 
   }
   

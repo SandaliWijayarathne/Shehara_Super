@@ -28,7 +28,7 @@ const AdminPanel = () => {
   // Fetch flash deals (products with a discount)
   const fetchFlashDeals = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/allproducts'); // Assuming the same API is used
+      const response = await axios.get('http://localhost:4000/allproducts'); 
       const flashDeals = response.data.filter(product => product.discount > 0);
       setFlashDeals(flashDeals);
     } catch (error) {
@@ -77,7 +77,7 @@ const AdminPanel = () => {
     }
   };
 
-  // Add product to Super Deals
+
   const addToSuperDeals = async () => {
     if (selectedProduct) {
       try {
@@ -87,8 +87,8 @@ const AdminPanel = () => {
 
         if (response.data.success) {
           message.success('Product added to Super Deals successfully!');
-          fetchAllProducts(); // Update the product list to reflect the new discount
-          fetchFlashDeals(); // Update the Flash Deals list
+          fetchAllProducts(); 
+          fetchFlashDeals(); 
         } else {
           message.error('Failed to add product to Super Deals');
         }
@@ -99,7 +99,7 @@ const AdminPanel = () => {
     }
   };
 
-  // Remove product from Super Deals (set discount to 0) with confirmation
+  
   const removeFromSuperDeals = async (record) => {
     confirm({
       title: 'Are you sure you want to remove this product from Super Deals?',
@@ -112,8 +112,8 @@ const AdminPanel = () => {
 
           if (response.data.success) {
             message.success('Product removed from Super Deals successfully!');
-            fetchAllProducts(); // Update the product list to reflect the change
-            fetchFlashDeals(); // Update the Flash Deals list
+            fetchAllProducts(); 
+            fetchFlashDeals(); 
           } else {
             message.error('Failed to remove product from Super Deals');
           }
@@ -128,7 +128,7 @@ const AdminPanel = () => {
     });
   };
 
-  // Columns for the product table
+  
   const columns = [
     {
       title: 'Product',

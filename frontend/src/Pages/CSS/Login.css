@@ -1,10 +1,8 @@
-/* Reset default margin and padding */
 body, html {
     margin: 0;
     padding: 0;
 }
 
-/* Existing styles */
 .login {
     display: flex;
     flex-direction: column;
@@ -55,7 +53,6 @@ button:hover {
     cursor: pointer;
 }
 
-/* Additional styling for positioning and structure */
 .container {
     text-align: center;
 }

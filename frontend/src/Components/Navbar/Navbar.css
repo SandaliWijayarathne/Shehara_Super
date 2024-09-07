@@ -1,4 +1,3 @@
-/* Existing styles */
 .navbar-container {
   position: fixed;
   top: 0;
@@ -13,7 +12,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: #022c5c;
-  padding: 8px 15px; /* Reduced padding */
+  padding: 8px 15px;
   color: white;
   width: 100%;
 }
@@ -24,46 +23,47 @@
   width: 100%;
 }
 
-/* Add this to shift content after navbar */
 .content-container {
-  margin-top: 100px; /* Shifts content 100px down */
+  margin-top: 100px;
 }
 
 .navbar-logo {
-  height: 50px;
+  height: 40px;
+  margin-top: -23px;
 }
 
 .nav-menu {
   display: flex;
   list-style: none;
-  gap: 15px; /* Reduced gap */
-  margin-left: auto; /* Adjust margin for alignment */
+  gap: 15px;
+  margin-left: auto;
+  margin-top: 3px;
 }
 
 .nav-menu li a {
   color: white;
   text-decoration: none;
-  font-size: 16px; /* Adjust font size */
-  font-weight: bold; /* Adjust font weight */
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .nav-login-cart {
   display: flex;
   align-items: center;
-  gap: 15px; /* Reduced gap */
+  gap: 15px;
 }
 
 .login-button {
-  width: 100px; /* Adjust button width */
-  height: 35px; /* Adjust button height */
+  width: 100px;
+  height: 35px;
   outline: none;
-  font-size: 16px; /* Adjust font size */
-  font-weight: bold; /* Adjust font weight */
+  font-size: 16px;
+  font-weight: bold;
   background: #022c5c;
   color: white;
   border: none;
   cursor: pointer;
-  text-align: center; /* Center text horizontally */
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,7 +71,7 @@
 }
 
 .login-button:hover {
-  background: #23185e; /* Darker shade or different color on hover */
+  background: #23185e;
 }
 
 .menu-toggle {
@@ -84,20 +84,20 @@
   background-color: white;
 }
 
-/* Search bar styles */
 .search-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0px 15px; /* Reduced padding */
+  padding: 0px 15px;
   background-color: #fcfcfc;
+  flex-direction: row; 
 }
 
 .search-input {
   width: 500px;
   height: 30px;
   padding: 2px 15px;
-  border-radius: 0 0 0 20px; /* Rounded corners for left side */
+  border-radius: 0 0 0 20px;
   border: 1px solid #ccc;
   outline: none;
   font-size: 12px;
@@ -106,24 +106,24 @@
 }
 
 .search-button {
-  background-color: #1b3b5f; /* Match the button color with the image */
+  background-color: #1b3b5f;
   color: white;
   border: 1px solid #1b3b5f;
-  border-radius: 0 20px 0 0; /* Rounded corners for right side */
-  height: 10px;
+  border-radius: 0 20px 0 0;
+  height: 34px; 
   width: 250px;
-  margin-top: 1px;
+  margin-top: -7px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: bold;
   transition: background-color 0.3s ease;
-  margin-left: -1px; /* To avoid double border */
+  margin-left: -1px;
 }
 
 .search-button:hover {
-  background-color: #022c5c; /* Slightly darker on hover */
+  background-color: #022c5c;
 }
 
 .search-button span {
@@ -131,12 +131,11 @@
   font-size: 10px;
 }
 
-/* Cart icon and count styles */
 .cart-icon {
   position: relative;
   font-size: 24px;
-  color: white; /* Set color of the cart icon */
-  text-decoration: none; /* Remove underline */
+  color: white;
+  text-decoration: none;
 }
 
 .cart-count {
@@ -150,22 +149,20 @@
   font-size: 12px;
 }
 
-/* Profile icon styles */
 .profile-icon {
-  font-size: 24px; /* Set the size of the profile icon */
-  color: white; /* Set color of the profile icon */
-  text-decoration: none; /* Remove underline */
-  margin-left: 15px; /* Add space between cart and profile icon */
-  cursor: pointer; /* Change cursor on hover */
+  font-size: 24px;
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+  cursor: pointer;
   display: flex;
   align-items: center;
 }
 
 .profile-icon:hover {
-  color: #007bff; /* Change color on hover */
+  color: #007bff;
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
   .nav-menu {
     display: none;
@@ -189,28 +186,26 @@
     align-items: center;
     justify-content: center;
     gap: 5px;
-    margin-right: 20px; /* Adjust margin for alignment */
+    margin-right: 20px;
   }
 
   .search-container {
-    flex-direction: column;
-    padding: 20px;
+    flex-direction: row; 
   }
 
   .search-input {
-    width: 100%;
-    border-radius: 20px; /* Make it fully rounded for mobile */
+    width: calc(100% - 250px); 
+    border-radius: 20px 0 0 20px;
   }
 
   .search-button {
-    width: 100%;
-    margin-top: 10px;
-    border-radius: 20px; /* Make it fully rounded for mobile */
-    margin-left: 0; /* Remove margin for mobile */
+    width: 250px;
+    margin-left: -1px; 
+    border-radius: 0 20px 20px 0;
   }
 
   .profile-icon {
-    font-size: 22px; /* Adjust size for mobile */
-    margin-left: 10px; /* Adjust margin for mobile */
+    font-size: 22px;
+    margin-left: 10px;
   }
 }

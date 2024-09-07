@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './FAQ.css'; // Ensure the CSS file is linked
+import './FAQ.css'; 
 
 const AccordionItem = ({ question, answer }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +33,6 @@ const FAQ = () => {
             question: "What happens if you make the delivery to the incorrect address?",
             answer: "We will call and confirm the address and the route before delivering the order and any inaccuracies in the address can be mentioned assuming the address is within the delivery grid of the store the order was placed to."
         },
-        // Add more questions and answers as needed
     ];
 
     return (

@@ -14,7 +14,7 @@ const getDefaultCart = () => {
 const ShopContextProvider = (props) => {
     const [all_product, setAll_Product] = useState([]);
     const [cartItems, setCartItems] = useState(getDefaultCart());
-    const [cartCount, setCartCount] = useState(0); // New state for cart count
+    const [cartCount, setCartCount] = useState(0); 
 
     const fetchAllProducts = async () => {
         try {
@@ -50,7 +50,7 @@ const ShopContextProvider = (props) => {
                 })
                 .then((data) => {
                     setCartItems(data);
-                    updateCartCount(data); // Update cart count when fetching cart items
+                    updateCartCount(data); 
                 })
                 .catch((error) => console.error('Fetch error:', error));
         }
@@ -122,7 +122,8 @@ const ShopContextProvider = (props) => {
 
     const clearCart = () => {
         setCartItems(getDefaultCart());
-        setCartCount(0); // Reset cart count
+        setCartCount(0); 
+        setCartCount(0); 
     };
 
     const getTotalCartAmount = () => {
@@ -140,7 +141,7 @@ const ShopContextProvider = (props) => {
         getTotalCartAmount, 
         all_product, 
         cartItems, 
-        cartCount, // Provide cart count in context 
+        cartCount, 
         addToCart, 
         removeFromCart 
     };
