@@ -12,7 +12,7 @@ const NewCollections = () => {
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const response = await fetch('http://localhost:4000/allbanners');
+        const response = await fetch('http://localhost:4000/api/banners/allbanners'); // Updated endpoint
         const data = await response.json();
         setBannerImages(data);
       } catch (error) {
@@ -84,7 +84,7 @@ const NewCollections = () => {
           ))}
         </div>
       </div>
-      <div className='flashdeals'><FlashDeals/></div>
+      <div className='flashdeals'><FlashDeals /></div>
       <div className="collections-container">
         <div className="collections">
           {collections.map((item, i) => (

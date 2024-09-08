@@ -12,7 +12,7 @@ const OrdersList = () => {
     setError(null);
 
     try {
-      const { data } = await axios.get('http://localhost:4000/api/orders');
+      const { data } = await axios.get('http://localhost:4000/api/orders'); // Corrected endpoint
       setOrders(data);
     } catch (error) {
       setError('Error fetching orders');
@@ -27,7 +27,7 @@ const OrdersList = () => {
 
   const removeOrder = async (id) => {
     try {
-      await axios.post('http://localhost:4000/api/removeorder', { id });
+      await axios.post('http://localhost:4000/api/orders/removeorder', { id }); // Corrected endpoint
       fetchOrders();
     } catch (error) {
       setError('Error removing order');

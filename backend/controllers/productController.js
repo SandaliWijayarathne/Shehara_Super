@@ -8,19 +8,20 @@ const addProduct = async (req, res) => {
         const product = new Product({
             id: id,
             name: req.body.name,
-            image: req.body.image,
+            image: req.body.image, // Image URL should come from the frontend
             category: req.body.category,
             price: req.body.price,
         });
 
         await product.save();
-        console.log(`Product added: ${req.body.name}`); // Added logging for successful product addition
+        console.log(`Product added: ${req.body.name}`);
         res.json({ success: true, name: req.body.name });
     } catch (error) {
-        console.error('Error adding product:', error); // Improved error logging
+        console.error('Error adding product:', error);
         res.status(500).json({ error: "Failed to add product" });
     }
 };
+
 
 const removeProduct = async (req, res) => {
     try {

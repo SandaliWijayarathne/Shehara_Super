@@ -16,7 +16,7 @@ const ListProduct = () => {
     setError(null);
 
     try {
-      const { data } = await axios.get('http://localhost:4000/allproducts');
+      const { data } = await axios.get('http://localhost:4000/api/products/allproducts'); // Fixed the endpoint
       setAllProducts(data);
     } catch (error) {
       setError('Error fetching products');
@@ -48,7 +48,7 @@ const ListProduct = () => {
 
   const removeProduct = async (id) => {
     try {
-      await axios.post('http://localhost:4000/removeproduct', { id });
+      await axios.post('http://localhost:4000/api/products/removeproduct', { id }); // Fixed the endpoint
       fetchAllProducts();
     } catch (error) {
       setError('Error removing product');
@@ -57,7 +57,7 @@ const ListProduct = () => {
 
   const updateProductPrices = async (id, newPrice) => {
     try {
-      await axios.put(`http://localhost:4000/updateprice/${id}`, { price: newPrice });
+      await axios.put(`http://localhost:4000/api/products/updateprice/${id}`, { price: newPrice }); // Fixed the endpoint
       fetchAllProducts();
     } catch (error) {
       setError('Error updating price');
