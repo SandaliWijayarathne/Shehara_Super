@@ -18,7 +18,7 @@ const ShopContextProvider = (props) => {
 
     const fetchAllProducts = async () => {
         try {
-            const response = await fetch('http://localhost:4000/allproducts');
+            const response = await fetch('http://localhost:4000/api/products/allproducts'); // Fixed endpoint
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -33,7 +33,7 @@ const ShopContextProvider = (props) => {
         fetchAllProducts();
 
         if (localStorage.getItem('auth-token')) {
-            fetch('http://localhost:4000/getcart', {
+            fetch('http://localhost:4000/api/users/getcart', { // Fixed endpoint
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -72,7 +72,7 @@ const ShopContextProvider = (props) => {
         });
 
         if (localStorage.getItem('auth-token')) {
-            fetch('http://localhost:4000/addtocart', {
+            fetch('http://localhost:4000/api/users/addtocart', { // Fixed endpoint
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -100,7 +100,7 @@ const ShopContextProvider = (props) => {
         });
 
         if (localStorage.getItem('auth-token')) {
-            fetch('http://localhost:4000/removefromcart', {
+            fetch('http://localhost:4000/api/users/removefromcart', { // Fixed endpoint
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -122,7 +122,6 @@ const ShopContextProvider = (props) => {
 
     const clearCart = () => {
         setCartItems(getDefaultCart());
-        setCartCount(0); 
         setCartCount(0); 
     };
 

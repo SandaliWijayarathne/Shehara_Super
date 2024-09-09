@@ -9,9 +9,16 @@ const Shopping = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await fetch('http://localhost:4000/allproducts');
-      const data = await response.json();
-      setProducts(data);
+      try {
+        const response = await fetch('http://localhost:4000/api/products/allproducts'); // Fixed endpoint
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error('Fetch error:', error);
+      }
     };
 
     fetchProducts();
@@ -40,7 +47,6 @@ const Shopping = () => {
               <img src={product.image} alt={product.name} />
             </Link>
             <h3>{product.name}</h3>
-            <p>Category: {product.category}</p>
             <p>Price: Rs.{product.price}</p>
           </div>
         ))
