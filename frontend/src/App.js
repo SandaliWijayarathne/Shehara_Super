@@ -21,34 +21,38 @@ import FAQ from './Components/FAQ/FAQ';
 import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy';
 import TermsConditions from './Components/Terms&Conditions/Terms&Conditions';
 
+import { GoogleOAuthProvider } from '@react-oauth/google'; // Import GoogleOAuthProvider
+
 function App() {
   return (
-    <div>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<Shop />} />
-          <Route path='/shopping' element={<Shopping />} />
-          <Route path='/cart' element={<Cart />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/location' element={<Location />} />
-          <Route path='/category/:category' element={<ShopCategory />} />
-          <Route path='/product/:productId' element={<Product />} />
-          <Route path='/delivery' element={<Delivery />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<LoginSignup />} />
-          <Route path='/user-profile' element={<UserProfile />} />
-          <Route path='/cart-items' element={<CartItems />} />
-          <Route path='/checkout' element={<Checkout />} />  
-          <Route path='/paytype' element={<PaymentForm />} /> 
-          <Route path='/selection' element={<Selection />} /> 
-          <Route path='/faq' element={<FAQ />} />
-          <Route path='/privacy-policy' element={<PrivacyPolicy />} />
-          <Route path='/terms-conditions' element={<TermsConditions />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </div>
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>  {/* Wrap your app with GoogleOAuthProvider */}
+      <div>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path='/' element={<Shop />} />
+            <Route path='/shopping' element={<Shopping />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/location' element={<Location />} />
+            <Route path='/category/:category' element={<ShopCategory />} />
+            <Route path='/product/:productId' element={<Product />} />
+            <Route path='/delivery' element={<Delivery />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<LoginSignup />} />
+            <Route path='/user-profile' element={<UserProfile />} />
+            <Route path='/cart-items' element={<CartItems />} />
+            <Route path='/checkout' element={<Checkout />} />  
+            <Route path='/paytype' element={<PaymentForm />} /> 
+            <Route path='/selection' element={<Selection />} /> 
+            <Route path='/faq' element={<FAQ />} />
+            <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+            <Route path='/terms-conditions' element={<TermsConditions />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </div>
+    </GoogleOAuthProvider>
   );
 }
 

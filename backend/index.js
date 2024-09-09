@@ -3,6 +3,7 @@ require('dotenv').config();  // Load environment variables
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const passport = require("./middlewares/authMiddleware"); // Import passport
 const db = require("./config/db");
 
 const bannerRoutes = require("./routes/bannerRoutes");
@@ -19,7 +20,9 @@ app.use(cors());
 app.use('/images', express.static('upload/images'));
 app.use('/banners', express.static('upload/banners'));
 
-app.use("/api/banners", bannerRoutes);  // Corrected route
+app.use(passport.initialize()); // Initialize passport
+
+app.use("/api/banners", bannerRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/users", userRoutes);

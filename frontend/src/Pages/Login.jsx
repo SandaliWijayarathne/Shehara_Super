@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { GoogleLogin } from '@react-oauth/google';
 import './CSS/Login.css';
 
 const LogginSignup = () => {
@@ -9,7 +10,7 @@ const LogginSignup = () => {
     email: ""
   });
   const [errors, setErrors] = useState({});
-  const [isAgreed, setIsAgreed] = useState(false); // Added state for agreement checkbox
+  const [isAgreed, setIsAgreed] = useState(false); 
 
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,7 +40,7 @@ const LogginSignup = () => {
     await fetch('http://localhost:4000/api/users/login', { // Fixed endpoint
       method: 'POST',
       headers: {
-        Accept: 'application/json', // Fixed Accept header
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
@@ -54,7 +55,7 @@ const LogginSignup = () => {
   };
 
   const signup = async () => {
-    if (!isAgreed) { // Ensure the terms are agreed to before signing up
+    if (!isAgreed) { 
       alert('You must agree to the terms and conditions');
       return;
     }
@@ -69,7 +70,7 @@ const LogginSignup = () => {
     await fetch('http://localhost:4000/api/users/signup', { // Fixed endpoint
       method: 'POST',
       headers: {
-        Accept: 'application/json', // Fixed Accept header
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
@@ -81,6 +82,18 @@ const LogginSignup = () => {
     } else {
       alert(responseData.errors);
     }
+  };
+
+  // Handle Google Login Success
+  const responseGoogleSuccess = (credentialResponse) => {
+    const token = credentialResponse.credential;
+    localStorage.setItem('auth-token', token);
+    window.location.replace('/');
+  };
+
+  // Handle Google Login Failure
+  const responseGoogleFailure = (error) => {
+    console.error("Google Sign In was unsuccessful. Try again later", error);
   };
 
   return (
@@ -129,6 +142,10 @@ const LogginSignup = () => {
             <p>I agree to the terms and conditions</p>
           </div>
         )}
+        <GoogleLogin
+          onSuccess={responseGoogleSuccess}
+          onError={responseGoogleFailure}
+        />
       </div>
     </div>
   );
