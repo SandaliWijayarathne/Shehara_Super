@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
+require("dotenv").config()
+app.use(express.static('public'))
 
 app.use(express.json());
 app.use(cors());
@@ -117,6 +119,75 @@ app.delete('/removebanner/:id', async (req, res) => {
         res.status(500).json({ error: "Failed to remove banner" });
     }
 });
+
+
+//payment
+
+
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
+
+// Assuming you have a function to get cart items from the database
+async function getCartItemsFromDB(cartItems) {
+  try {
+    // Fetch product details from the database for each cart item
+    const storeItems = await Product.find({
+      id: { $in: cartItems.map(item => item.id) }
+    });
+
+    // Map the cart items to include necessary Stripe fields
+    return cartItems.map(cartItem => {
+      const product = storeItems.find(item => item.id === cartItem.id);
+      if (!product) {
+        throw new Error(`Product with ID ${cartItem.id} not found`);
+      }
+
+      return {
+        priceInCents: product.price * 100,  // Ensure price is in cents
+        name: product.name,
+        quantity: cartItem.quantity,
+      };
+    });
+  } catch (error) {
+    throw new Error(`Failed to fetch products: ${error.message}`);
+  }
+}
+
+app.post('/create-checkout-session', async (req, res) => {
+  try {
+    // Get cart data from the request body (coming from frontend)
+    const cartItems = req.body.items;
+
+    // Fetch product details for each cart item
+    const storeItems = await getCartItemsFromDB(cartItems);
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: storeItems.map(item => {
+        return {
+          price_data: {
+            currency: 'lkr',  // Change currency to your preferred one
+            product_data: {
+              name: item.name,
+            },
+            unit_amount: item.priceInCents,  // Amount in cents
+          },
+          quantity: item.quantity,
+        };
+      }),
+      success_url: `${process.env.SERVER_URL}/success.html`,  // Ensure this points to your frontend
+      cancel_url: `${process.env.SERVER_URL}/cancel.html`,  // Ensure this points to your frontend
+    });
+
+    res.json({ url: session.url });
+  } catch (error) {
+    console.error("Error creating checkout session:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
 
 // Product Schema
 const Product = mongoose.model("Product", {
