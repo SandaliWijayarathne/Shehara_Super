@@ -1,21 +1,20 @@
 .breadcrum {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: gray;
-    font-size: 16px;
-    font-weight: 600;
-    margin: 60px 170px;
-    text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: gray;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 60px 170px;
+  text-transform: capitalize;
 }
 
-/* Remove underline from breadcrumb links */
 .breadcrum a {
-    text-decoration: none; /* Removes underline from links */
-    color: inherit; /* Ensures links inherit the gray color */
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Optional: Add underline on hover for better UX */
 .breadcrum a:hover {
-    text-decoration: underline; /* Adds underline on hover */
+  text-decoration: underline; /* Adds underline on hover */
 }
