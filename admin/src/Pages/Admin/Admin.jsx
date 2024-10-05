@@ -7,7 +7,7 @@ import ListProduct from '../../Components/ListProduct/ListProduct';
 import OrderList from '../../Components/OrdersList/OrdersList';
 import AddBanner from '../../Components/Advertise/Banner';
 import Dashboard from '../../Components/Dashboard/Dashboard';
-import Superdeals from '../../Components/SuperDeals/superDeals';
+import Superdeals from '../../Components/Superdeals/superDeals';
 
 const Admin = () => {
   return (
