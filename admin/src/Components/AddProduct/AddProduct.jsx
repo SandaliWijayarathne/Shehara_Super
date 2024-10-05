@@ -7,7 +7,7 @@ const AddProduct = () => {
   const [productDetails, setProductDetails] = useState({
     name: "",
     image: "",
-    category: "Bakery",
+    category: "Vegetables",
     price: ""
   });
   const [loading, setLoading] = useState(false);
@@ -58,7 +58,7 @@ const AddProduct = () => {
           setProductDetails({
             name: "",
             image: "",
-            category: "Bakery",
+            category: "Vegetables",
             price: ""
           });
           setImage(null);
@@ -108,7 +108,7 @@ const AddProduct = () => {
           className='product-category-selector'
         >
           <option value="Vegetables">Vegetables</option>
-          <option value="Celebration Cakes">Bakery</option>
+          <option value="Bakery">Bakery</option>
           <option value="Spices">Spices</option>
           <option value="Household">Household</option>
           <option value="BabyProducts">Baby Products</option>
