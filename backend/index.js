@@ -175,8 +175,8 @@ app.post('/create-checkout-session', async (req, res) => {
           quantity: item.quantity,
         };
       }),
-      success_url: `${process.env.SERVER_URL}/success.html`,  // Ensure this points to your frontend
-      cancel_url: `${process.env.SERVER_URL}/cancel.html`,  // Ensure this points to your frontend
+      success_url: `http://localhost:3000/success`,  // Ensure this points to your frontend
+      cancel_url: `http://localhost:3000/fail`,  // Ensure this points to your frontend
     });
 
     res.json({ url: session.url });
@@ -198,7 +198,7 @@ const Product = mongoose.model("Product", {
     price: { type: Number, required: true },
     date: { type: Date, default: Date.now },
     available: { type: Boolean, default: true },
-    discount:{type: Number,default: 0},
+    discount:{type: Number,default: 0}
 });
 
 // Update Product Discount
@@ -243,6 +243,7 @@ app.post('/addproduct', async (req, res) => {
             category: req.body.category,
             price: req.body.price,
             discount: req.body.discount || 0, // Ensure discount is included
+            description:req.body.description || "Quality Product"
         });
 
         await product.save();

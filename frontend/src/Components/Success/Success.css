@@ -1,0 +1,52 @@
+.success-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full height */
+    background-color: #f0f8ff; /* Light background color */
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .success-title {
+    font-size: 2.5rem;
+    color: #4caf50; /* Green color for success */
+    margin-bottom: 20px;
+  }
+  
+  .success-message {
+    font-size: 1.2rem;
+    color: #333; /* Dark text color */
+    margin-bottom: 30px;
+  }
+  
+  .success-icon {
+    font-size: 4rem;
+    color: #4caf50; /* Green color for success icon */
+    margin-bottom: 20px;
+  }
+  
+  .success-instructions {
+    font-size: 1rem;
+    color: #666; /* Light grey color */
+    margin-bottom: 30px;
+  }
+  
+  .continue-shopping-button {
+    background-color: #4caf50; /* Green button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  .continue-shopping-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
