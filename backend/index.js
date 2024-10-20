@@ -78,16 +78,23 @@ app.post("/bannerupload", uploadBannerImage.single('banner'), async (req, res) =
     }
 });
 
-// Upload Product Image Endpoint
 app.post("/uploadproductimage", uploadProductImage.single('product'), async (req, res) => {
-    if (!req.file) {
-        return res.status(400).json({ success: 0, message: 'No file uploaded' });
+    try {
+        if (!req.file) {
+            console.log("No file uploaded");
+            return res.status(400).json({ success: 0, message: 'No file uploaded' });
+        }
+
+        const imageUrl = `http://localhost:${port}/images/${req.file.filename}`;
+        console.log("Image uploaded successfully:", imageUrl);
+        res.json({ success: 1, image_url: imageUrl });
+    } catch (error) {
+        console.error("Error uploading product image:", error);
+        res.status(500).json({ success: 0, message: 'Failed to upload image' });
     }
-
-    const imageUrl = `http://localhost:${port}/images/${req.file.filename}`;
-
-    res.json({ success: 1, image_url: imageUrl });
 });
+
+
 
 // Banner Schema
 const Banner = mongoose.model("Banner", {
@@ -186,9 +193,6 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
-
-
-
 // Product Schema
 const Product = mongoose.model("Product", {
     id: { type: Number, required: true },
@@ -196,10 +200,12 @@ const Product = mongoose.model("Product", {
     image: { type: String, required: true },
     category: { type: String, required: true },
     price: { type: Number, required: true },
+    description: { type: String, required: true }, // New field for product description
     date: { type: Date, default: Date.now },
     available: { type: Boolean, default: true },
-    discount:{type: Number,default: 0},
+    discount: { type: Number, default: 0 },
 });
+
 
 // Update Product Discount
 app.put('/updatediscount/:id', async (req, res) => {
@@ -228,21 +234,21 @@ app.put('/updatediscount/:id', async (req, res) => {
         res.status(500).json({ error: "Failed to update discount" });
     }
 });
-
-//add product
-
+// Add Product
 app.post('/addproduct', async (req, res) => {
     try {
         let products = await Product.find({});
         let id = products.length > 0 ? products[products.length - 1].id + 1 : 1;
 
+        // Create a new product object with the description included
         const product = new Product({
             id: id,
             name: req.body.name,
             image: req.body.image,
             category: req.body.category,
             price: req.body.price,
-            discount: req.body.discount || 0, // Ensure discount is included
+            description: req.body.description, // Include description
+            discount: req.body.discount || 0,
         });
 
         await product.save();
@@ -254,6 +260,7 @@ app.post('/addproduct', async (req, res) => {
         res.status(500).json({ error: "Failed to save product" });
     }
 });
+
 
 
 // Remove Product
@@ -268,13 +275,14 @@ app.post('/removeproduct', async (req, res) => {
 app.get('/allproducts', async (req, res) => {
     try {
         let products = await Product.find({});
-        console.log("All products Fetched");
-        res.json(products);
+        console.log("All products fetched");
+        res.json(products); // This will include the product descriptions
     } catch (error) {
         console.error("Error fetching all products:", error);
         res.status(500).json({ error: "Failed to fetch products" });
     }
 });
+
 
 // Update Product Price
 app.put('/updateprice/:id', async (req, res) => {

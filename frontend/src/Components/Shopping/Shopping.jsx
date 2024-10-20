@@ -40,7 +40,6 @@ const Shopping = () => {
               <img src={product.image} alt={product.name} />
             </Link>
             <h3>{product.name}</h3>
-            <p>Category: {product.category}</p>
             <p>Price: Rs.{product.price}</p>
           </div>
         ))

@@ -1,49 +1,69 @@
 .shopping {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px;
-    background-color: #f4f4f4; 
-    margin-top: 150px;
-  }
-  
-  .product-item {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    margin: 10px;
-    max-width: 250px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  .product-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  .product-item img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 12px;
-  }
-  
-  .product-item h3 {
-    font-size: 18px;
-    color: #022c5c; 
-    margin-bottom: 8px;
-  }
-  
-  .product-item p {
-    font-size: 16px;
-    color: #555; 
-  }
-  
-  .product-item p:last-child {
-    font-weight: bold;
-    color: #278d1a; 
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+  background-color: #f4f4f4; 
+  margin-top: 150px;
+}
+
+.product-item {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 10px;
+  max-width: 250px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.product-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.product-item h3 {
+  font-size: 18px;
+  color: #022c5c; 
+  margin-bottom: 8px;
+}
+
+.price {
+  font-size: 18px;
+  color: #278d1a; /* Green color for the price */
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.add-to-cart-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: background-color 0.3s, box-shadow 0.2s;
+}
+
+.add-to-cart-button:hover {
+  background-color: #e0e0e0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-to-cart-button i {
+  margin-right: 8px;
+}

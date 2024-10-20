@@ -31,8 +31,11 @@ const ProductDisplay = (props) => {
             </div>
             <div className="productdisplay-right">
                 <h1>{product.name}</h1>
-                <div className="productdisplay-right-price">Rs. {product.price}.00</div>
+                <div className="productdisplay-right-price">
+                    Rs. {product.price}.00 <span className="unit">/Unit</span>
+                </div>
                 <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
+                {/* Product description moved below the button */}
                 <div className="productdisplay-right-description">
                     {product.description}
                 </div>

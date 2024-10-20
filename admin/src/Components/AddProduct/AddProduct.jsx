@@ -8,7 +8,8 @@ const AddProduct = () => {
     name: "",
     image: "",
     category: "Vegetables",
-    price: ""
+    price: "",
+    description: "" // Added description field
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -22,7 +23,7 @@ const AddProduct = () => {
   };
 
   const addProduct = async () => {
-    if (!productDetails.name || !productDetails.price || !image) {
+    if (!productDetails.name || !productDetails.price || !productDetails.description || !image) {
       setError('Please fill in all fields and upload an image.');
       return;
     }
@@ -40,7 +41,7 @@ const AddProduct = () => {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'admin-auth-token': adminToken, // Add the token here
+          'admin-auth-token': adminToken,
         },
         body: formData,
       }).then((resp) => resp.json());
@@ -56,7 +57,7 @@ const AddProduct = () => {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'admin-auth-token': adminToken, // Add the token here
+            'admin-auth-token': adminToken,
           },
           body: JSON.stringify(updatedProductDetails),
         }).then((resp) => resp.json());
@@ -67,7 +68,8 @@ const AddProduct = () => {
             name: "",
             image: "",
             category: "Bakery",
-            price: ""
+            price: "",
+            description: "" // Reset description
           });
           setImage(null);
         } else {
@@ -126,6 +128,17 @@ const AddProduct = () => {
           <option value="FrozenFoods">Frozen Food</option>
           <option value="Fruits">Fruits</option>
         </select>
+      </div>
+      <div className="form-group">
+        <label>Description</label>
+        <textarea 
+          value={productDetails.description}
+          onChange={changeHandler}
+          name='description'
+          placeholder='Enter product description'
+          rows="4"
+          className='product-description'
+        />
       </div>
       <div className="form-group image-upload">
         <label htmlFor="file-input" className='upload-label'>
