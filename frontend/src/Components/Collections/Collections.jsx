@@ -84,7 +84,15 @@ const NewCollections = () => {
           ))}
         </div>
       </div>
-      <div className='flashdeals'><FlashDeals/></div>
+      <div className="flashdeals"><FlashDeals/></div>
+      
+      {/* New Category Title Section */}
+      <div className="category-title">
+        <hr className="line" />
+        <h2>Shop By Category </h2>
+        <hr className="line" />
+      </div>
+      
       <div className="collections-container">
         <div className="collections">
           {collections.map((item, i) => (

@@ -21,36 +21,44 @@ const AddProduct = () => {
     setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
   };
 
-  const Add_Product = async () => {
+  const addProduct = async () => {
     if (!productDetails.name || !productDetails.price || !image) {
       setError('Please fill in all fields and upload an image.');
       return;
     }
-
+  
     setLoading(true);
     setError(null);
-    
+  
     try {
       const formData = new FormData();
-      formData.append('product', image);
+      formData.append('image', image);
+  
+      const adminToken = localStorage.getItem('admin-auth-token');
   
       const imageResponse = await fetch('http://localhost:4000/uploadproductimage', {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
+          'Accept': 'application/json',
+          'admin-auth-token': adminToken, // Add the token here
         },
         body: formData,
       }).then((resp) => resp.json());
   
       if (imageResponse.success) {
-        productDetails.image = imageResponse.image_url;
+        const updatedProductDetails = {
+          ...productDetails,
+          image: imageResponse.image_url,
+        };
+
         const productResponse = await fetch('http://localhost:4000/addproduct', {
           method: 'POST',
           headers: {
-            Accept: 'application/json',
+            'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'admin-auth-token': adminToken, // Add the token here
           },
-          body: JSON.stringify(productDetails),
+          body: JSON.stringify(updatedProductDetails),
         }).then((resp) => resp.json());
   
         if (productResponse.success) {
@@ -58,7 +66,7 @@ const AddProduct = () => {
           setProductDetails({
             name: "",
             image: "",
-            category: "Vegetables",
+            category: "Bakery",
             price: ""
           });
           setImage(null);
@@ -74,7 +82,7 @@ const AddProduct = () => {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className='add-product'>
       {error && <p className="error">{error}</p>}
@@ -132,7 +140,7 @@ const AddProduct = () => {
           hidden 
         />
       </div>
-      <button onClick={Add_Product} className='add-product-btn' disabled={loading}>
+      <button onClick={addProduct} className='add-product-btn' disabled={loading}>
         {loading ? 'Adding...' : 'Add Product'}
       </button>
     </div>

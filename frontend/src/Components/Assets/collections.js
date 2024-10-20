@@ -42,7 +42,7 @@ let new_collections = [
   },
   {
     id: 7,
-    name: "Snacks and Confectionary",
+    name: "Snacks",
     image: p7_img,
   },
   {
