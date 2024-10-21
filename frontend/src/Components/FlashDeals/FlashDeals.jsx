@@ -16,7 +16,15 @@ const FlashDeals = () => {
         throw new Error('Failed to fetch flash deals');
       }
       const data = await response.json();
-      const productsWithDiscount = data.filter(product => product.discount > 0);
+      const updatedData = data.map((images) => {
+            if (images.image) {
+              images.image = `http://${URL}:4000${images.image}`;
+            }
+            return images;
+          });
+          console.log(data);
+          console.log(updatedData);
+          const productsWithDiscount = updatedData.filter(product => product.discount > 0);
       setFlashDeals(productsWithDiscount);
     } catch (error) {
       console.error('Error fetching flash deals:', error);
