@@ -4,7 +4,7 @@ import collections from '../Assets/collections';
 import Item from '../Item/Item';
 import FlashDeals from '../FlashDeals/FlashDeals';
 
-const URL ="localhost";
+const URL ="16.171.25.23";
 
 const NewCollections = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -14,7 +14,7 @@ const NewCollections = () => {
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const response = await fetch('http://localhost:4000/allbanners');
+        const response = await fetch(`http://${URL}:4000/allbanners`);
         const data = await response.json();
         console.log(data);
         const updatedData = data.map((images) => {
