@@ -4,7 +4,7 @@ import collections from '../Assets/collections';
 import Item from '../Item/Item';
 import FlashDeals from '../FlashDeals/FlashDeals';
 
-const URL ="localhost";
+const URL ="13.49.67.237";
 
 const NewCollections = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

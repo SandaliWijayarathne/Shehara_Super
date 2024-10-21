@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import './Shopping.css'; 
 
-const URL ="localhost";
+const URL ="13.49.67.237";
 
 const Shopping = () => {
   const location = useLocation();
