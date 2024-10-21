@@ -4,7 +4,7 @@ import collections from '../Assets/collections';
 import Item from '../Item/Item';
 import FlashDeals from '../FlashDeals/FlashDeals';
 
-const URL ="51.20.191.101";
+const URL ="13.48.30.154";
 
 const NewCollections = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
