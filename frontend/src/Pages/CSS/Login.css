@@ -3,7 +3,7 @@ body, html {
     padding: 0;
 }
 
-.login {
+.loginsignup {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,18 +12,31 @@ body, html {
     background-color: #e0e6ed; 
 }
 
-.login-fields {
+.loginsignup-container {
     display: flex;
     flex-direction: column;
-    width: 300px; 
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px; /* Added max-width for responsiveness */
+    padding: 20px; /* Added padding */
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.login-fields input {
+.loginsignup-fields {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Full width */
+}
+
+.loginsignup-fields input {
     padding: 0.75rem;
     margin-bottom: 1rem;
     border: 1px solid #ccc;
     border-radius: 15px;
-    font-size: 1rem;
+    font-size: 1rem; /* Default font size */
 }
 
 button {
@@ -32,7 +45,7 @@ button {
     padding: 0.75rem;
     border: none;
     border-radius: 15px;
-    font-size: 1.3rem;
+    font-size: 1.3rem; /* Default button font size */
     cursor: pointer;
     margin-bottom: 1rem;
     width: 100%; 
@@ -43,22 +56,56 @@ button:hover {
     background-color: #0055cc;
 }
 
-.login-login {
+.loginsignup-login {
     color: #666;
     margin-top: 1rem; 
 }
 
-.login-login span {
+.loginsignup-login span {
     color: #003366;
     cursor: pointer;
 }
 
-.container {
-    text-align: center;
+.loginsignup-agree {
+    display: flex;
+    align-items: center;
+    margin-top: 10px; /* Added margin for spacing */
 }
 
-.login-icon img{
-    width: 200px;
-    height: auto;
-    margin-left: 30px;
+.loginsignup-agree input {
+    margin-right: 5px; /* Added spacing between checkbox and text */
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+    .loginsignup-container {
+        width: 90%; /* Full width on smaller screens */
+        max-width: none; /* Remove max-width */
+    }
+
+    .loginsignup-fields input {
+        font-size: 0.9rem; /* Slightly reduced input font size */
+    }
+
+    button {
+        font-size: 1.1rem; /* Slightly reduced button font size */
+    }
+
+    .loginsignup-login {
+        font-size: 0.9rem; /* Reduced login text font size */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .loginsignup-fields input {
+        font-size: 0.8rem; /* Further reduced input font size */
+    }
+
+    button {
+        font-size: 1rem; /* Further reduced button font size */
+    }
+
+    .loginsignup-login {
+        font-size: 0.8rem; /* Further reduced login text font size */
+    }
 }

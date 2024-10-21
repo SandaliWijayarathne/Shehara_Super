@@ -53,4 +53,45 @@
   .tracking-details p {
     margin: 5px 0;
   }
+  @media screen and (max-width: 768px) {
+    .tracking-form input {
+      width: 250px; /* Reduced input width for smaller screens */
+      font-size: 14px; /* Reduced font size */
+    }
+  
+    .tracking-form button {
+      font-size: 14px; /* Reduced button font size */
+      padding: 0px 15px; /* Adjusted padding for smaller screens */
+      height: 35px; /* Reduced button height */
+    }
+  
+    .tracking-details h2 {
+      font-size: 20px; /* Reduced heading size */
+    }
+  
+    .tracking-details p {
+      font-size: 14px; /* Reduced paragraph font size */
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .tracking-form input {
+      width: 200px; /* Further reduced input width for extra small screens */
+      font-size: 12px; /* Further reduced font size */
+    }
+  
+    .tracking-form button {
+      font-size: 12px; /* Further reduced button font size */
+      padding: 0px 10px; /* Adjusted padding */
+      height: 30px; /* Further reduced button height */
+    }
+  
+    .tracking-details h2 {
+      font-size: 18px; /* Further reduced heading size */
+    }
+  
+    .tracking-details p {
+      font-size: 12px; /* Further reduced paragraph font size */
+    }
+  }
   

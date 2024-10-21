@@ -45,3 +45,44 @@
   font-size: 1rem;
   margin-bottom: 10px;
 }
+@media screen and (max-width: 768px) {
+  .shop-details h1 {
+    font-size: 1.5rem; /* Reduced main heading size */
+  }
+
+  .shop-details h2 {
+    font-size: 1.25rem; /* Reduced subheading size */
+  }
+
+  .shop-details p {
+    font-size: 0.9rem; /* Reduced paragraph size */
+  }
+
+  .location-content {
+    flex-direction: column; /* Changed to column layout for smaller screens */
+    padding: 10px; /* Reduced padding */
+  }
+
+  .map-container iframe {
+    width: 100%; /* Make the map responsive */
+    height: 300px; /* Adjust height for smaller screens */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .shop-details h1 {
+    font-size: 1.25rem; /* Further reduced main heading size */
+  }
+
+  .shop-details h2 {
+    font-size: 1rem; /* Further reduced subheading size */
+  }
+
+  .shop-details p {
+    font-size: 0.8rem; /* Further reduced paragraph size */
+  }
+
+  .map-container iframe {
+    height: 250px; /* Further adjust map height */
+  }
+}
