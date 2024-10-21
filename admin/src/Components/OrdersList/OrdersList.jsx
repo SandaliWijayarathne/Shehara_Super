@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './OrdersList.css';
 import axios from 'axios';
 
+const URL = "16.171.25.23"
+
 const OrdersList = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -12,7 +14,7 @@ const OrdersList = () => {
     setError(null);
 
     try {
-      const { data } = await axios.get('http://localhost:4000/api/orders');
+      const { data } = await axios.get(`http://${URL}:4000/api/orders`);
       setOrders(data);
     } catch (error) {
       setError('Error fetching orders');
@@ -27,7 +29,7 @@ const OrdersList = () => {
 
   const removeOrder = async (id) => {
     try {
-      await axios.post('http://localhost:4000/api/removeorder', { id });
+      await axios.post(`http://${URL}:4000/api/removeorder`, { id });
       fetchOrders();
     } catch (error) {
       setError('Error removing order');

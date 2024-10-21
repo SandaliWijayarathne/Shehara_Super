@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './AddProduct.css';
 import upload_area from '../../assets/upload_area.svg';
 
+const URL = "16.171.25.23";
 
 const AddProduct = () => {
   const [image, setImage] = useState(null);
@@ -35,7 +36,7 @@ const AddProduct = () => {
       const formData = new FormData();
       formData.append('product', image);
   
-      const imageResponse = await fetch('http://localhost:4000/uploadproductimage', {
+      const imageResponse = await fetch(`http://${URL}:4000/uploadproductimage`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -45,7 +46,7 @@ const AddProduct = () => {
   
       if (imageResponse.success) {
         productDetails.image = imageResponse.image_url;
-        const productResponse = await fetch('http://localhost:4000/addproduct', {
+        const productResponse = await fetch(`http://${URL}localhost:4000/addproduct`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',

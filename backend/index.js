@@ -13,7 +13,7 @@ app.use(express.static('public'))
 app.use(express.json());
 app.use(cors({ origin: '*' }));
 
-const URL ="13.48.30.154";
+const URL ="16.171.25.23";
 
 // Database connection with MongoDB
 mongoose.connect("mongodb+srv://sanda:TVRS1234%23@cluster0.r6puny8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
@@ -66,7 +66,7 @@ app.post("/bannerupload", uploadBannerImage.single('banner'), async (req, res) =
         return res.status(400).json({ success: 0, message: 'No file uploaded' });
     }
 
-    const imageUrl = `http://${URL}:${port}/banners/${req.file.filename}`;
+    const imageUrl = `/banners/${req.file.filename}`;
 
     const banner = new Banner({ url: imageUrl });
 
@@ -86,7 +86,7 @@ app.post("/uploadproductimage", uploadProductImage.single('product'), async (req
         return res.status(400).json({ success: 0, message: 'No file uploaded' });
     }
 
-    const imageUrl = `http://${URL}:${port}/images/${req.file.filename}`;
+    const imageUrl = `/images/${req.file.filename}`;
 
     res.json({ success: 1, image_url: imageUrl });
 });

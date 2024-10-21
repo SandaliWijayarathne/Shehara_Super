@@ -4,6 +4,8 @@ import { UploadOutlined, InboxOutlined, DeleteOutlined } from '@ant-design/icons
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 
+const URL ="16.171.25.23"
+
 const AddBanner = () => {
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -11,7 +13,7 @@ const AddBanner = () => {
 
   const fetchBanners = async () => {
     try {
-      const { data } = await axios.get('http://localhost:4000/allbanners');
+      const { data } = await axios.get(`http://${URL}:4000/allbanners`);
       setBanners(data);
     } catch (error) {
       message.error('Error fetching banners');
@@ -45,7 +47,7 @@ const AddBanner = () => {
       const formData = new FormData();
       formData.append('banner', files[0]);
 
-      const { data } = await axios.post('http://localhost:4000/bannerupload', formData);
+      const { data } = await axios.post(`http://${URL}:4000/bannerupload`, formData);
 
       if (data.success) {
         message.success('Image uploaded successfully!');
@@ -63,7 +65,7 @@ const AddBanner = () => {
 
   const handleDelete = async (id) => {
     try {
-      const { data } = await axios.delete(`http://localhost:4000/removebanner/${id}`);
+      const { data } = await axios.delete(`http://${URL}:4000/removebanner/${id}`);
       if (data.success) {
         message.success('Banner deleted successfully!');
         fetchBanners();

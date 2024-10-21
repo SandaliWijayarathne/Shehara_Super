@@ -7,8 +7,7 @@ import ListProduct from '../../Components/ListProduct/ListProduct';
 import OrderList from '../../Components/OrdersList/OrdersList';
 import AddBanner from '../../Components/Advertise/Banner';
 import Dashboard from '../../Components/Dashboard/Dashboard';
-import Superdeals from '../../Components/Superdeals/superDeals';
-
+import SuperDeals from '../../Components/SuperDeals/superDeals';
 const Admin = () => {
   return (
     <div className='admin'>
@@ -21,7 +20,7 @@ const Admin = () => {
           <Route path='/listproduct' element={<ListProduct />} />
           <Route path='/orders' element={<OrderList />} />
           <Route path='/addbanner' element={<AddBanner />} />
-          <Route path='/superdeals' element= {<Superdeals/>}/>
+          <Route path='/superdeals' element={<SuperDeals/>}/>
         </Routes>
       </div>
     </div>

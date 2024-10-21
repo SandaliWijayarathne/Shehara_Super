@@ -6,7 +6,7 @@ const { Header, Content, Sider } = Layout;
 const { Search } = Input;
 const { confirm } = Modal;
 
-const Superdeals = () => {
+const SuperDeals = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -14,10 +14,12 @@ const Superdeals = () => {
   const [currentTab, setCurrentTab] = useState('allProducts');
   const [flashDeals, setFlashDeals] = useState([]);
 
+  const URL = "16.171.25.23";
+
   // Fetch all products
   const fetchAllProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/allproducts');
+      const response = await axios.get(`http://${URL}:4000/allproducts`);
       setAllProducts(response.data);
       setFilteredProducts(response.data);
     } catch (error) {
@@ -28,7 +30,7 @@ const Superdeals = () => {
   // Fetch flash deals (products with a discount)
   const fetchFlashDeals = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/allproducts'); 
+      const response = await axios.get(`http://${URL}:4000/allproducts`); 
       const flashDeals = response.data.filter(product => product.discount > 0);
       setFlashDeals(flashDeals);
     } catch (error) {
@@ -81,7 +83,7 @@ const Superdeals = () => {
   const addToSuperDeals = async () => {
     if (selectedProduct) {
       try {
-        const response = await axios.put(`http://localhost:4000/updatediscount/${selectedProduct.id}`, {
+        const response = await axios.put(`http://${URL}:4000/updatediscount/${selectedProduct.id}`, {
           discount
         });
 
@@ -106,7 +108,7 @@ const Superdeals = () => {
       content: `${record.name} - Rs. ${record.price}`,
       onOk: async () => {
         try {
-          const response = await axios.put(`http://localhost:4000/updatediscount/${record.id}`, {
+          const response = await axios.put(`http://${URL}:4000/updatediscount/${record.id}`, {
             discount: 0
           });
 
@@ -229,4 +231,4 @@ const Superdeals = () => {
   );
 };
 
-export default Superdeals;
+export default SuperDeals;
