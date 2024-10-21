@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './FlashDeals.css';
 
+const URL ="localhost"
+
 const FlashDeals = () => {
   const [flashDeals, setFlashDeals] = useState([]);
   const navigate = useNavigate();
@@ -9,7 +11,7 @@ const FlashDeals = () => {
   // Fetch all products with discounts
   const fetchFlashDeals = async () => {
     try {
-      const response = await fetch('http://localhost:4000/allproducts');
+      const response = await fetch(`http://${URL}:4000/allproducts`);
       if (!response.ok) {
         throw new Error('Failed to fetch flash deals');
       }

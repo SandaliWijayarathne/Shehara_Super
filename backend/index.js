@@ -11,7 +11,9 @@ require("dotenv").config()
 app.use(express.static('public'))
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: '*' }));
+
+const URL = "localhost";
 
 // Database connection with MongoDB
 mongoose.connect("mongodb+srv://sanda:TVRS1234%23@cluster0.r6puny8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
@@ -64,7 +66,7 @@ app.post("/bannerupload", uploadBannerImage.single('banner'), async (req, res) =
         return res.status(400).json({ success: 0, message: 'No file uploaded' });
     }
 
-    const imageUrl = `http://localhost:${port}/banners/${req.file.filename}`;
+    const imageUrl = `http://${URL}:${port}/banners/${req.file.filename}`;
 
     const banner = new Banner({ url: imageUrl });
 
@@ -84,7 +86,7 @@ app.post("/uploadproductimage", uploadProductImage.single('product'), async (req
         return res.status(400).json({ success: 0, message: 'No file uploaded' });
     }
 
-    const imageUrl = `http://localhost:${port}/images/${req.file.filename}`;
+    const imageUrl = `http://${URL}:${port}/images/${req.file.filename}`;
 
     res.json({ success: 1, image_url: imageUrl });
 });
@@ -175,8 +177,8 @@ app.post('/create-checkout-session', async (req, res) => {
           quantity: item.quantity,
         };
       }),
-      success_url: `http://localhost:3000/success`,  // Ensure this points to your frontend
-      cancel_url: `http://localhost:3000/fail`,  // Ensure this points to your frontend
+      success_url: `http://${URL}:3000/success`,  // Ensure this points to your frontend
+      cancel_url: `http://${URL}:3000/fail`,  // Ensure this points to your frontend
     });
 
     res.json({ url: session.url });

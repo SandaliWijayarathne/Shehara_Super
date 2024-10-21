@@ -4,6 +4,8 @@ import './CartItems.css';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
 
+const URL ="localhost";
+
 const CartItems = () => {
     const { getTotalCartAmount, all_product, cartItems, removeFromCart } = useContext(ShopContext);
     const [loading, setLoading] = useState(false);
@@ -22,7 +24,7 @@ const CartItems = () => {
         setLoading(true);
         setError(null);
 
-        fetch('http://localhost:4000/create-checkout-session', {
+        fetch(`http://${URL}:4000/create-checkout-session`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

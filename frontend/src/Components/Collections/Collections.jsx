@@ -4,6 +4,8 @@ import collections from '../Assets/collections';
 import Item from '../Item/Item';
 import FlashDeals from '../FlashDeals/FlashDeals';
 
+const URL ="localhost";
+
 const NewCollections = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [bannerImages, setBannerImages] = useState([]);
@@ -12,7 +14,7 @@ const NewCollections = () => {
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const response = await fetch('http://localhost:4000/allbanners');
+        const response = await fetch(`http://${URL}:4000/allbanners`);
         const data = await response.json();
         setBannerImages(data);
       } catch (error) {
