@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './FlashDeals.css';
 
-const URL ="13.49.67.237"
+const URL ="51.20.191.101"
 
 const FlashDeals = () => {
   const [flashDeals, setFlashDeals] = useState([]);
