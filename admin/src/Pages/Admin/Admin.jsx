@@ -7,7 +7,7 @@ import ListProduct from '../../Components/ListProduct/ListProduct';
 import OrderList from '../../Components/OrdersList/OrdersList';
 import AddBanner from '../../Components/Advertise/Banner';
 import Dashboard from '../../Components/Dashboard/Dashboard';
-import superDeals from '../../Components/SuperDeals/superDeals';
+
 
 const Admin = () => {
   return (
@@ -21,7 +21,6 @@ const Admin = () => {
           <Route path='/listproduct' element={<ListProduct />} />
           <Route path='/orders' element={<OrderList />} />
           <Route path='/addbanner' element={<AddBanner />} />
-          <Route path='/superdeals' element={<superDeals/>}/>
 
         </Routes>
       </div>
