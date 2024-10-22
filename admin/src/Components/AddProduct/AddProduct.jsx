@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './AddProduct.css';
 import upload_area from '../../assets/upload_area.svg';
 
-const URL = "16.171.25.23";
+const URL = "localhost";
 
 const AddProduct = () => {
   const [image, setImage] = useState(null);

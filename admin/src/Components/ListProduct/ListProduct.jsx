@@ -4,7 +4,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
 import axios from 'axios';
 
-const URL = "16.171.25.23"
+const URL = "localhost"
 
 const ListProduct = () => {
   const [allProducts, setAllProducts] = useState([]);

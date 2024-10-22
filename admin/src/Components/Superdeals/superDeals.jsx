@@ -14,7 +14,7 @@ const superDeals = () => {
   const [currentTab, setCurrentTab] = useState('allProducts');
   const [flashDeals, setFlashDeals] = useState([]);
 
-  const URL = "16.171.25.23";
+  const URL = "localhost";
 
   // Fetch all products
   const fetchAllProducts = async () => {

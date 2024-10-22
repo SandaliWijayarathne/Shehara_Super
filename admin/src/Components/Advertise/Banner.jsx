@@ -4,7 +4,7 @@ import { UploadOutlined, InboxOutlined, DeleteOutlined } from '@ant-design/icons
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 
-const URL ="16.171.25.23"
+const URL ="localhost"
 
 const AddBanner = () => {
   const [files, setFiles] = useState([]);
