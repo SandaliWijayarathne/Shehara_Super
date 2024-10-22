@@ -32,17 +32,17 @@ let new_collections = [
   },
   {
     id: 5,
-    name: "Baby Products",
+    name: "BabyProducts",
     image: p5_img,
   },
   {
     id: 6,
-    name: "Canned Products",
+    name: "CannedProducts",
     image: p6_img,
   },
   {
     id: 7,
-    name: "Snacks and Confectionary",
+    name: "Snacks",
     image: p7_img,
   },
   {
@@ -52,7 +52,7 @@ let new_collections = [
   },
   {
     id: 9,
-    name: "Frozen Food",
+    name: "FrozenFoods",
     image: p9_img,
   },
   {

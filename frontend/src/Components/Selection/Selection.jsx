@@ -8,7 +8,7 @@ const Selection = () => {
       <Link to="/category/Beverages">Beverages</Link>
       <Link to="/category/Fruits">Fruits</Link>
       <Link to="/category/Vegetables">Vegetables</Link>
-      <Link to="/category/BabyProducts">Baby Products</Link>
+      <Link to="/category/BabyProducts">BabyProducts</Link>
       <Link to="/category/FrozenFoods">Frozen Foods</Link>
       <Link to="/category/Bakery">Bakery</Link>
       <Link to="/category/Household">Household</Link>
