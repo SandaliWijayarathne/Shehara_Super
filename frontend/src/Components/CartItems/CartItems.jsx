@@ -8,9 +8,17 @@ const CartItems = () => {
     const { getTotalCartAmount, all_product, cartItems, removeFromCart } = useContext(ShopContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [isAddressPopupOpen, setIsAddressPopupOpen] = useState(false); // state to control popup
+    const [address, setAddress] = useState(''); // state to store user's address
     const navigate = useNavigate();
 
     const handleCheckout = () => {
+        if (!address) {
+            // If address is not provided, show the address popup
+            setIsAddressPopupOpen(true);
+            return;
+        }
+
         // Prepare the items in the cart for the checkout session
         const items = all_product
             .filter(product => cartItems[product.id] > 0)
@@ -29,6 +37,7 @@ const CartItems = () => {
             },
             body: JSON.stringify({
                 items: items,
+                address: address, // Send the address as part of the checkout data
             }),
         })
             .then((res) => {
@@ -110,6 +119,29 @@ const CartItems = () => {
                     {error && <p className="error-message">{error}</p>}
                 </div>
             </div>
+
+            {/* Address Popup */}
+            {isAddressPopupOpen && (
+                <div className="address-popup">
+                    <div className="address-popup-content">
+                        <h2>Enter Your Address</h2>
+                        <textarea
+                            placeholder="Enter your delivery address here"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                        />
+                        <button onClick={() => setIsAddressPopupOpen(false)}>Cancel</button>
+                        <button
+                            onClick={() => {
+                                setIsAddressPopupOpen(false);
+                                handleCheckout();
+                            }}
+                        >
+                            Confirm Address
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
