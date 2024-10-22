@@ -10,9 +10,17 @@ const CartItems = () => {
     const { getTotalCartAmount, all_product, cartItems, removeFromCart } = useContext(ShopContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [isAddressPopupOpen, setIsAddressPopupOpen] = useState(false); // state to control popup
+    const [address, setAddress] = useState(''); // state to store user's address
     const navigate = useNavigate();
 
     const handleCheckout = () => {
+        if (!address) {
+            // If address is not provided, show the address popup
+            setIsAddressPopupOpen(true);
+            return;
+        }
+
         // Prepare the items in the cart for the checkout session
         const items = all_product
             .filter(product => cartItems[product.id] > 0)
@@ -31,6 +39,7 @@ const CartItems = () => {
             },
             body: JSON.stringify({
                 items: items,
+                address: address, // Send the address as part of the checkout data
             }),
         })
             .then((res) => {
@@ -112,6 +121,39 @@ const CartItems = () => {
                     {error && <p className="error-message">{error}</p>}
                 </div>
             </div>
+
+            {/* Updated Address Popup */}
+            {isAddressPopupOpen && (
+                <div className="address-popup-container">
+                    <div className="address-popup">
+                        <h2>Enter Your Address</h2>
+                        <p>Please provide your delivery address for the order.</p>
+                        <textarea
+                            className="address-input"
+                            placeholder="Enter your delivery address"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                        />
+                        <div className="popup-buttons">
+                            <button 
+                                className="popup-cancel-btn" 
+                                onClick={() => setIsAddressPopupOpen(false)}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="popup-submit-btn"
+                                onClick={() => {
+                                    setIsAddressPopupOpen(false);
+                                    handleCheckout();
+                                }}
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
