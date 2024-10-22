@@ -21,7 +21,16 @@ const ListProduct = () => {
 
       const { data } = await axios.get(`http://${URL}:4000/allproducts`);
 
-      setAllProducts(data);
+      const updatedData = data.map((images) => {
+        if (images.image) {
+          images.image = `http://${URL}:4000${images.image}`;
+        }
+        return images;
+      });
+      console.log(data);
+      console.log(updatedData);
+      setAllProducts(updatedData);
+      
     } catch (error) {
       setError('Error fetching products');
     } finally {

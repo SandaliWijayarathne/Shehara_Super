@@ -31,11 +31,11 @@ const AddProduct = () => {
 
     setLoading(true);
     setError(null);
-    
+
     try {
       const formData = new FormData();
       formData.append('product', image);
-  
+
       const imageResponse = await fetch(`http://${URL}:4000/uploadproductimage`, {
         method: 'POST',
         headers: {
@@ -43,12 +43,14 @@ const AddProduct = () => {
         },
         body: formData,
       }).then((resp) => resp.json());
-  
-      if (imageResponse.success) {
-        productDetails.image = imageResponse.image_url;
 
-        const productResponse = await fetch(`http://${URL}localhost:4000/addproduct`, {
-          
+      if (imageResponse.success) {
+        setProductDetails((prevDetails) => ({
+          ...prevDetails,
+          image: imageResponse.image_url
+        }));
+
+        const productResponse = await fetch(`http://${URL}:4000/addproduct`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -56,7 +58,7 @@ const AddProduct = () => {
           },
           body: JSON.stringify(productDetails),
         }).then((resp) => resp.json());
-  
+
         if (productResponse.success) {
           alert("Product Added Successfully!");
           setProductDetails({
