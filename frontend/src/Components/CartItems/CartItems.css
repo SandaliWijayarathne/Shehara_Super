@@ -137,3 +137,68 @@
         margin: 0 auto;
     }
 }
+
+/* Popup container */
+.address-popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* dark overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Popup box */
+.address-popup {
+    background-color: white;
+    width: 500px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.address-popup h2 {
+    margin-bottom: 15px;
+}
+
+.address-popup p {
+    margin-bottom: 20px;
+}
+
+.address-input {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Popup buttons */
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.popup-cancel-btn, .popup-submit-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.popup-cancel-btn {
+    background-color: #110339;
+    color: white;
+}
+
+.popup-submit-btn {
+    background-color: #24ce2a;
+    color: white;
+}

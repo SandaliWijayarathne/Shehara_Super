@@ -143,6 +143,11 @@
   display: flex;
   align-items: center;
 }
+.error-text {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
 
 .user-profile-page .payment-info img {
   width: 50px;
