@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './AddProduct.css';
 import upload_area from '../../assets/upload_area.svg';
+import { message } from 'antd'; // Import message from antd
 
-const URL = "localhost";
+const S_URL = "localhost";
 
 const AddProduct = () => {
   const [image, setImage] = useState(null);
@@ -26,31 +27,28 @@ const AddProduct = () => {
   const Add_Product = async () => {
     if (!productDetails.name || !productDetails.price || !image) {
       setError('Please fill in all fields and upload an image.');
+      message.error('Please fill in all fields and upload an image.');
       return;
     }
 
     setLoading(true);
     setError(null);
-
+    
     try {
       const formData = new FormData();
       formData.append('product', image);
-
-      const imageResponse = await fetch(`http://${URL}:4000/uploadproductimage`, {
+  
+      const imageResponse = await fetch(`http://${S_URL}:4000/uploadproductimage`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
         },
         body: formData,
       }).then((resp) => resp.json());
-
+  
       if (imageResponse.success) {
-        setProductDetails((prevDetails) => ({
-          ...prevDetails,
-          image: imageResponse.image_url
-        }));
-
-        const productResponse = await fetch(`http://${URL}:4000/addproduct`, {
+        productDetails.image = imageResponse.image_url;
+        const productResponse = await fetch(`http://${S_URL}:4000/addproduct`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -58,9 +56,9 @@ const AddProduct = () => {
           },
           body: JSON.stringify(productDetails),
         }).then((resp) => resp.json());
-
+  
         if (productResponse.success) {
-          alert("Product Added Successfully!");
+          message.success("Product Added Successfully!");
           setProductDetails({
             name: "",
             image: "",
@@ -70,12 +68,15 @@ const AddProduct = () => {
           setImage(null);
         } else {
           setError("Failed to add product");
+          message.error("Failed to add product");
         }
       } else {
         setError("Failed to upload image");
+        message.error("Failed to upload image");
       }
     } catch (error) {
       setError("An error occurred. Please try again.");
+      message.error("An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }

@@ -6,7 +6,7 @@ const { Header, Content, Sider } = Layout;
 const { Search } = Input;
 const { confirm } = Modal;
 
-const superDeals = () => {
+const SuperDeals = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -246,4 +246,4 @@ const superDeals = () => {
   );
 };
 
-export default superDeals;
+export default SuperDeals;
