@@ -8,11 +8,11 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarEleme
 
 const Dashboard = () => {
   const lineChartData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','Augest','October','November','December'],
     datasets: [
       {
         label: 'Sales',
-        data: [33, 53, 85, 41, 44, 65, 59],
+        data: [],
         fill: false,
         borderColor: '#4caf50',
       },
@@ -20,14 +20,29 @@ const Dashboard = () => {
   };
 
   const barChartData = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    labels: ['Vegetables', 'Bakery', 'Spices', 'Household', 'Baby Products', 'Canned Products','Snacks','Beverages','Frozen Foods','Fruits'],
     datasets: [
       {
         label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        data: [],
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
+      },
+    ],
+  };
+
+  // New data for the number of users
+  const userChartData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','Augest','October','November','December'],
+    datasets: [
+      {
+        label: 'Users',
+        data: [],
+        fill: false,
+        borderColor: '#ff6384',
+        backgroundColor: '#ff6384',
+        tension: 0.4,
       },
     ],
   };
@@ -43,6 +58,11 @@ const Dashboard = () => {
         <Col span={12}>
           <Card title="Category Distribution" bordered={false}>
             <Bar data={barChartData} />
+          </Card>
+        </Col>
+        <Col span={12}>
+          <Card title="User Growth" bordered={false}>
+            <Line data={userChartData} />
           </Card>
         </Col>
       </Row>

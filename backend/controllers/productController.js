@@ -1,31 +1,46 @@
 const Product = require("../models/Product");
 
 const addProduct = async (req, res) => {
-    let products = await Product.find({});
-    let id = products.length > 0 ? products[products.length - 1].id + 1 : 1;
+    try {
+        let products = await Product.find({});
+        let id = products.length > 0 ? products[products.length - 1].id + 1 : 1;
 
-    const product = new Product({
-        id: id,
-        name: req.body.name,
-        image: req.body.image,
-        category: req.body.category,
-        price: req.body.price,
-    });
+        const product = new Product({
+            id: id,
+            name: req.body.name,
+            image: req.body.image, // Image URL should come from the frontend
+            category: req.body.category,
+            price: req.body.price,
+        });
 
-    await product.save();
-    res.json({ success: true, name: req.body.name });
+        await product.save();
+        console.log(`Product added: ${req.body.name}`);
+        res.json({ success: true, name: req.body.name });
+    } catch (error) {
+        console.error('Error adding product:', error);
+        res.status(500).json({ error: "Failed to add product" });
+    }
 };
 
+
 const removeProduct = async (req, res) => {
-    await Product.findOneAndDelete({ id: req.body.id });
-    res.json({ success: true, name: req.body.name });
+    try {
+        await Product.findOneAndDelete({ id: req.body.id });
+        console.log(`Product removed with ID: ${req.body.id}`); // Added logging for product removal
+        res.json({ success: true, name: req.body.name });
+    } catch (error) {
+        console.error('Error removing product:', error); // Improved error logging
+        res.status(500).json({ error: "Failed to remove product" });
+    }
 };
 
 const getAllProducts = async (req, res) => {
     try {
         let products = await Product.find({});
+        console.log("All products fetched"); // Added logging for fetching products
         res.json(products);
     } catch (error) {
+        console.error('Error fetching products:', error); // Improved error logging
         res.status(500).json({ error: "Failed to fetch products" });
     }
 };
@@ -39,9 +54,11 @@ const updatePrice = async (req, res) => {
 
         product.price = req.body.price;
         await product.save();
+        console.log(`Price updated for product ID: ${req.params.id}`); // Added logging for price update
         res.json({ success: true, product });
     } catch (error) {
-        res.status(500).json({ error: "Failed to update prices" });
+        console.error('Error updating price:', error); // Improved error logging
+        res.status(500).json({ error: "Failed to update price" });
     }
 };
 
@@ -49,8 +66,10 @@ const getNewCollections = async (req, res) => {
     try {
         let products = await Product.find({});
         let newcollections = products.slice(1).slice(-8);
+        console.log("New collections fetched"); // Added logging for fetching new collections
         res.json(newcollections);
     } catch (error) {
+        console.error('Error fetching new collections:', error); // Improved error logging
         res.status(500).json({ error: "Failed to fetch new collections" });
     }
 };

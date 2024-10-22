@@ -41,21 +41,21 @@ const UserProfile = () => {
   };
 
   const handleSaveProfile = () => {
-    const authToken = localStorage.getItem('auth-token'); // Get the auth token from localStorage or wherever you store it
+    const authToken = localStorage.getItem('auth-token'); 
   
     // Fetch request to update profile
-    fetch('http://localhost:4000/updateprofile', {  // <-- Ensure the correct URL
+    fetch('http://localhost:4000/updateprofile', { 
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': authToken, // Include the JWT token here
+        'auth-token': authToken, 
       },
       body: JSON.stringify({
         name: name,
         address: address,
         contactNumber: number,
         cardNumber: cardNumber,
-        profileImage: profileImage, // Base64 string or URL
+        profileImage: profileImage, 
       })
     })
     .then(response => {

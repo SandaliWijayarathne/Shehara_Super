@@ -1,4 +1,3 @@
-/* General Styles */
 .cartitems-container {
     margin: 120px auto;
     padding: 20px;
@@ -60,20 +59,20 @@
 }
 
 .cartitems-quantity {
-    width: 40px; /* Adjust the width */
-    height: 30px; /* Adjust the height */
+    width: 40px; 
+    height: 30px; 
     background: #e6f2ff;
     color: #333;
     border-radius: 5px;
     text-align: center;
     font-size: 16px;
-    border: 1px solid #00ff0d; /* Add a border for better visibility */
-    line-height: 30px; /* Adjust line-height to match height */
-    margin: 0 auto; /* Center horizontally */
+    border: 1px solid #00ff0d; 
+    line-height: 30px; 
+    margin: 0 auto; 
     display: flex;
-    align-items: center; /* Center text vertically */
-    justify-content: center; /* Center text horizontally */
-    box-sizing: border-box; /* Ensure padding and border are included in the element's width and height */
+    align-items: center; 
+    justify-content: center; 
+    box-sizing: border-box; 
 }
 
 
@@ -127,7 +126,6 @@
     background: #0056b3;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .cartitems-header, .cartitems-product {
         grid-template-columns: 0.5fr 1.5fr 1fr 1fr 1fr 0.5fr;

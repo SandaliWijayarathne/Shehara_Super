@@ -1,15 +1,53 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CartItems.css';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
 
+const URL ="localhost";
+
 const CartItems = () => {
     const { getTotalCartAmount, all_product, cartItems, removeFromCart } = useContext(ShopContext);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const handleCheckout = () => {
-        navigate('/checkout');
+        // Prepare the items in the cart for the checkout session
+        const items = all_product
+            .filter(product => cartItems[product.id] > 0)
+            .map(product => ({
+                id: product.id,
+                quantity: cartItems[product.id],
+            }));
+
+        setLoading(true);
+        setError(null);
+
+        fetch(`http://${URL}:4000/create-checkout-session`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                items: items,
+            }),
+        })
+            .then((res) => {
+                if (res.ok) return res.json();
+                return res.json().then((json) => Promise.reject(json));
+            })
+            .then(({ url }) => {
+                // Redirect to the payment page
+                window.location = url;
+            })
+            .catch((e) => {
+                console.error(e.error);
+                setError('Something went wrong while processing the payment.');
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     return (
@@ -32,7 +70,14 @@ const CartItems = () => {
                             <p>Rs.{e.price}</p>
                             <button className="cartitems-quantity">{cartItems[e.id]}</button>
                             <p>Rs.{e.price * cartItems[e.id]}</p>
-                            <img className="cartitems-remove-icon" src={remove_icon} onClick={() => { removeFromCart(e.id) }} alt="Remove item" />
+                            <img
+                                className="cartitems-remove-icon"
+                                src={remove_icon}
+                                onClick={() => {
+                                    removeFromCart(e.id);
+                                }}
+                                alt="Remove item"
+                            />
                         </div>
                     );
                 }
@@ -57,11 +102,18 @@ const CartItems = () => {
                             <h3>Rs.{getTotalCartAmount()}</h3>
                         </div>
                     </div>
-                    <button className="checkout-button" onClick={handleCheckout}>PROCEED TO CHECKOUT</button>
+                    <button
+                        className="checkout-button"
+                        onClick={handleCheckout}
+                        disabled={loading}
+                    >
+                        {loading ? 'Processing...' : 'PROCEED TO CHECKOUT'}
+                    </button>
+                    {error && <p className="error-message">{error}</p>}
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default CartItems;

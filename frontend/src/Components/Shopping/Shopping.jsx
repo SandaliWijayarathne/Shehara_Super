@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import './Shopping.css'; // Make sure to import the CSS file
+import './Shopping.css'; 
+
+const URL ="localhost";
 
 const Shopping = () => {
   const location = useLocation();
@@ -9,9 +11,11 @@ const Shopping = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await fetch('http://localhost:4000/allproducts');
+
+      const response = await fetch(`http://${URL}:4000/allproducts`);
       const data = await response.json();
       setProducts(data);
+
     };
 
     fetchProducts();
@@ -36,12 +40,10 @@ const Shopping = () => {
       {filteredProducts.length > 0 ? (
         filteredProducts.map(product => (
           <div key={product.id} className="product-item">
-            {/* Link to the Product page with the product's ID */}
             <Link to={`/product/${product.id}`}>
               <img src={product.image} alt={product.name} />
             </Link>
             <h3>{product.name}</h3>
-            <p>Category: {product.category}</p>
             <p>Price: Rs.{product.price}</p>
           </div>
         ))

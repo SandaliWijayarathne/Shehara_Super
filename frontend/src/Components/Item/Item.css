@@ -11,9 +11,9 @@
 }
 
 .item img {
-  width: 150px; /* Fixed width */
-  height: 250px; /* Increased height for rectangular shape */
-  object-fit: cover; /* Ensure the image covers the area */
+  width: 150px;
+  height: 250px; 
+  object-fit: cover; 
   border-radius: 8px;
   margin-bottom: 10px;
 }

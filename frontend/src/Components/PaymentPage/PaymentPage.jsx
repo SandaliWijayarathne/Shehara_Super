@@ -18,7 +18,6 @@ const Checkout = () => {
 
   const handlePayClick = () => {
     if (selectedPayment === 'cash') {
-      // If cash on delivery is selected, submit the order
       const authToken = localStorage.getItem('auth-token');
       fetch('/submitOrder', {
         method: 'POST',

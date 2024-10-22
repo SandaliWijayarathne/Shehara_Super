@@ -1,3 +1,5 @@
+require('dotenv').config(); // Make sure you require dotenv
+
 const jwt = require("jsonwebtoken");
 
 const fetchUser = async (req, res, next) => {
@@ -6,7 +8,7 @@ const fetchUser = async (req, res, next) => {
         return res.status(401).send({ errors: "Please authenticate using valid token" });
     }
     try {
-        const data = jwt.verify(token, 'secret_cake');
+        const data = jwt.verify(token, process.env.JWT_SECRET);
         req.user = data.user;
         next();
     } catch (error) {

@@ -257,7 +257,6 @@ let all_product = [
     image: B12_img,
     Price: 250.0,
   },
-  // Fruits
   {
     id: 13,
     name: "Orange Crush",

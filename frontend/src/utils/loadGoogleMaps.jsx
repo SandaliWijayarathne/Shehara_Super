@@ -1,4 +1,3 @@
-// src/utils/loadGoogleMaps.js
 export const loadGoogleMaps = (callback) => {
     const existingScript = document.getElementById('googleMaps');
     if (!existingScript) {

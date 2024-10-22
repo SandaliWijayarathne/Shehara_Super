@@ -2,17 +2,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 60px;
+    padding: 12px 40px;
     box-shadow: 0 1px 3px -2px #000;
     margin-bottom: 1px;
     background: #022c5c;
     font-family: 'Arial', sans-serif;
+    height: 80px;
 }
 
 .nav-left {
     display: flex;
     align-items: center;
 }
+
+
 
 .nav-logo-link {
     display: flex;
@@ -28,6 +31,7 @@
 .nav-company-name {
     font-size: 24px;
     font-weight: 700;
+    align-items: center;
     color: #fff;
 }
 
@@ -37,7 +41,7 @@
 }
 
 .nav-profile {
-    width: 80px;
+    width: 60px;
     border-radius: 50%;
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;

@@ -31,14 +31,7 @@ const ProductDisplay = (props) => {
             </div>
             <div className="productdisplay-right">
                 <h1>{product.name}</h1>
-                <div className="productdisplay-right-price">Rs. {product.price}</div>
-                <div className="productdisplay-right-weight">
-                    <select>
-                        <option value="500g">500 g</option>
-                        <option value="1kg">1 kg</option>
-                        <option value="2kg">2 kg</option>
-                    </select>
-                </div>
+                <div className="productdisplay-right-price">Rs. {product.price}.00</div>
                 <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
                 <div className="productdisplay-right-description">
                     {product.description}

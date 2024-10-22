@@ -20,6 +20,8 @@ import Selection from './Components/Selection/Selection';
 import FAQ from './Components/FAQ/FAQ';
 import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy';
 import TermsConditions from './Components/Terms&Conditions/Terms&Conditions';
+import Success from './Components/Success/Success';
+import Failure from './Components/Failure/Failure';
 
 function App() {
   return (
@@ -45,6 +47,9 @@ function App() {
           <Route path='/faq' element={<FAQ />} />
           <Route path='/privacy-policy' element={<PrivacyPolicy />} />
           <Route path='/terms-conditions' element={<TermsConditions />} />
+          <Route path='/success' element={<Success/>}/>
+          <Route path='/fail' element={<Failure/>}/>
+
         </Routes>
         <Footer />
       </BrowserRouter>
