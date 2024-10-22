@@ -2,12 +2,14 @@ import { useState } from 'react';
 import './AddProduct.css';
 import upload_area from '../../assets/upload_area.svg';
 
+const URL = "localhost";
+
 const AddProduct = () => {
   const [image, setImage] = useState(null);
   const [productDetails, setProductDetails] = useState({
     name: "",
     image: "",
-    category: "Bakery",
+    category: "Vegetables",
     price: ""
   });
   const [loading, setLoading] = useState(false);
@@ -34,7 +36,7 @@ const AddProduct = () => {
       const formData = new FormData();
       formData.append('product', image);
   
-      const imageResponse = await fetch('http://localhost:4000/api/products/uploadproductimage', { // Changed the endpoint to match backend
+      const imageResponse = await fetch(`http://${URL}:4000/uploadproductimage`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -44,7 +46,9 @@ const AddProduct = () => {
   
       if (imageResponse.success) {
         productDetails.image = imageResponse.image_url;
-        const productResponse = await fetch('http://localhost:4000/api/products/addproduct', { // Changed the endpoint to match backend
+
+        const productResponse = await fetch(`http://${URL}localhost:4000/addproduct`, {
+          
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -58,7 +62,7 @@ const AddProduct = () => {
           setProductDetails({
             name: "",
             image: "",
-            category: "Bakery",
+            category: "Vegetables",
             price: ""
           });
           setImage(null);
@@ -108,7 +112,7 @@ const AddProduct = () => {
           className='product-category-selector'
         >
           <option value="Vegetables">Vegetables</option>
-          <option value="Celebration Cakes">Bakery</option>
+          <option value="Bakery">Bakery</option>
           <option value="Spices">Spices</option>
           <option value="Household">Household</option>
           <option value="BabyProducts">Baby Products</option>

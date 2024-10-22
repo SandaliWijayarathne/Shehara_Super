@@ -6,7 +6,7 @@ const { Header, Content, Sider } = Layout;
 const { Search } = Input;
 const { confirm } = Modal;
 
-const AdminPanel = () => {
+const superDeals = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -15,11 +15,15 @@ const AdminPanel = () => {
   const [flashDeals, setFlashDeals] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const URL = "localhost";
+
   // Fetch all products
   const fetchAllProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:4000/api/products/allproducts'); // Ensure the backend endpoint is correct
+
+      const response = await axios.get(`http://${URL}:4000/allproducts`);
+
       setAllProducts(response.data);
       setFilteredProducts(response.data);
       setLoading(false);
@@ -34,7 +38,9 @@ const AdminPanel = () => {
   const fetchFlashDeals = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:4000/api/products/allproducts'); // Ensure backend is returning discounts
+
+      const response = await axios.get(`http://${URL}:4000/allproducts`); 
+
       const flashDeals = response.data.filter(product => product.discount > 0);
       setFlashDeals(flashDeals);
       setLoading(false);
@@ -89,7 +95,9 @@ const AdminPanel = () => {
   const addToSuperDeals = async () => {
     if (selectedProduct) {
       try {
-        const response = await axios.put(`http://localhost:4000/api/products/updatediscount/${selectedProduct.id}`, {
+
+        const response = await axios.put(`http://${URL}:4000/updatediscount/${selectedProduct.id}`, {
+
           discount
         });
 
@@ -113,7 +121,9 @@ const AdminPanel = () => {
       content: `${record.name} - Rs. ${record.price}`,
       onOk: async () => {
         try {
-          const response = await axios.put(`http://localhost:4000/api/products/updatediscount/${record.id}`, {
+          
+          const response = await axios.put(`http://${URL}:4000/updatediscount/${record.id}`, {
+
             discount: 0
           });
 
@@ -236,4 +246,4 @@ const AdminPanel = () => {
   );
 };
 
-export default AdminPanel;
+export default superDeals;
