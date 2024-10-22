@@ -120,25 +120,35 @@ const CartItems = () => {
                 </div>
             </div>
 
-            {/* Address Popup */}
+            {/* Updated Address Popup */}
             {isAddressPopupOpen && (
-                <div className="address-popup">
-                    <div className="address-popup-content">
+                <div className="address-popup-container">
+                    <div className="address-popup">
                         <h2>Enter Your Address</h2>
+                        <p>Please provide your delivery address for the order.</p>
                         <textarea
-                            placeholder="Enter your delivery address here"
+                            className="address-input"
+                            placeholder="Enter your delivery address"
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
                         />
-                        <button onClick={() => setIsAddressPopupOpen(false)}>Cancel</button>
-                        <button
-                            onClick={() => {
-                                setIsAddressPopupOpen(false);
-                                handleCheckout();
-                            }}
-                        >
-                            Confirm Address
-                        </button>
+                        <div className="popup-buttons">
+                            <button 
+                                className="popup-cancel-btn" 
+                                onClick={() => setIsAddressPopupOpen(false)}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="popup-submit-btn"
+                                onClick={() => {
+                                    setIsAddressPopupOpen(false);
+                                    handleCheckout();
+                                }}
+                            >
+                                Submit
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
