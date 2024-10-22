@@ -36,7 +36,7 @@ const LogginSignup = () => {
     }
     setErrors({});
     let responseData;
-    await fetch('http://localhost:4000/api/users/login', { // Fixed endpoint
+    await fetch('http://localhost:4000/login', { // Fixed endpoint
       method: 'POST',
       headers: {
         Accept: 'application/json', // Fixed Accept header
@@ -66,7 +66,7 @@ const LogginSignup = () => {
     }
     setErrors({});
     let responseData;
-    await fetch('http://localhost:4000/api/users/signup', { // Fixed endpoint
+    await fetch('http://localhost:4000/signup', { // Fixed endpoint
       method: 'POST',
       headers: {
         Accept: 'application/json', // Fixed Accept header
