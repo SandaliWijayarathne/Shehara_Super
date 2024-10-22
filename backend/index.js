@@ -13,7 +13,7 @@ app.use(express.static('public'))
 app.use(express.json());
 app.use(cors({ origin: '*' }));
 
-const URL ="16.171.25.23";
+const URL ="16.171.182.128";
 
 // Database connection with MongoDB
 mongoose.connect("mongodb+srv://sanda:TVRS1234%23@cluster0.r6puny8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
