@@ -22,7 +22,6 @@ const ShopCategory = () => {
 
   return (
     <div className='product-category'>
-
       <Breadcrum product={{ category, name: '' }} />
 
       <div className="shopcategory-indexSort">
@@ -33,11 +32,13 @@ const ShopCategory = () => {
           <Sort products={sortedProducts} setSortedProducts={handleSortProducts} />
         </div>
       </div>
+      
       <div className="shopcategory-products">
         {sortedProducts.map((product, i) => (
           <ProductItem key={i} product={product} />
         ))}
       </div>
+      
       <div className="shopcategory-loadmore">
         Explore More
       </div>

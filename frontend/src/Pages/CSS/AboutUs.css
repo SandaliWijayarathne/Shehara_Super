@@ -1,6 +1,6 @@
 .about-page {
   font-family: Arial, sans-serif;
-  padding-top: 100px; 
+  padding-top: 100px;
   background-color: #022c5c;
   color: white;
 }
@@ -11,7 +11,7 @@
   padding: 50px;
   background-color: #022c5c;
   color: white;
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
 .about-left {
@@ -56,19 +56,21 @@
 
 .info-cards {
   display: flex;
+  background-color: #4caf50;
   justify-content: space-around;
+  flex-wrap: wrap; /* 🟦 Modified: Allow cards to wrap */
   padding: 40px 40px;
   background-color: white;
   margin: 20px 0;
 }
 
 .info-card {
-  background-color: #d9f2e6;
+  background-color: #4caf50;
   padding: 20px;
   border-radius: 0px 20px 0px 20px;
   text-align: center;
   width: 15%;
-  height: 150px; 
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,7 +84,52 @@
   transform: translateY(-5px);
 }
 
-.info-card:nth-child(1) {
+.info-card h3 {
+  font-size: 18px;
+  border-radius: 10px;
+}
+
+/* 🟦 New: Styles for smaller screens */
+@media screen and (max-width: 768px) {
+  .about-left h2 {
+    font-size: 24px; /* Reduced heading size for tablets */
+  }
+
+  .about-left p {
+    font-size: 14px; /* Reduced paragraph size */
+  }
+
+  .about-left button {
+    font-size: 12px; /* Reduced button font size */
+    padding: 6px 12px; /* Adjusted button padding */
+  }
+
+  .info-card h3 {
+    font-size: 14px; /* Reduced card heading size */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .about-left h2 {
+    font-size: 20px; /* Further reduced heading size for small screens */
+  }
+
+  .about-left p {
+    font-size: 12px; /* Further reduced paragraph size */
+  }
+
+  .about-left button {
+    font-size: 10px; /* Further reduced button font size */
+    padding: 5px 10px; /* Further adjusted button padding */
+  }
+
+  .info-card h3 {
+    font-size: 12px; /* Further reduced card heading size */
+  }
+}
+
+
+/* .info-card:nth-child(1) {
   background-color: #4caf50;
   color: white;
 }
@@ -100,9 +147,4 @@
 .info-card:nth-child(4) {
   background-color: #ffc107;
   color: white;
-}
-
-.info-card h3 {
-  font-size: 18px;
-  border-radius: 10px; 
-}
+}*/

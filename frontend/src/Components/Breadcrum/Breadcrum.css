@@ -10,11 +10,14 @@
 }
 
 .breadcrum a {
+
   text-decoration: none;
   color: inherit;
+
 }
 
-/* Optional: Add underline on hover for better UX */
 .breadcrum a:hover {
-  text-decoration: underline; /* Adds underline on hover */
+
+    text-decoration: underline;
+
 }

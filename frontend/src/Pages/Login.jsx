@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './CSS/Login.css';
 
-
 const LogginSignup = () => {
   const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({
@@ -10,10 +9,15 @@ const LogginSignup = () => {
     email: ""
   });
   const [errors, setErrors] = useState({});
+  const [isAgreed, setIsAgreed] = useState(false); // Added state for agreement checkbox
 
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: "" });
+  };
+
+  const handleAgreement = (e) => {
+    setIsAgreed(e.target.checked);
   };
 
   const validateForm = () => {
@@ -31,16 +35,16 @@ const LogginSignup = () => {
       return;
     }
     setErrors({});
-    console.log("Login Function Executed", formData);
     let responseData;
-    await fetch('http://localhost:4000/login', {
+    await fetch('http://localhost:4000/api/users/login', { // Fixed endpoint
       method: 'POST',
       headers: {
-        Accept: 'application/formData',
+        Accept: 'application/json', // Fixed Accept header
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
     }).then((response) => response.json()).then((data) => responseData = data);
+    
     if (responseData.success) {
       localStorage.setItem('auth-token', responseData.token);
       window.location.replace("/");
@@ -50,22 +54,27 @@ const LogginSignup = () => {
   };
 
   const signup = async () => {
+    if (!isAgreed) { // Ensure the terms are agreed to before signing up
+      alert('You must agree to the terms and conditions');
+      return;
+    }
+
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
     setErrors({});
-    console.log("Signup Function Executed", formData);
     let responseData;
-    await fetch('http://localhost:4000/signup', {
+    await fetch('http://localhost:4000/api/users/signup', { // Fixed endpoint
       method: 'POST',
       headers: {
-        Accept: 'application/formData',
+        Accept: 'application/json', // Fixed Accept header
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
     }).then((response) => response.json()).then((data) => responseData = data);
+    
     if (responseData.success) {
       localStorage.setItem('auth-token', responseData.token);
       window.location.replace("/");
@@ -79,7 +88,7 @@ const LogginSignup = () => {
       <div className="loginsignup-container">
         <h1>{state}</h1>
         <div className="loginsignup-fields">
-          {state === "Sign Up" ? (
+          {state === "Sign Up" && (
             <>
               <input
                 name='username'
@@ -90,7 +99,7 @@ const LogginSignup = () => {
               />
               {errors.username && <p className="error">{errors.username}</p>}
             </>
-          ) : null}
+          )}
           <input
             name='email'
             value={formData.email}
@@ -110,14 +119,16 @@ const LogginSignup = () => {
         </div>
         <button onClick={() => { state === "Login" ? login() : signup() }}>Continue</button>
         {state === "Sign Up" ? (
-          <p className="loginsignup-login">Already have an account? <span onClick={() => { setState("Login") }}>Login here</span></p>
+          <p className="loginsignup-login">Already have an account? <span onClick={() => setState("Login")}>Login here</span></p>
         ) : (
-          <p className="loginsignup-login">Create an account? <span onClick={() => { setState("Sign Up") }}>Click here</span></p>
+          <p className="loginsignup-login">Create an account? <span onClick={() => setState("Sign Up")}>Click here</span></p>
         )}
-        <div className="loginsignup-agree">
-          <input type="checkbox" name='' id='' />
-          <p>I agree to the terms and conditions</p>
-        </div>
+        {state === "Sign Up" && (
+          <div className="loginsignup-agree">
+            <input type="checkbox" onChange={handleAgreement} />
+            <p>I agree to the terms and conditions</p>
+          </div>
+        )}
       </div>
     </div>
   );

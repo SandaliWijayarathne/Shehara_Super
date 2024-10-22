@@ -4,6 +4,8 @@ import collections from '../Assets/collections';
 import Item from '../Item/Item';
 import FlashDeals from '../FlashDeals/FlashDeals';
 
+const URL ="localhost";
+
 const NewCollections = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [bannerImages, setBannerImages] = useState([]);
@@ -12,9 +14,20 @@ const NewCollections = () => {
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const response = await fetch('http://localhost:4000/allbanners');
+
+        const response = await fetch(`http://${URL}:4000/allbanners`);
+
         const data = await response.json();
-        setBannerImages(data);
+        console.log(data);
+        const updatedData = data.map((images) => {
+          if (images.url) {
+            images.url = `http://${URL}:4000${images.url}`;
+          }
+          return images;
+        });
+        console.log(updatedData);
+
+        setBannerImages(updatedData);
       } catch (error) {
         console.error('Error fetching banners:', error);
       }
@@ -84,6 +97,7 @@ const NewCollections = () => {
           ))}
         </div>
       </div>
+
       <div className="flashdeals"><FlashDeals/></div>
       
       {/* New Category Title Section */}
@@ -92,7 +106,6 @@ const NewCollections = () => {
         <h2>Shop By Category </h2>
         <hr className="line" />
       </div>
-      
       <div className="collections-container">
         <div className="collections">
           {collections.map((item, i) => (

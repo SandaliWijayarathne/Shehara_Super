@@ -113,6 +113,8 @@ const UserProfile = () => {
       alert('Error updating profile: ' + error.message);
     });
   };
+  
+  
 
   return (
     <div className="user-profile-page App">

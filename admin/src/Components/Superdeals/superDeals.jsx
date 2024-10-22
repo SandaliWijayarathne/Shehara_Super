@@ -6,33 +6,48 @@ const { Header, Content, Sider } = Layout;
 const { Search } = Input;
 const { confirm } = Modal;
 
-const Superdeals = () => {
+const superDeals = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [discount, setDiscount] = useState(0);
   const [currentTab, setCurrentTab] = useState('allProducts');
   const [flashDeals, setFlashDeals] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const URL = "localhost";
 
   // Fetch all products
   const fetchAllProducts = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get('http://localhost:4000/allproducts');
+
+      const response = await axios.get(`http://${URL}:4000/allproducts`);
+
       setAllProducts(response.data);
       setFilteredProducts(response.data);
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching products:', error);
+      message.error('Failed to fetch products. Please try again.');
+      setLoading(false);
     }
   };
 
   // Fetch flash deals (products with a discount)
   const fetchFlashDeals = async () => {
+    setLoading(true);
     try {
-      const response = await axios.get('http://localhost:4000/allproducts'); 
+
+      const response = await axios.get(`http://${URL}:4000/allproducts`); 
+
       const flashDeals = response.data.filter(product => product.discount > 0);
       setFlashDeals(flashDeals);
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching flash deals:', error);
+      message.error('Failed to fetch flash deals. Please try again.');
+      setLoading(false);
     }
   };
 
@@ -77,49 +92,51 @@ const Superdeals = () => {
     }
   };
 
-
   const addToSuperDeals = async () => {
     if (selectedProduct) {
       try {
-        const response = await axios.put(`http://localhost:4000/updatediscount/${selectedProduct.id}`, {
+
+        const response = await axios.put(`http://${URL}:4000/updatediscount/${selectedProduct.id}`, {
+
           discount
         });
 
         if (response.data.success) {
           message.success('Product added to Super Deals successfully!');
-          fetchAllProducts(); 
-          fetchFlashDeals(); 
+          fetchAllProducts(); // Refetch products after update
+          fetchFlashDeals();
         } else {
           message.error('Failed to add product to Super Deals');
         }
       } catch (error) {
         console.error('Error updating discount:', error);
-        message.error('Failed to update discount');
+        message.error('Failed to update discount. Please try again.');
       }
     }
   };
 
-  
   const removeFromSuperDeals = async (record) => {
     confirm({
       title: 'Are you sure you want to remove this product from Super Deals?',
       content: `${record.name} - Rs. ${record.price}`,
       onOk: async () => {
         try {
-          const response = await axios.put(`http://localhost:4000/updatediscount/${record.id}`, {
+          
+          const response = await axios.put(`http://${URL}:4000/updatediscount/${record.id}`, {
+
             discount: 0
           });
 
           if (response.data.success) {
             message.success('Product removed from Super Deals successfully!');
-            fetchAllProducts(); 
-            fetchFlashDeals(); 
+            fetchAllProducts(); // Refetch products after removal
+            fetchFlashDeals();
           } else {
             message.error('Failed to remove product from Super Deals');
           }
         } catch (error) {
           console.error('Error removing discount:', error);
-          message.error('Failed to remove discount');
+          message.error('Failed to remove discount. Please try again.');
         }
       },
       onCancel() {
@@ -128,7 +145,6 @@ const Superdeals = () => {
     });
   };
 
-  
   const columns = [
     {
       title: 'Product',
@@ -191,6 +207,7 @@ const Superdeals = () => {
             dataSource={currentTab === 'allProducts' ? filteredProducts : flashDeals}
             rowKey="id"
             pagination={{ pageSize: 5 }}
+            loading={loading}
           />
           {selectedProduct && currentTab === 'allProducts' && (
             <div style={{ marginTop: 20 }}>
@@ -229,4 +246,4 @@ const Superdeals = () => {
   );
 };
 
-export default Superdeals;
+export default superDeals;
