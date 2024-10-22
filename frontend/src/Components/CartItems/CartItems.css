@@ -5,6 +5,9 @@
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Two-column layout */
+    gap: 20px;
 }
 
 .cartitems hr {
@@ -75,29 +78,16 @@
     box-sizing: border-box; 
 }
 
-
-.cartitems-format {
-    display: grid;
-    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 0.5fr;
-    align-items: center;
-    padding: 15px 0;
-    gap: 20px;
-}
-
-
 .cartitems-summary {
-    margin-top: 50px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.cartitems-total {
     background-color: #fff;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+}
+
+.cartitems-total {
     width: 100%;
-    max-width: 400px;
     font-weight: 600;
 }
 
@@ -126,13 +116,71 @@
     background: #0056b3;
 }
 
+/* Address Popup */
+.address-popup {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.address-popup-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.address-popup-content h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.address-popup-content textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.address-popup-content button {
+    width: 100%;
+    height: 40px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.address-popup-content button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
+    .cartitems-container {
+        grid-template-columns: 1fr; /* Single-column layout on smaller screens */
+    }
+
     .cartitems-header, .cartitems-product {
         grid-template-columns: 0.5fr 1.5fr 1fr 1fr 1fr 0.5fr;
         font-size: 16px;
     }
 
-    .cartitems-total {
+    .cartitems-summary {
         width: 100%;
         margin: 0 auto;
     }
