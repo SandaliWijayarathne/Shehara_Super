@@ -1,11 +1,10 @@
-/* Reset default margins and paddings */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
   
-  /* Existing styles */
   .loginsignup {
     display: flex;
     justify-content: center;

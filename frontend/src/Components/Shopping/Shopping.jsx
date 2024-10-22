@@ -11,9 +11,11 @@ const Shopping = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
+
       const response = await fetch(`http://${URL}:4000/allproducts`);
       const data = await response.json();
       setProducts(data);
+
     };
 
     fetchProducts();
@@ -42,7 +44,6 @@ const Shopping = () => {
               <img src={product.image} alt={product.name} />
             </Link>
             <h3>{product.name}</h3>
-            <p>Category: {product.category}</p>
             <p>Price: Rs.{product.price}</p>
           </div>
         ))

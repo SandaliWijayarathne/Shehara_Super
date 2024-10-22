@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './FlashDeals.css';
 
@@ -11,7 +11,9 @@ const FlashDeals = () => {
   // Fetch all products with discounts
   const fetchFlashDeals = async () => {
     try {
+
       const response = await fetch(`http://${URL}:4000/allproducts`);
+
       if (!response.ok) {
         throw new Error('Failed to fetch flash deals');
       }
@@ -34,13 +36,6 @@ const FlashDeals = () => {
   // Function to handle navigation to product detail page
   const handleNavigateToProduct = (itemId) => {
     navigate(`/product/${itemId}`);
-  };
-
-  // Function to handle adding a product to the cart
-  const handleAddToCart = (event, itemId) => {
-    event.stopPropagation(); // Prevent card click event from firing
-    // Add your add-to-cart logic here
-    console.log(`Add product ${itemId} to cart`);
   };
 
   useEffect(() => {

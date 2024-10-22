@@ -46,7 +46,9 @@ const AddProduct = () => {
   
       if (imageResponse.success) {
         productDetails.image = imageResponse.image_url;
+
         const productResponse = await fetch(`http://${URL}localhost:4000/addproduct`, {
+          
           method: 'POST',
           headers: {
             Accept: 'application/json',

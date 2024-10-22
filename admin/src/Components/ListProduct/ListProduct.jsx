@@ -18,7 +18,9 @@ const ListProduct = () => {
     setError(null);
 
     try {
+
       const { data } = await axios.get(`http://${URL}:4000/allproducts`);
+
       setAllProducts(data);
     } catch (error) {
       setError('Error fetching products');
@@ -50,7 +52,9 @@ const ListProduct = () => {
 
   const removeProduct = async (id) => {
     try {
+
       await axios.post(`http://${URL}:4000/removeproduct`, { id });
+
       fetchAllProducts();
     } catch (error) {
       setError('Error removing product');
@@ -59,7 +63,9 @@ const ListProduct = () => {
 
   const updateProductPrices = async (id, newPrice) => {
     try {
+
       await axios.put(`http://${URL}:4000/updateprice/${id}`, { price: newPrice });
+
       fetchAllProducts();
     } catch (error) {
       setError('Error updating price');

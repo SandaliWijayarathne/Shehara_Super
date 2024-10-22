@@ -11,9 +11,12 @@ const AddBanner = () => {
   const [uploading, setUploading] = useState(false);
   const [banners, setBanners] = useState([]);
 
+  // Fetch all banners from backend
   const fetchBanners = async () => {
     try {
+
       const { data } = await axios.get(`http://${URL}:4000/allbanners`);
+
       setBanners(data);
     } catch (error) {
       message.error('Error fetching banners');
@@ -49,6 +52,7 @@ const AddBanner = () => {
 
       const { data } = await axios.post(`http://${URL}:4000/bannerupload`, formData);
 
+
       if (data.success) {
         message.success('Image uploaded successfully!');
         setFiles([]);
@@ -65,7 +69,9 @@ const AddBanner = () => {
 
   const handleDelete = async (id) => {
     try {
+
       const { data } = await axios.delete(`http://${URL}:4000/removebanner/${id}`);
+
       if (data.success) {
         message.success('Banner deleted successfully!');
         fetchBanners();

@@ -14,7 +14,9 @@ const NewCollections = () => {
   useEffect(() => {
     const fetchBanners = async () => {
       try {
+
         const response = await fetch(`http://${URL}:4000/allbanners`);
+
         const data = await response.json();
         console.log(data);
         const updatedData = data.map((images) => {
@@ -95,7 +97,7 @@ const NewCollections = () => {
           ))}
         </div>
       </div>
-      <div className='flashdeals'><FlashDeals/></div>
+      <div className='flashdeals'><FlashDeals /></div>
       <div className="collections-container">
         <div className="collections">
           {collections.map((item, i) => (
