@@ -125,7 +125,7 @@ const LogginSignup = () => {
         )}
         {state === "Sign Up" && (
           <div className="loginsignup-agree">
-            <input type="checkbox" onChange={handleAgreement} />
+            <input type="checkbox" className='cbox' onChange={handleAgreement}/>
             <p>I agree to the terms and conditions</p>
           </div>
         )}

@@ -7,7 +7,10 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
-require("dotenv").config()
+require("dotenv").config();
+const bcrypt = require('bcryptjs');
+const validator = require('validator');
+
 app.use(express.static('public'))
 
 app.use(express.json());
@@ -279,6 +282,7 @@ app.get('/allproducts', async (req, res) => {
     }
 });
 
+
 // Update Product Price
 app.put('/updateprice/:id', async (req, res) => {
     try {
@@ -394,8 +398,8 @@ app.get('/getUserAddress', fetchUser, async (req, res) => {
 // User Schema
 const Users = mongoose.model('Users', {
     name: { type: String },
-    email: { type: String, unique: true },
-    password: { type: String },
+    email: { type: String, unique: true, required: true },
+    password: { type: String, required: true },
     cartData: { type: Object },
     address: { type: String },
     contactNumber: { type: String },
@@ -404,23 +408,49 @@ const Users = mongoose.model('Users', {
     date: { type: Date, default: Date.now },
 });
 
+// Helper function to validate email and password
+const validateEmailAndPassword = (email, password) => {
+    if (!validator.isEmail(email)) {
+        return { success: false, errors: "Invalid email format" };
+    }
+    if (password.length < 6 || password === '123456' || 'asdfgh'||'zxcvbn') {
+        return { success: false, errors: "Password must be at least 6 characters" };
+    }
+    return { success: true };
+};
+
 // Register User
 app.post('/signup', async (req, res) => {
+    const { username, email, password } = req.body;
+
+    // Validate email and password
+    const validation = validateEmailAndPassword(email, password);
+    if (!validation.success) {
+        return res.status(400).json(validation);
+    }
+
     try {
-        let check = await Users.findOne({ email: req.body.email });
+        // Check if user already exists
+        let check = await Users.findOne({ email });
         if (check) {
-            return res.status(400).json({ success: false, errors: "Existing user found with same email address" });
+            return res.status(400).json({ success: false, errors: "Existing user found with the same email address" });
         }
 
+        // Encrypt the password before saving
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Initialize cart with 0 values for 300 items
         let cart = {};
         for (let i = 0; i < 300; i++) {
             cart[i] = 0;
         }
 
+        // Create a new user
         const user = new Users({
-            name: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
+            name: username,
+            email,
+            password: hashedPassword, // Store hashed password
             cartData: cart,
             address: '',
             contactNumber: '',
@@ -428,8 +458,10 @@ app.post('/signup', async (req, res) => {
             profileImage: '',
         });
 
+        // Save user in the database
         await user.save();
 
+        // Generate JWT token
         const data = { user: { id: user.id } };
         const token = jwt.sign(data, 'secret_cake');
         res.json({ success: true, token });
@@ -441,54 +473,57 @@ app.post('/signup', async (req, res) => {
 
 // Login User
 app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
     try {
-        let user = await Users.findOne({ email: req.body.email });
+        // Check if the user exists
+        let user = await Users.findOne({ email });
         if (!user) {
-            return res.json({ success: false, errors: "Wrong Email Id" });
+            return res.status(400).json({ success: false, errors: "Incorrect email or password" });
         }
 
-        const passCompare = req.body.password === user.password;
-        if (passCompare) {
-            const data = { user: { id: user.id } };
-            const token = jwt.sign(data, 'secret_cake');
-            res.json({ success: true, token });
-        } else {
-            res.json({ success: false, errors: "Wrong Password" });
+        // Compare provided password with the stored hashed password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ success: false, errors: "Incorrect email or password" });
         }
+
+        // Generate JWT token
+        const data = { user: { id: user.id } };
+        const token = jwt.sign(data, 'secret_cake');
+        res.json({ success: true, token });
     } catch (error) {
         console.error("Error logging in user:", error);
         res.status(500).json({ error: "Failed to login user" });
     }
 });
 
-// Update User Profile Endpoint
-app.put('/updateprofile', fetchUser, async (req, res) => {
+// Get User Profile (secured route with JWT authentication)
+app.get('/profile', async (req, res) => {
+    const token = req.header('auth-token');
+
+    // Verify JWT token
+    if (!token) {
+        return res.status(401).json({ success: false, errors: "Access denied, no token provided" });
+    }
+
     try {
-        const userId = req.user.id;
+        // Verify token
+        const verified = jwt.verify(token, 'secret_cake');
+        const user = await Users.findById(verified.user.id).select('-password'); // Exclude password
 
-        const updatedUser = await Users.findByIdAndUpdate(
-            userId,
-            {
-                name: req.body.name,
-                address: req.body.address,
-                contactNumber: req.body.contactNumber,
-                cardNumber: req.body.cardNumber,
-                profileImage: req.body.profileImage,
-            },
-            { new: true }
-        );
-
-        if (!updatedUser) {
-            return res.status(404).json({ success: false, message: "User not found" });
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
         }
 
-        console.log("User profile updated:", updatedUser);
-        res.json({ success: true, updatedUser });
+        // Return user profile data
+        res.json({ success: true, user });
     } catch (error) {
-        console.error("Error updating profile:", error);
-        res.status(500).json({ error: "Failed to update profile" });
+        console.error("Error fetching user profile:", error);
+        res.status(500).json({ error: "Failed to fetch user profile" });
     }
 });
+
 
 // Fetch New Collections
 app.get('/newcollections', async (req, res) => {
