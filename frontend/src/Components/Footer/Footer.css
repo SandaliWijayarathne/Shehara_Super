@@ -15,6 +15,7 @@
 
 .footer-main {
   display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
   justify-content: space-around;
   padding: 20px 50px;
 }
@@ -25,6 +26,8 @@
   align-items: center;
   text-align: center;
   font-size: 14px;
+  flex: 1 1 200px; /* Allow flexibility in width */
+  margin: 10px; /* Add margin for spacing */
 }
 
 .footer-logo img {
@@ -38,6 +41,7 @@
 
 .footer-links {
   display: flex;
+  flex-wrap: wrap; /* Allow links to wrap to the next line */
   justify-content: space-around;
   width: 60%;
 }
@@ -45,6 +49,8 @@
 .footer-links div {
   display: flex;
   flex-direction: column;
+  flex: 1 1 150px; /* Allow flexibility in width */
+  margin: 10px; /* Add margin for spacing */
 }
 
 .footer-links h4 {
@@ -75,4 +81,49 @@
 .google-play-icon {
   width: 150px;
   margin-top: 10px;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  .footer-main {
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center align items */
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .footer-links {
+    width: 100%; /* Full width for links */
+    justify-content: center; /* Center align links */
+  }
+
+  .footer-links div {
+    flex: 1 1 auto; /* Allow flexibility in width */
+    margin: 5px; /* Add margin for spacing */
+  }
+
+  .footer-logo img {
+    width: 120px; /* Slightly smaller logo for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-top {
+    font-size: 12px; /* Smaller font for mobile */
+  }
+
+  .footer-contact p {
+    font-size: 12px; /* Smaller font for contact info */
+  }
+
+  .footer-links h4 {
+    font-size: 14px; /* Smaller heading font */
+  }
+
+  .footer-links li {
+    font-size: 12px; /* Smaller link font */
+  }
+
+  .google-play-icon {
+    width: 120px; /* Smaller icon for mobile */
+  }
 }

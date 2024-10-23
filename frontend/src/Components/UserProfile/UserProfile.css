@@ -16,6 +16,7 @@
 .user-profile-page body {
   font-family: sans-serif;
   background-color: #f5f5f5;
+  margin-top: 200px;
 }
 
 .user-profile-page .App {
@@ -26,33 +27,6 @@
   padding: 50px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.navbar {
-  background-color: #003366;
-  color: white;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: -30px;
-  margin-top: 5px;
-}
-
-.navbar-logo {
-  width: 100px;
-}
-
-.nav-menu {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
-.nav-menu a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
 }
 
 .search-bar-container {
@@ -199,17 +173,6 @@
     max-width: 600px;
   }
 
-  .navbar {
-    flex-direction: column;
-    padding: 10px;
-    align-items: flex-start;
-  }
-
-  .nav-menu {
-    flex-direction: column;
-    gap: 10px;
-  }
-
   .profile-container {
     flex-direction: column;
   }
@@ -240,19 +203,6 @@
     margin: 20px auto 0 auto;
     padding: 20px;
     max-width: 100%;
-  }
-
-  .navbar-logo {
-    width: 80px;
-  }
-
-  .navbar {
-    justify-content: center;
-  }
-
-  .nav-menu {
-    gap: 5px;
-    text-align: center;
   }
 
   .profile-container {
