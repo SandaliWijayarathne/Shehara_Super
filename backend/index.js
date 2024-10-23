@@ -201,7 +201,7 @@ const Product = mongoose.model("Product", {
     date: { type: Date, default: Date.now },
     available: { type: Boolean, default: true },
     discount:{type: Number,default: 0},
-    description:{type:String,default:"This is quality product"},
+    description:{type:String,default:"This product is high quality and meets all your needs."},
 });
 
 // Update Product Discount
