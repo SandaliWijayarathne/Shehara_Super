@@ -23,9 +23,17 @@ const FlashDeals = () => {
       try {
   
         const response = await axios.get(`http://${URL}:4000/allproducts`);
-  
-        setAllProducts(response.data);
-        setFilteredProducts(response.data);
+
+        const updatedData1 = response.data.map((images) => {
+            if (images.image) {
+              images.image = `http://${URL}:4000${images.image}`;
+            }
+            return images;
+          });
+          
+        console.log(updatedData1);
+        setAllProducts(updatedData1);
+        setFilteredProducts(updatedData1);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -42,7 +50,17 @@ const FlashDeals = () => {
         const response = await axios.get(`http://${URL}:4000/allproducts`); 
   
         const flashDeals = response.data.filter(product => product.discount > 0);
-        setFlashDeals(flashDeals);
+
+        const updatedData = flashDeals.map((images) => {
+            if (images.image) {
+              images.image = `http://${URL}:4000${images.image}`;
+            }
+            return images;
+          });
+
+          console.log(updatedData);
+        setFlashDeals(updatedData);
+
         setLoading(false);
       } catch (error) {
         console.error('Error fetching flash deals:', error);
