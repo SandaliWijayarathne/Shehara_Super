@@ -76,12 +76,12 @@
 
 /* Hidden by default, shown on smaller screens */
 .menu-toggle {
-  display: none;
+  display: none; /* Initially hidden */
 }
 
 .menu-toggle .dropdown-icon {
-  width: 25px;
-  height: 25px;
+  width: 25px; /* Adjust width as needed */
+  height: 25px; /* Adjust height as needed */
   cursor: pointer;
   z-index: 1500;
 }
@@ -165,10 +165,6 @@
   color: #007bff;
 }
 
-.menu-toggle {
-  display: none; /* Initially hidden */
-}
-
 /* Responsive Styling */
 @media (max-width: 1024px) {
   .navbar {
@@ -211,6 +207,7 @@
     padding: 5px 0;
     margin-top: 40px;
   }
+
   .navbar-logo {
     height: 40px;
     margin-top: -23px;
@@ -237,39 +234,18 @@
     right: 10px;
     padding: 15px;
     border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
 
-  .nav-menu.nav-menu-visible {
-    display: flex;
-  }
-}
-
-@media (max-width: 480px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px 15px;
+  .nav-menu-visible {
+    display: flex; /* Show menu when open */
   }
 
-  .navbar-logo {
-    margin-bottom: 10px;
+  .nav-menu li {
+    padding: 8px 0;
   }
 
-  .search-container {
-    width: 100%;
-    flex-direction: column;
-    padding: 10px 0;
-  }
-
-  .search-input {
-    width: 100%;
-    margin-top: 0;
-    margin-bottom: 10px;
-    border-radius: 0 20px 0 20px;
-  }
-
-  .search-button {
-    width: 100%;
-    margin-left: 0;
+  .nav-menu li a {
+    font-size: 14px;
   }
 }

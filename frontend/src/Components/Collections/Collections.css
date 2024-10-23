@@ -73,7 +73,7 @@
   padding: 20px;
   border-radius: 20px 0px 20px 0px;
   margin-bottom: 20px;
-  margin-top: 50px;
+  margin-top: 17px;
 }
 
 .collections {
@@ -96,7 +96,7 @@
   align-items: center;
   justify-content: center;
   margin: 40px 0;
-  width: 90%;
+  width: 85%;
 }
 
 .category-title h2 {
@@ -144,5 +144,29 @@
 @media (max-width: 480px) {
   .collections {
     grid-template-columns: 1fr; 
+  }
+  
+  /* Additional styles for the banner at small screen sizes */
+  .banner-container {
+    margin-top: 200px;
+    height: 480px; /* Adjust height for smaller screens */
+  }
+  
+  .banner-image {
+    object-fit: cover; /* Ensure the images cover the area without distortion */
+  }
+
+  .nav-button {
+    font-size: 20px; /* Smaller buttons on mobile */
+    padding: 8px; /* Reduced padding */
+  }
+  
+  .dot {
+    width: 8px; /* Smaller dots for mobile */
+    height: 8px;
+  }
+
+  .dot.active {
+    background-color: #555; /* Change active dot color for visibility */
   }
 }

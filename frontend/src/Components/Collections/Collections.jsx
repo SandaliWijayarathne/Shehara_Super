@@ -8,19 +8,18 @@ import Banner2 from '../Assets/banner_2.png';
 import Banner3 from '../Assets/banner_3.png';
 import Banner4 from '../Assets/banner_4.png';
 
-const URL ="localhost";
+const URL = "localhost";
 
 const NewCollections = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [bannerImages, setBannerImages] = useState([]);
   const [direction, setDirection] = useState('forward');
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Track window width
 
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-
         const response = await fetch(`http://${URL}:4000/allbanners`);
-
         const data = await response.json();
         console.log(data);
         const updatedData = data.map((images) => {
@@ -30,7 +29,6 @@ const NewCollections = () => {
           return images;
         });
         console.log(updatedData);
-
         setBannerImages(updatedData);
       } catch (error) {
         console.error('Error fetching banners:', error);
@@ -38,6 +36,15 @@ const NewCollections = () => {
     };
 
     fetchBanners();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
@@ -61,7 +68,7 @@ const NewCollections = () => {
       });
     }, 15000);
 
-    return () => clearInterval(intervalId); 
+    return () => clearInterval(intervalId);
   }, [bannerImages, direction]);
 
   const goToSlide = (index) => {
@@ -76,15 +83,18 @@ const NewCollections = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? bannerImages.length - 1 : prevIndex - 1));
   };
 
+  // Determine which banners to show based on window width
+  const bannersToShow = windowWidth <= 480 ? [Banner1, Banner2, Banner3, Banner4] : bannerImages;
+
   return (
     <div className="new-collections">
       <div className="banner-container">
         <div className="banner-slider" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-          {bannerImages.map((banner) => (
+          {bannersToShow.map((banner, index) => (
             <img
-              key={banner._id}
-              src={banner.url}
-              alt={`Banner ${banner._id}`}
+              key={index}
+              src={typeof banner === 'string' ? banner : banner.url}
+              alt={`Banner ${index}`}
               className="banner-image"
             />
           ))}
@@ -92,7 +102,7 @@ const NewCollections = () => {
         <button className="nav-button prev" onClick={prevSlide}>‹</button>
         <button className="nav-button next" onClick={nextSlide}>›</button>
         <div className="dots-container">
-          {bannerImages.map((_, index) => (
+          {bannersToShow.map((_, index) => (
             <span
               key={index}
               className={`dot ${currentIndex === index ? 'active' : ''}`}
@@ -102,8 +112,8 @@ const NewCollections = () => {
         </div>
       </div>
 
-      <div className="flashdeals"><FlashDeals/></div>
-      
+      <div className="flashdeals"><FlashDeals /></div>
+
       {/* New Category Title Section */}
       <div className="category-title">
         <hr className="line" />
