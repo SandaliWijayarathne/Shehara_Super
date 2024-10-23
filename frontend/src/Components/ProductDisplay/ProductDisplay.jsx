@@ -32,10 +32,10 @@ const ProductDisplay = (props) => {
             <div className="productdisplay-right">
                 <h1>{product.name}</h1>
                 <div className="productdisplay-right-price">Rs. {product.price}.00</div>
-                <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
                 <div className="productdisplay-right-description">
-                    {product.description}
+                    {product.description} {/* Display description */}
                 </div>
+                <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
             </div>
             <ToastContainer />
         </div>

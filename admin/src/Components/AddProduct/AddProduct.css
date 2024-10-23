@@ -29,12 +29,19 @@
 }
 
 .form-group input,
-.form-group select {
+.form-group select,
+.form-group textarea {
   padding: 10px;
   font-size: 1em;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-sizing: border-box;
+  font-family: inherit; /* Ensure consistent font style */
+}
+
+.form-group textarea {
+  resize: vertical; /* Allow vertical resizing if needed */
+  height: 50px; /* Set initial height */
 }
 
 .product-category-selector {

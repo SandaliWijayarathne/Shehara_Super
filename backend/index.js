@@ -200,7 +200,8 @@ const Product = mongoose.model("Product", {
     price: { type: Number, required: true },
     date: { type: Date, default: Date.now },
     available: { type: Boolean, default: true },
-    discount:{type: Number,default: 0}
+    discount:{type: Number,default: 0},
+    description:{type:String,default:"This is quality product"},
 });
 
 // Update Product Discount
@@ -231,8 +232,7 @@ app.put('/updatediscount/:id', async (req, res) => {
     }
 });
 
-//add product
-
+// Add product endpoint
 app.post('/addproduct', async (req, res) => {
     try {
         let products = await Product.find({});
@@ -245,7 +245,7 @@ app.post('/addproduct', async (req, res) => {
             category: req.body.category,
             price: req.body.price,
             discount: req.body.discount || 0, // Ensure discount is included
-            description:req.body.description || "Quality Product"
+            description: req.body.description, // Use req.body.description here
         });
 
         await product.save();
@@ -257,6 +257,7 @@ app.post('/addproduct', async (req, res) => {
         res.status(500).json({ error: "Failed to save product" });
     }
 });
+
 
 
 // Remove Product
@@ -437,7 +438,7 @@ app.post('/signup', async (req, res) => {
         console.error("Error registering user:", error);
         res.status(500).json({ error: "Failed to register user" });
     }
-});order
+});
 
 // Login User
 app.post('/login', async (req, res) => {

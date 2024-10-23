@@ -11,7 +11,8 @@ const AddProduct = () => {
     name: "",
     image: "",
     category: "Vegetables",
-    price: ""
+    price: "",
+    description: "" // New description field
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -25,19 +26,19 @@ const AddProduct = () => {
   };
 
   const Add_Product = async () => {
-    if (!productDetails.name || !productDetails.price || !image) {
-      setError('Please fill in all fields and upload an image.');
-      message.error('Please fill in all fields and upload an image.');
+    if (!productDetails.name || !productDetails.price || !image || !productDetails.description) {
+      setError('Please fill in all fields, including the description, and upload an image.');
+      message.error('Please fill in all fields, including the description, and upload an image.');
       return;
     }
 
     setLoading(true);
     setError(null);
-    
+
     try {
       const formData = new FormData();
       formData.append('product', image);
-  
+
       const imageResponse = await fetch(`http://${S_URL}:4000/uploadproductimage`, {
         method: 'POST',
         headers: {
@@ -45,7 +46,7 @@ const AddProduct = () => {
         },
         body: formData,
       }).then((resp) => resp.json());
-  
+
       if (imageResponse.success) {
         productDetails.image = imageResponse.image_url;
         const productResponse = await fetch(`http://${S_URL}:4000/addproduct`, {
@@ -56,14 +57,15 @@ const AddProduct = () => {
           },
           body: JSON.stringify(productDetails),
         }).then((resp) => resp.json());
-  
+
         if (productResponse.success) {
           message.success("Product Added Successfully!");
           setProductDetails({
             name: "",
             image: "",
             category: "Vegetables",
-            price: ""
+            price: "",
+            description: "" // Reset description field
           });
           setImage(null);
         } else {
@@ -125,6 +127,15 @@ const AddProduct = () => {
           <option value="FrozenFoods">Frozen Food</option>
           <option value="Fruits">Fruits</option>
         </select>
+      </div>
+      <div className="form-group">
+        <label>Product Description</label> {/* New description field */}
+        <textarea
+          value={productDetails.description}
+          onChange={changeHandler}
+          name="description"
+          placeholder="Enter product description"
+        />
       </div>
       <div className="form-group image-upload">
         <label htmlFor="file-input" className='upload-label'>
