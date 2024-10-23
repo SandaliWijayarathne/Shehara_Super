@@ -7,6 +7,10 @@ import Banner1 from '../Assets/banner_1.png';
 import Banner2 from '../Assets/banner_2.png';
 import Banner3 from '../Assets/banner_3.png';
 import Banner4 from '../Assets/banner_4.png';
+import Banner5 from '../Assets/banner_5.png';
+import Banner6 from '../Assets/banner_6.png';
+import Banner7 from '../Assets/banner_7.png';
+import Banner8 from '../Assets/banner_8.png';
 
 const URL = "localhost";
 
@@ -84,7 +88,11 @@ const NewCollections = () => {
   };
 
   // Determine which banners to show based on window width
-  const bannersToShow = windowWidth <= 480 ? [Banner1, Banner2, Banner3, Banner4] : bannerImages;
+  const bannersToShow = windowWidth <= 480 
+    ? [Banner1, Banner2, Banner3, Banner4] // Banners for 480px and below
+    : windowWidth <= 768 
+      ? [Banner5, Banner6, Banner7, Banner8] // Banners for 481px to 768px
+      : bannerImages; // Banners for larger screens
 
   return (
     <div className="new-collections">
