@@ -1,3 +1,4 @@
+/* General Styles */
 .user-profile-page body,
 .user-profile-page html,
 .user-profile-page div,
@@ -143,11 +144,6 @@
   display: flex;
   align-items: center;
 }
-.error-text {
-  color: red;
-  font-size: 0.9em;
-  margin-top: 5px;
-}
 
 .user-profile-page .payment-info img {
   width: 50px;
@@ -185,4 +181,103 @@
 .user-profile-page .footer {
   margin-top: 40px;
   text-align: center;
+}
+
+.error-text {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+/* Responsive Styles */
+
+/* Small Devices (Tablets and below) */
+@media (max-width: 768px) {
+  .user-profile-page .App {
+    margin: 50px auto 0 auto;
+    padding: 30px;
+    max-width: 600px;
+  }
+
+  .navbar {
+    flex-direction: column;
+    padding: 10px;
+    align-items: flex-start;
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .profile-container {
+    flex-direction: column;
+  }
+
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+  }
+
+  .user-profile-page .profile {
+    padding: 15px;
+  }
+
+  .payment-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .order-section {
+    flex-direction: column;
+  }
+}
+
+/* Extra Small Devices (Phones) */
+@media (max-width: 480px) {
+  .user-profile-page .App {
+    margin: 20px auto 0 auto;
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  .navbar-logo {
+    width: 80px;
+  }
+
+  .navbar {
+    justify-content: center;
+  }
+
+  .nav-menu {
+    gap: 5px;
+    text-align: center;
+  }
+
+  .profile-container {
+    flex-direction: column;
+  }
+
+  .profile-image {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+  }
+
+  .user-profile-page .profile {
+    padding: 10px;
+  }
+
+  .payment-info img {
+    width: 40px;
+  }
+
+  .order-section {
+    flex-direction: column;
+  }
+
+  .order-section img {
+    width: 50px;
+  }
 }
