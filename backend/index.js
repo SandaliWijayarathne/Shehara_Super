@@ -7,10 +7,9 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
-require("dotenv").config();
 const bcrypt = require('bcryptjs');
-const validator = require('validator');
 
+require("dotenv").config()
 app.use(express.static('public'))
 
 app.use(express.json());
@@ -282,7 +281,6 @@ app.get('/allproducts', async (req, res) => {
     }
 });
 
-
 // Update Product Price
 app.put('/updateprice/:id', async (req, res) => {
     try {
@@ -395,62 +393,41 @@ app.get('/getUserAddress', fetchUser, async (req, res) => {
     }
 });
 
-// User Schema
+// Define User Schema
 const Users = mongoose.model('Users', {
     name: { type: String },
-    email: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
+    email: { type: String, unique: true },
+    password: { type: String },
     cartData: { type: Object },
     address: { type: String },
     contactNumber: { type: String },
     cardNumber: { type: String },
     profileImage: { type: String },
+    orderNumber: {type:String},
     date: { type: Date, default: Date.now },
 });
 
-// Helper function to validate email and password
-const validateEmailAndPassword = (email, password) => {
-    if (!validator.isEmail(email)) {
-        return { success: false, errors: "Invalid email format" };
-    }
-    if (password.length < 6 || password === '123456' || 'asdfgh'||'zxcvbn') {
-        return { success: false, errors: "Password must be at least 6 characters" };
-    }
-    return { success: true };
-};
-
 // Register User
 app.post('/signup', async (req, res) => {
-    const { username, email, password } = req.body;
-
-    // Validate email and password
-    const validation = validateEmailAndPassword(email, password);
-    if (!validation.success) {
-        return res.status(400).json(validation);
-    }
-
     try {
-        // Check if user already exists
-        let check = await Users.findOne({ email });
+        let check = await Users.findOne({ email: req.body.email });
         if (check) {
-            return res.status(400).json({ success: false, errors: "Existing user found with the same email address" });
+            return res.status(400).json({ success: false, errors: "Existing user found with same email address" });
         }
 
-        // Encrypt the password before saving
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        // Initialize cart with 0 values for 300 items
         let cart = {};
         for (let i = 0; i < 300; i++) {
             cart[i] = 0;
         }
 
-        // Create a new user
+        // Hash the password
+        const salt = await bcrypt.genSalt(10); // Generate salt
+        const hashedPassword = await bcrypt.hash(req.body.password, salt); // Hash password
+
         const user = new Users({
-            name: username,
-            email,
-            password: hashedPassword, // Store hashed password
+            name: req.body.username,
+            email: req.body.email,
+            password: hashedPassword,  // Store hashed password
             cartData: cart,
             address: '',
             contactNumber: '',
@@ -458,10 +435,8 @@ app.post('/signup', async (req, res) => {
             profileImage: '',
         });
 
-        // Save user in the database
         await user.save();
 
-        // Generate JWT token
         const data = { user: { id: user.id } };
         const token = jwt.sign(data, 'secret_cake');
         res.json({ success: true, token });
@@ -471,58 +446,95 @@ app.post('/signup', async (req, res) => {
     }
 });
 
+// Middleware to verify JWT token
+const verifyToken = (req, res, next) => {
+    const token = req.headers['auth-token']; // Get token from the header
+    if (!token) {
+        return res.status(403).json({ success: false, error: "Access denied" });
+    }
+    jwt.verify(token, 'secret_cake', (err, user) => {
+        if (err) {
+            return res.status(403).json({ success: false, error: "Invalid token" });
+        }
+        req.user = user.user; // Attach user info to the request
+        next(); // Call the next middleware/route handler
+    });
+};
+
+app.get('/getuser', verifyToken, async (req, res) => {
+    try {
+        const userId = req.user.id; // Assuming you attach user id to req.user in verifyToken middleware
+        const user = await Users.findById(userId).select('-password'); // Exclude password field
+
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
+        }
+
+        res.json({ success: true, user });
+    } catch (error) {
+        console.error("Error fetching user info:", error);
+        res.status(500).json({ error: "Failed to fetch user info" });
+    }
+});
+
+
 // Login User
 app.post('/login', async (req, res) => {
-    const { email, password } = req.body;
-
     try {
-        // Check if the user exists
-        let user = await Users.findOne({ email });
+        let user = await Users.findOne({ email: req.body.email });
         if (!user) {
-            return res.status(400).json({ success: false, errors: "Incorrect email or password" });
+            return res.json({ success: false, errors: "Wrong Email Id" });
         }
 
-        // Compare provided password with the stored hashed password
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ success: false, errors: "Incorrect email or password" });
+        // Compare the hashed password
+        const passCompare = await bcrypt.compare(req.body.password, user.password); // Compare passwords
+        if (passCompare) {
+            const data = { user: { id: user.id } };
+            const token = jwt.sign(data, 'secret_cake');
+            res.json({ success: true, token });
+        } else {
+            res.json({ success: false, errors: "Wrong Password" });
         }
-
-        // Generate JWT token
-        const data = { user: { id: user.id } };
-        const token = jwt.sign(data, 'secret_cake');
-        res.json({ success: true, token });
     } catch (error) {
         console.error("Error logging in user:", error);
         res.status(500).json({ error: "Failed to login user" });
     }
 });
 
-// Get User Profile (secured route with JWT authentication)
-app.get('/profile', async (req, res) => {
-    const token = req.header('auth-token');
 
-    // Verify JWT token
-    if (!token) {
-        return res.status(401).json({ success: false, errors: "Access denied, no token provided" });
-    }
 
+
+// Update User Profile Endpoint
+app.put('/updateprofile', fetchUser, async (req, res) => {
     try {
-        // Verify token
-        const verified = jwt.verify(token, 'secret_cake');
-        const user = await Users.findById(verified.user.id).select('-password'); // Exclude password
+        const userId = req.user.id;
+        console.log(userId);
 
-        if (!user) {
-            return res.status(404).json({ success: false, errors: "User not found" });
+        const updatedUser = await Users.findByIdAndUpdate(
+            userId,req.body,
+           /* {
+                  name: req.body.name,
+                address: req.body.address,
+                contactNumber: req.body.contactNumber,
+                cardNumber: req.body.cardNumber,
+                profileImage: req.body.profileImage,
+                
+            }*/
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        // Return user profile data
-        res.json({ success: true, user });
+       // console.log("User profile updated:", updatedUser);
+        res.json({ success: true, updatedUser });
     } catch (error) {
-        console.error("Error fetching user profile:", error);
-        res.status(500).json({ error: "Failed to fetch user profile" });
+        console.error("Error updating profile:", error);
+        res.status(500).json({ error: "Failed to update profile" });
     }
 });
+
 
 
 // Fetch New Collections
@@ -580,6 +592,32 @@ app.post('/getcart', fetchUser, async (req, res) => {
     }
 });
 
+//create order
+
+app.post('/submitOrder', fetchUser, async (req, res) => {
+    const { address, paymentMethod, trackingId } = req.body;
+
+    if (!trackingId) {
+        return res.status(400).json({ success: false, message: 'Tracking ID (OTP) is required' });
+    }
+
+    try {
+        const newOrder = new Order({
+            userId: req.user.id,
+            address: address,
+            paymentMethod: paymentMethod,
+            trackingId: trackingId, // Store OTP as trackingId
+        });
+
+        await newOrder.save();
+        res.json({ success: true, message: 'Order placed successfully', trackingId: trackingId });
+    } catch (error) {
+        console.error('Error submitting order:', error);
+        res.status(500).json({ success: false, message: 'Failed to submit order' });
+    }
+});
+
+
 // Remove Order
 app.post('/api/removeorder', async (req, res) => {
     try {
@@ -601,4 +639,3 @@ app.listen(port, (error) => {
         console.log("Error: " + error);
     }
 });
-
