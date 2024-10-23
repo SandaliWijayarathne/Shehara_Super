@@ -15,7 +15,7 @@ const SuperDeals = () => {
   const [flashDeals, setFlashDeals] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const URL = "localhost";
+  const URL = "13.51.121.50";
 
   // Fetch all products
   const fetchAllProducts = async () => {

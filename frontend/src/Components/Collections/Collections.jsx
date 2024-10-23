@@ -12,7 +12,7 @@ import Banner6 from '../Assets/banner_6.png';
 import Banner7 from '../Assets/banner_7.png';
 import Banner8 from '../Assets/banner_8.png';
 
-const URL = "localhost";
+const URL = "13.51.121.50";
 
 const NewCollections = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
