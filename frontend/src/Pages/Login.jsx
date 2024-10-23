@@ -20,11 +20,27 @@ const LogginSignup = () => {
     setIsAgreed(e.target.checked);
   };
 
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
+    return re.test(String(email).toLowerCase());
+  };
+
   const validateForm = () => {
     const newErrors = {};
-    if (state === "Sign Up" && !formData.username) newErrors.username = "Username is required.";
-    if (!formData.email) newErrors.email = "Email is required.";
-    if (!formData.password) newErrors.password = "Password is required.";
+    if (state === "Sign Up") {
+      if (!formData.username) newErrors.username = "Username is required.";
+      if (!isAgreed) newErrors.agreement = "You must agree to the terms and conditions.";
+    }
+    if (!formData.email) {
+      newErrors.email = "Email is required.";
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "Invalid email format.";
+    }
+    if (!formData.password) {
+      newErrors.password = "Password is required.";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters long.";
+    }
     return newErrors;
   };
 
@@ -36,10 +52,10 @@ const LogginSignup = () => {
     }
     setErrors({});
     let responseData;
-    await fetch('http://localhost:4000/login', { // Fixed endpoint
+    await fetch('http://localhost:4000/login', {
       method: 'POST',
       headers: {
-        Accept: 'application/json', // Fixed Accept header
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
@@ -54,11 +70,6 @@ const LogginSignup = () => {
   };
 
   const signup = async () => {
-    if (!isAgreed) { // Ensure the terms are agreed to before signing up
-      alert('You must agree to the terms and conditions');
-      return;
-    }
-
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -66,10 +77,10 @@ const LogginSignup = () => {
     }
     setErrors({});
     let responseData;
-    await fetch('http://localhost:4000/signup', { // Fixed endpoint
+    await fetch('http://localhost:4000/signup', {
       method: 'POST',
       headers: {
-        Accept: 'application/json', // Fixed Accept header
+        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(formData),
@@ -125,8 +136,9 @@ const LogginSignup = () => {
         )}
         {state === "Sign Up" && (
           <div className="loginsignup-agree">
-            <input type="checkbox" onChange={handleAgreement} />
+            <input type="checkbox" className='cbox' onChange={handleAgreement} />
             <p>I agree to the terms and conditions</p>
+            {errors.agreement && <p className="error">{errors.agreement}</p>}
           </div>
         )}
       </div>

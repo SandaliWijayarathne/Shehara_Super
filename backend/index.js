@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
+const bcrypt = require('bcryptjs');
+
 require("dotenv").config()
 app.use(express.static('public'))
 
@@ -391,7 +393,7 @@ app.get('/getUserAddress', fetchUser, async (req, res) => {
     }
 });
 
-// User Schema
+// Define User Schema
 const Users = mongoose.model('Users', {
     name: { type: String },
     email: { type: String, unique: true },
@@ -401,6 +403,7 @@ const Users = mongoose.model('Users', {
     contactNumber: { type: String },
     cardNumber: { type: String },
     profileImage: { type: String },
+    orderNumber: {type:String},
     date: { type: Date, default: Date.now },
 });
 
@@ -417,10 +420,14 @@ app.post('/signup', async (req, res) => {
             cart[i] = 0;
         }
 
+        // Hash the password
+        const salt = await bcrypt.genSalt(10); // Generate salt
+        const hashedPassword = await bcrypt.hash(req.body.password, salt); // Hash password
+
         const user = new Users({
             name: req.body.username,
             email: req.body.email,
-            password: req.body.password,
+            password: hashedPassword,  // Store hashed password
             cartData: cart,
             address: '',
             contactNumber: '',
@@ -439,6 +446,38 @@ app.post('/signup', async (req, res) => {
     }
 });
 
+// Middleware to verify JWT token
+const verifyToken = (req, res, next) => {
+    const token = req.headers['auth-token']; // Get token from the header
+    if (!token) {
+        return res.status(403).json({ success: false, error: "Access denied" });
+    }
+    jwt.verify(token, 'secret_cake', (err, user) => {
+        if (err) {
+            return res.status(403).json({ success: false, error: "Invalid token" });
+        }
+        req.user = user.user; // Attach user info to the request
+        next(); // Call the next middleware/route handler
+    });
+};
+
+app.get('/getuser', verifyToken, async (req, res) => {
+    try {
+        const userId = req.user.id; // Assuming you attach user id to req.user in verifyToken middleware
+        const user = await Users.findById(userId).select('-password'); // Exclude password field
+
+        if (!user) {
+            return res.status(404).json({ success: false, errors: "User not found" });
+        }
+
+        res.json({ success: true, user });
+    } catch (error) {
+        console.error("Error fetching user info:", error);
+        res.status(500).json({ error: "Failed to fetch user info" });
+    }
+});
+
+
 // Login User
 app.post('/login', async (req, res) => {
     try {
@@ -447,7 +486,8 @@ app.post('/login', async (req, res) => {
             return res.json({ success: false, errors: "Wrong Email Id" });
         }
 
-        const passCompare = req.body.password === user.password;
+        // Compare the hashed password
+        const passCompare = await bcrypt.compare(req.body.password, user.password); // Compare passwords
         if (passCompare) {
             const data = { user: { id: user.id } };
             const token = jwt.sign(data, 'secret_cake');
@@ -461,20 +501,25 @@ app.post('/login', async (req, res) => {
     }
 });
 
+
+
+
 // Update User Profile Endpoint
 app.put('/updateprofile', fetchUser, async (req, res) => {
     try {
         const userId = req.user.id;
+        console.log(userId);
 
         const updatedUser = await Users.findByIdAndUpdate(
-            userId,
-            {
-                name: req.body.name,
+            userId,req.body,
+           /* {
+                  name: req.body.name,
                 address: req.body.address,
                 contactNumber: req.body.contactNumber,
                 cardNumber: req.body.cardNumber,
                 profileImage: req.body.profileImage,
-            },
+                
+            }*/
             { new: true }
         );
 
@@ -482,13 +527,15 @@ app.put('/updateprofile', fetchUser, async (req, res) => {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        console.log("User profile updated:", updatedUser);
+       // console.log("User profile updated:", updatedUser);
         res.json({ success: true, updatedUser });
     } catch (error) {
         console.error("Error updating profile:", error);
         res.status(500).json({ error: "Failed to update profile" });
     }
 });
+
+
 
 // Fetch New Collections
 app.get('/newcollections', async (req, res) => {
@@ -592,4 +639,3 @@ app.listen(port, (error) => {
         console.log("Error: " + error);
     }
 });
-
