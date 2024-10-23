@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import './Shopping.css'; 
 
-const URL ="localhost";
+const URL ="13.51.205.153";
 
 const Shopping = () => {
   const location = useLocation();
-  const [products, setProducts] = useState([]);
+  const [products, setProductlocalhosts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import all_product from '../Components/Assets/all_product';
 
-const URL ="localhost";
+const URL ="13.51.205.153";
 
 export const ShopContext = createContext(null);
 
