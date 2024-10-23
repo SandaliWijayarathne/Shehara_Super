@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './OrdersList.css';
 import axios from 'axios';
 
-const URL = "13.51.121.50"
+const URL = "13.51.205.153"
 
 const OrdersList = () => {
   const [orders, setOrders] = useState([]);

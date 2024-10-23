@@ -4,7 +4,7 @@ import upload_area from '../../assets/upload_area.svg';
 import { message } from 'antd'; // Import message from antd
 
 
-URL = "13.51.121.50"
+URL = "13.51.205.153"
 const AddProduct = () => {
   const [image, setImage] = useState(null);
   const [productDetails, setProductDetails] = useState({
