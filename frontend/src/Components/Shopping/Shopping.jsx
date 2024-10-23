@@ -14,7 +14,15 @@ const Shopping = () => {
 
       const response = await fetch(`http://${URL}:4000/allproducts`);
       const data = await response.json();
-      setProducts(data);
+      const updatedData = data.map((images) => {
+        if (images.image) {
+          images.image = `http://${URL}:4000${images.image}`;
+        }
+        return images;
+      });
+      console.log(data);
+      console.log(updatedData);
+      setProducts(updatedData);
 
     };
 

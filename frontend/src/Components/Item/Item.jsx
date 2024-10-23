@@ -6,7 +6,7 @@ const Item = ({ id, name, image }) => {
   return (
     <div className="item">
       <Link to={`/category/${name}`}>
-        <img src={image} alt={name} />
+        <img src={image} />
       </Link>
       <p>{name}</p>
     </div>
