@@ -437,7 +437,7 @@ app.post('/signup', async (req, res) => {
         console.error("Error registering user:", error);
         res.status(500).json({ error: "Failed to register user" });
     }
-});order
+});
 
 // Login User
 app.post('/login', async (req, res) => {
