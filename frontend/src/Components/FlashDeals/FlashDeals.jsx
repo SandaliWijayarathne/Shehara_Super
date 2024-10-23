@@ -44,7 +44,11 @@ const FlashDeals = () => {
 
   return (
     <div className="maincontainer">
-      <p className="text">Super Deals</p>
+          <div className="category-titl">
+        <hr className="line" />
+        <h2>Super Deals </h2>
+        <hr className="line" />
+      </div>
       <div className="flash-deals-container">
         {flashDeals.length > 0 ? (
           flashDeals.map(product => (

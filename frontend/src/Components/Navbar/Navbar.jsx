@@ -3,7 +3,7 @@ import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaUserCircle } from 'react-icons/fa';
 import logo from '../Assets/logo.png';
-import Dropdown from '../Assets/dropdown_icon.png'; // Path to dropdown icon
+import Dropdown from '../Assets/dropdown_icon.png'; 
 import { ShopContext } from '../../Context/ShopContext';
 
 const Navbar = () => {
