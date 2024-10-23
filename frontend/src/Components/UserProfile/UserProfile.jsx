@@ -9,32 +9,41 @@ import ipad from '../Assets/ipad.png';
 
 const UserProfile = () => {
   const location = useLocation();
-  const { username } = location.state || {};
-
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [profileImage, setProfileImage] = useState(profilePic);
   const [cardError, setCardError] = useState('');
-
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    if (username) {
-      setName(username);
-    }
+    const authToken = localStorage.getItem('auth-token');
 
-    // Load user profile from localStorage if it exists
-    const savedProfile = JSON.parse(localStorage.getItem('userProfile'));
-    if (savedProfile) {
-      setName(savedProfile.name || '');
-      setAddress(savedProfile.address || '');
-      setNumber(savedProfile.contactNumber || '');
-      setCardNumber(savedProfile.cardNumber || '');
-      setProfileImage(savedProfile.profileImage || profilePic);
-    }
-  }, [username]);
+    // Fetch user profile information on mount
+    fetch('http://localhost:4000/getuser', {
+      method: 'GET',
+      headers: {
+        'auth-token': authToken,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setName(data.user.name);
+          setAddress(data.user.address);
+          setNumber(data.user.contactNumber);
+          setCardNumber(data.user.cardNumber);
+          setProfileImage(data.user.profileImage || profilePic);
+        } else {
+          alert(data.errors);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching user profile:', error);
+        alert('Error fetching user profile: ' + error.message);
+      });
+  }, []);
 
   const handleProfileImageChange = (event) => {
     const file = event.target.files[0];
@@ -67,7 +76,7 @@ const UserProfile = () => {
       return;
     }
 
-    const authToken = localStorage.getItem('auth-token'); 
+    const authToken = localStorage.getItem('auth-token');
     
     // Create a FormData object
     const formData = new FormData();
@@ -84,7 +93,7 @@ const UserProfile = () => {
     fetch('http://localhost:4000/updateprofile', { 
       method: 'PUT',
       headers: {
-        'auth-token': authToken, 
+        'auth-token': authToken,
       },
       body: formData // Send the FormData object
     })
@@ -113,8 +122,6 @@ const UserProfile = () => {
       alert('Error updating profile: ' + error.message);
     });
   };
-  
-  
 
   return (
     <div className="user-profile-page App">

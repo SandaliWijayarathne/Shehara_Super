@@ -76,6 +76,10 @@ button:hover {
     margin-right: 5px; /* Added spacing between checkbox and text */
 }
 
+.cbox{
+    margin-bottom: 22px;
+}
+
 /* Media Queries for Responsiveness */
 @media screen and (max-width: 768px) {
     .loginsignup-container {

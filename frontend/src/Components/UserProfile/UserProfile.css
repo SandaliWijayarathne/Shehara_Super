@@ -1,6 +1,4 @@
 /* General Styles */
-.user-profile-page body,
-.user-profile-page html,
 .user-profile-page div,
 .user-profile-page p,
 .user-profile-page h3,
@@ -8,7 +6,7 @@
 .user-profile-page button,
 .user-profile-page ul,
 .user-profile-page li {
-  margin: 10px;
+  margin: 20px;
   padding: 0;
   box-sizing: border-box;
 }
@@ -23,7 +21,7 @@
   text-align: center;
   background-color: white;
   max-width: 850px;
-  margin: 100px auto 0 auto; 
+  margin: 120px auto 0 auto; 
   padding: 50px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
