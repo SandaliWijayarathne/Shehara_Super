@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './CSS/Login.css';
 
-const CURL ="13.51.121.50"
+const CRUL ="13.51.121.50"
 
 const LogginSignup = () => {
   const [state, setState] = useState("Login");
@@ -79,7 +79,7 @@ const LogginSignup = () => {
     }
     setErrors({});
     let responseData;
-    await fetch(`http://${CURL}:4000/signup`, {
+    await fetch(`http://${CRUL}:4000/signup`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
