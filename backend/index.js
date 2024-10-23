@@ -437,7 +437,7 @@ app.post('/signup', async (req, res) => {
         console.error("Error registering user:", error);
         res.status(500).json({ error: "Failed to register user" });
     }
-});
+});order
 
 // Login User
 app.post('/login', async (req, res) => {
@@ -544,6 +544,32 @@ app.post('/getcart', fetchUser, async (req, res) => {
         res.status(500).json({ error: "Failed to fetch cart data" });
     }
 });
+
+//create order
+
+app.post('/submitOrder', fetchUser, async (req, res) => {
+    const { address, paymentMethod, trackingId } = req.body;
+
+    if (!trackingId) {
+        return res.status(400).json({ success: false, message: 'Tracking ID (OTP) is required' });
+    }
+
+    try {
+        const newOrder = new Order({
+            userId: req.user.id,
+            address: address,
+            paymentMethod: paymentMethod,
+            trackingId: trackingId, // Store OTP as trackingId
+        });
+
+        await newOrder.save();
+        res.json({ success: true, message: 'Order placed successfully', trackingId: trackingId });
+    } catch (error) {
+        console.error('Error submitting order:', error);
+        res.status(500).json({ success: false, message: 'Failed to submit order' });
+    }
+});
+
 
 // Remove Order
 app.post('/api/removeorder', async (req, res) => {

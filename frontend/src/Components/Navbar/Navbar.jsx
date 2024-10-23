@@ -3,10 +3,12 @@ import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaUserCircle } from 'react-icons/fa';
 import logo from '../Assets/logo.png';
+import Dropdown from '../Assets/dropdown_icon.png'; // Path to dropdown icon
 import { ShopContext } from '../../Context/ShopContext';
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for menu toggle
   const navigate = useNavigate();
   const { cartCount } = useContext(ShopContext);
 
@@ -26,6 +28,10 @@ const Navbar = () => {
     }
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen); // Toggle menu visibility
+  };
+
   const isLoggedIn = !!localStorage.getItem('auth-token'); // Check if user is logged in
 
   const handleLogout = () => {
@@ -38,12 +44,10 @@ const Navbar = () => {
       <div className="navbar">
         <div className="navbar-content">
           <img src={logo} alt="Logo" className="navbar-logo" />
-          <button className="menu-toggle">
-            <span className="hamburger"></span>
-            <span className="hamburger"></span>
-            <span className="hamburger"></span>
+          <button className="menu-toggle" onClick={toggleMenu}>
+            <img src={Dropdown} alt="Dropdown Icon" className="dropdown-icon" />
           </button>
-          <ul className={`nav-menu`}>
+          <ul className={`nav-menu ${isMenuOpen ? 'nav-menu-visible' : ''}`}>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/about">About Us</Link></li>
             <li><Link to="/shopping">Shop</Link></li>

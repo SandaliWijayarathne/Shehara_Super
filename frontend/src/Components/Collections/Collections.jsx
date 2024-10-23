@@ -3,6 +3,10 @@ import './Collections.css';
 import collections from '../Assets/collections';
 import Item from '../Item/Item';
 import FlashDeals from '../FlashDeals/FlashDeals';
+import Banner1 from '../Assets/banner_1.png';
+import Banner2 from '../Assets/banner_2.png';
+import Banner3 from '../Assets/banner_3.png';
+import Banner4 from '../Assets/banner_4.png';
 
 const URL ="localhost";
 
