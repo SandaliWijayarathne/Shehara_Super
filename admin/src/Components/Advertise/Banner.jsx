@@ -4,7 +4,7 @@ import { UploadOutlined, InboxOutlined, DeleteOutlined } from '@ant-design/icons
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
 
-const URL ="localhost"
+const C_URL ="localhost"
 
 const AddBanner = () => {
   const [files, setFiles] = useState([]);
@@ -15,9 +15,18 @@ const AddBanner = () => {
   const fetchBanners = async () => {
     try {
 
-      const { data } = await axios.get(`http://${URL}:4000/allbanners`);
+      const { data } = await axios.get(`http://${C_URL}:4000/allbanners`);
 
-      setBanners(data);
+      const updatedData = data.map((images) => {
+        if (images.url) {
+          images.url = `http://${C_URL}:4000${images.url}`;
+        }
+        return images;
+      });
+      console.log(data);
+      console.log(updatedData);
+      setBanners(updatedData);
+
     } catch (error) {
       message.error('Error fetching banners');
     }
@@ -50,7 +59,7 @@ const AddBanner = () => {
       const formData = new FormData();
       formData.append('banner', files[0]);
 
-      const { data } = await axios.post(`http://${URL}:4000/bannerupload`, formData);
+      const { data } = await axios.post(`http://${C_URL}:4000/bannerupload`, formData);
 
 
       if (data.success) {
@@ -70,7 +79,7 @@ const AddBanner = () => {
   const handleDelete = async (id) => {
     try {
 
-      const { data } = await axios.delete(`http://${URL}:4000/removebanner/${id}`);
+      const { data } = await axios.delete(`http://${C_URL}:4000/removebanner/${id}`);
 
       if (data.success) {
         message.success('Banner deleted successfully!');

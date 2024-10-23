@@ -20,7 +20,7 @@ const Sidebar = () => {
         <div className="sidebar-item">Banners</div>
       </Link>
       <Link to={'/superdeals'} className='sidebar-link'>
-        <div className="sidebar-item">Super Deals
+        <div className="sidebar-item">Flash Deals
         </div>
       </Link>
       
