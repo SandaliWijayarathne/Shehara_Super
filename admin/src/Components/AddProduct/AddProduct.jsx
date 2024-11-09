@@ -173,7 +173,8 @@ const AddProduct = () => {
           <option value="pcs">Pieces (pcs)</option>
           <option value="kg">Kilograms (kg)</option>
           <option value="g">Grams (g)</option>
-          <option value="lb">Pounds (lb)</option>
+          <option value="ml">Milli Liters (ml)</option>
+          <option value="l">Liters (l)</option>
         </select>
       </div>
 

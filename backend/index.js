@@ -203,7 +203,7 @@ const Product = mongoose.model("Product", {
     description:{type: String, default: "This is Quality product"},
     discount: { type: Number, default: 0 },
     stock: { type: Number, required: true,default:200 }, 
-    unit: { type: String, enum: ["pcs", "kg", "g", "lb"], required: true, default:"kg" },
+    unit: { type: String, enum: ["pcs", "kg", "g", "ml","l"], required: true, default:"kg" },
 });
 
 
