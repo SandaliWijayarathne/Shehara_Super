@@ -16,6 +16,22 @@ const ProductDisplay = (props) => {
     // Function to handle adding product to cart
     const handleAddToCart = (productId) => {
         const amount = selectedOption === "Custom" ? customAmount : selectedOption || 1;
+
+        // Validate the selected amount with the stock
+        if (amount > product.stock) {
+            toast.error(`You can only add up to ${product.stock} items of this product to your cart.`, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                className: 'toastify-error',
+            });
+            return;  // Prevent adding if quantity exceeds stock
+        }
+
         addToCart(productId, amount);
 
         toast.success(`${product.name} has been added to your cart!`, {
@@ -38,7 +54,7 @@ const ProductDisplay = (props) => {
             setShowCustomInput(true);
         } else {
             setShowCustomInput(false);
-            setCustomAmount('');
+            setCustomAmount(''); // Clear custom input if not using it
         }
     };
 

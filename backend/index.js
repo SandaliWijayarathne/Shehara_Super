@@ -558,9 +558,16 @@ app.get('/newcollections', async (req, res) => {
 // Add to Cart
 app.post('/addtocart', fetchUser, async (req, res) => {
     try {
-        console.log("Added", req.body.itemId);
+        console.log("Added", req.body.itemId, "Quantity:", req.body.quantity);
         let userData = await Users.findOne({ _id: req.user.id });
-        userData.cartData[req.body.itemId] += 1;
+        
+        // Check if the item already exists in the cart, and add the quantity
+        if (!userData.cartData[req.body.itemId]) {
+            userData.cartData[req.body.itemId] = 0;
+        }
+        userData.cartData[req.body.itemId] += req.body.quantity; // Add the requested quantity
+
+        // Update the cartData with the new quantity
         await Users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
         res.send("Added");
     } catch (error) {
@@ -568,6 +575,7 @@ app.post('/addtocart', fetchUser, async (req, res) => {
         res.status(500).json({ error: "Failed to add to cart" });
     }
 });
+
 
 // Remove from Cart
 app.post('/removefromcart', fetchUser, async (req, res) => {

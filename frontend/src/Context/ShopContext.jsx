@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import all_product from '../Components/Assets/all_product';
 
-const URL ="13.51.121.50";
+const URL ="localhost";
 
 export const ShopContext = createContext(null);
 
@@ -78,24 +78,28 @@ const ShopContextProvider = (props) => {
         setCartCount(count);
     };
 
-    const addToCart = (itemId) => {
+    const addToCart = (itemId, quantity = 1) => {
         setCartItems((prev) => {
-            const updatedCart = { ...prev, [itemId]: prev[itemId] + 1 };
-            updateCartCount(updatedCart);
+            const updatedCart = { 
+                ...prev, 
+                [itemId]: (prev[itemId] || 0) + quantity // Use the quantity value instead of just adding 1
+            };
+            updateCartCount(updatedCart); // Recalculate the total cart count
             return updatedCart;
         });
-
+    
         if (localStorage.getItem('auth-token')) {
-
             fetch(`http://${URL}:4000/addtocart`, {
-
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'auth-token': `${localStorage.getItem('auth-token')}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ itemId: itemId }),
+                body: JSON.stringify({
+                    itemId: itemId,
+                    quantity: quantity, // Send the selected quantity to the backend
+                }),
             })
                 .then((response) => {
                     if (!response.ok) {
@@ -103,10 +107,15 @@ const ShopContextProvider = (props) => {
                     }
                     return response.json();
                 })
-                .then((data) => console.log(data))
-                .catch((error) => console.error('Fetch error:', error));
+                .then((data) => {
+                    console.log(data); // Handle success (optional)
+                })
+                .catch((error) => {
+                    console.error('Fetch error:', error); // Handle error (optional)
+                });
         }
     };
+    
 
     const removeFromCart = (itemId) => {
         setCartItems((prev) => {
