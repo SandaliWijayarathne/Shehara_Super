@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import all_product from '../Components/Assets/all_product';
 
-const URL ="localhost";
+const URL = "localhost";
 
 export const ShopContext = createContext(null);
 
@@ -16,25 +16,19 @@ const getDefaultCart = () => {
 const ShopContextProvider = (props) => {
     const [all_product, setAll_Product] = useState([]);
     const [cartItems, setCartItems] = useState(getDefaultCart());
-    const [cartCount, setCartCount] = useState(0); 
+    const [cartCount, setCartCount] = useState(0);
 
     const fetchAllProducts = async () => {
         try {
-
             const response = await fetch(`http://${URL}:4000/allproducts`);
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+            if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
             const updatedData = data.map((images) => {
                 if (images.image) {
-                  images.image = `http://${URL}:4000${images.image}`;
+                    images.image = `http://${URL}:4000${images.image}`;
                 }
                 return images;
-              });
-              console.log(data);
-              console.log(updatedData);
+            });
             setAll_Product(updatedData);
         } catch (error) {
             console.error('Fetch error:', error);
@@ -43,11 +37,8 @@ const ShopContextProvider = (props) => {
 
     useEffect(() => {
         fetchAllProducts();
-
         if (localStorage.getItem('auth-token')) {
-          
             fetch(`http://${URL}:4000/getcart`, {
-
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -57,14 +48,12 @@ const ShopContextProvider = (props) => {
                 body: JSON.stringify({}),
             })
                 .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
+                    if (!response.ok) throw new Error('Network response was not ok');
                     return response.json();
                 })
                 .then((data) => {
                     setCartItems(data);
-                    updateCartCount(data); 
+                    updateCartCount(data);
                 })
                 .catch((error) => console.error('Fetch error:', error));
         }
@@ -86,9 +75,7 @@ const ShopContextProvider = (props) => {
         });
 
         if (localStorage.getItem('auth-token')) {
-
             fetch(`http://${URL}:4000/addtocart`, {
-
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -96,15 +83,7 @@ const ShopContextProvider = (props) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ itemId: itemId }),
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((data) => console.log(data))
-                .catch((error) => console.error('Fetch error:', error));
+            }).catch((error) => console.error('Fetch error:', error));
         }
     };
 
@@ -116,9 +95,7 @@ const ShopContextProvider = (props) => {
         });
 
         if (localStorage.getItem('auth-token')) {
-
             fetch(`http://${URL}:4000/removefromcart`, {
-
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -126,21 +103,53 @@ const ShopContextProvider = (props) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ itemId: itemId }),
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((data) => console.log(data))
-                .catch((error) => console.error('Fetch error:', error));
+            }).catch((error) => console.error('Fetch error:', error));
+        }
+    };
+
+    const increaseCartItem = (itemId) => {
+        setCartItems((prev) => {
+            const updatedCart = { ...prev, [itemId]: prev[itemId] + 1 };
+            updateCartCount(updatedCart);
+            return updatedCart;
+        });
+
+        if (localStorage.getItem('auth-token')) {
+            fetch(`http://${URL}:4000/increasecartitem`, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'auth-token': `${localStorage.getItem('auth-token')}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ itemId: itemId }),
+            }).catch((error) => console.error('Fetch error:', error));
+        }
+    };
+
+    const decreaseCartItem = (itemId) => {
+        setCartItems((prev) => {
+            const updatedCart = { ...prev, [itemId]: Math.max(prev[itemId] - 1, 0) };
+            updateCartCount(updatedCart);
+            return updatedCart;
+        });
+
+        if (localStorage.getItem('auth-token')) {
+            fetch(`http://${URL}:4000/decreasecartitem`, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'auth-token': `${localStorage.getItem('auth-token')}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ itemId: itemId }),
+            }).catch((error) => console.error('Fetch error:', error));
         }
     };
 
     const clearCart = () => {
         setCartItems(getDefaultCart());
-        setCartCount(0); 
+        setCartCount(0);
     };
 
     const getTotalCartAmount = () => {
@@ -154,13 +163,15 @@ const ShopContextProvider = (props) => {
         return totalAmount;
     };
 
-    const contextValue = { 
-        getTotalCartAmount, 
-        all_product, 
-        cartItems, 
-        cartCount, 
-        addToCart, 
-        removeFromCart 
+    const contextValue = {
+        getTotalCartAmount,
+        all_product,
+        cartItems,
+        cartCount,
+        addToCart,
+        removeFromCart,
+        increaseCartItem,
+        decreaseCartItem,
     };
 
     return (

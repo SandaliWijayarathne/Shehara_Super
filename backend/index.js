@@ -82,6 +82,56 @@ app.post("/bannerupload", uploadBannerImage.single('banner'), async (req, res) =
     }
 });
 
+// Increase Cart Item Quantity
+app.post('/increasecartitem', fetchUser, async (req, res) => {
+    try {
+        const itemId = req.body.itemId;
+        console.log(`Increasing quantity for item ID: ${itemId}`);
+
+        // Fetch user data
+        let userData = await Users.findOne({ _id: req.user.id });
+        if (!userData) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Increase the item quantity
+        userData.cartData[itemId] += 1;
+        await Users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
+
+        res.json({ success: true, message: "Item quantity increased", cartData: userData.cartData });
+    } catch (error) {
+        console.error("Error increasing cart item quantity:", error);
+        res.status(500).json({ error: "Failed to increase item quantity" });
+    }
+});
+
+
+// Decrease Cart Item Quantity
+app.post('/decreasecartitem', fetchUser, async (req, res) => {
+    try {
+        const itemId = req.body.itemId;
+        console.log(`Decreasing quantity for item ID: ${itemId}`);
+
+        // Fetch user data
+        let userData = await Users.findOne({ _id: req.user.id });
+        if (!userData) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Decrease the item quantity (ensure it doesn't go below zero)
+        if (userData.cartData[itemId] > 0) {
+            userData.cartData[itemId] -= 1;
+        }
+        await Users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
+
+        res.json({ success: true, message: "Item quantity decreased", cartData: userData.cartData });
+    } catch (error) {
+        console.error("Error decreasing cart item quantity:", error);
+        res.status(500).json({ error: "Failed to decrease item quantity" });
+    }
+});
+
+
 // Upload Product Image Endpoint
 app.post("/uploadproductimage", uploadProductImage.single('product'), async (req, res) => {
     if (!req.file) {
