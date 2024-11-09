@@ -15,7 +15,7 @@ app.use(express.static('public'))
 app.use(express.json());
 app.use(cors({ origin: '*' }));
 
-const URL ="localhost";
+const URL ="13.51.121.50";
 
 // Database connection with MongoDB
 mongoose.connect("mongodb+srv://sanda:TVRS1234%23@cluster0.r6puny8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
@@ -81,6 +81,56 @@ app.post("/bannerupload", uploadBannerImage.single('banner'), async (req, res) =
         res.status(500).json({ error: "Failed to save banner" });
     }
 });
+
+// Increase Cart Item Quantity
+app.post('/increasecartitem', fetchUser, async (req, res) => {
+    try {
+        const itemId = req.body.itemId;
+        console.log(`Increasing quantity for item ID: ${itemId}`);
+
+        // Fetch user data
+        let userData = await Users.findOne({ _id: req.user.id });
+        if (!userData) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Increase the item quantity
+        userData.cartData[itemId] += 1;
+        await Users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
+
+        res.json({ success: true, message: "Item quantity increased", cartData: userData.cartData });
+    } catch (error) {
+        console.error("Error increasing cart item quantity:", error);
+        res.status(500).json({ error: "Failed to increase item quantity" });
+    }
+});
+
+
+// Decrease Cart Item Quantity
+app.post('/decreasecartitem', fetchUser, async (req, res) => {
+    try {
+        const itemId = req.body.itemId;
+        console.log(`Decreasing quantity for item ID: ${itemId}`);
+
+        // Fetch user data
+        let userData = await Users.findOne({ _id: req.user.id });
+        if (!userData) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        // Decrease the item quantity (ensure it doesn't go below zero)
+        if (userData.cartData[itemId] > 0) {
+            userData.cartData[itemId] -= 1;
+        }
+        await Users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
+
+        res.json({ success: true, message: "Item quantity decreased", cartData: userData.cartData });
+    } catch (error) {
+        console.error("Error decreasing cart item quantity:", error);
+        res.status(500).json({ error: "Failed to decrease item quantity" });
+    }
+});
+
 
 // Upload Product Image Endpoint
 app.post("/uploadproductimage", uploadProductImage.single('product'), async (req, res) => {
@@ -191,8 +241,6 @@ app.post('/create-checkout-session', async (req, res) => {
 });
 
 
-
-
 // Product Schema
 const Product = mongoose.model("Product", {
     id: { type: Number, required: true },
@@ -202,8 +250,13 @@ const Product = mongoose.model("Product", {
     price: { type: Number, required: true },
     date: { type: Date, default: Date.now },
     available: { type: Boolean, default: true },
-    discount:{type: Number,default: 0}
+    description:{type: String, default: "This is Quality product"},
+    discount: { type: Number, default: 0 },
+    stock: { type: Number, required: true,default:200 }, 
+    unit: { type: String, enum: ["pcs", "kg", "g", "lb"], required: true, default:"kg" },
 });
+
+
 
 // Update Product Discount
 app.put('/updatediscount/:id', async (req, res) => {
@@ -247,7 +300,9 @@ app.post('/addproduct', async (req, res) => {
             category: req.body.category,
             price: req.body.price,
             discount: req.body.discount || 0, // Ensure discount is included
-            description:req.body.description || "Quality Product"
+            description:req.body.description,
+            stock:req.body.stock,
+            unit:req.body.unit,
         });
 
         await product.save();
