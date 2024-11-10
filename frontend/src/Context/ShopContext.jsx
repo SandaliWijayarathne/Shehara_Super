@@ -155,13 +155,29 @@ const ShopContextProvider = (props) => {
     const getTotalCartAmount = () => {
         let totalAmount = 0;
         for (const item in cartItems) {
-            let itemInfo = all_product.find((product) => product.id === Number(item));
+            const itemInfo = all_product.find((product) => product.id === Number(item));
             if (itemInfo) {
-                totalAmount += itemInfo.price * cartItems[item];
+                const quantity = cartItems[item];
+                
+                // Calculate total based on the product's unit
+                let itemTotal = 0;
+                if (itemInfo.unit === 'pcs') {
+                    // For pieces, the price is multiplied directly by the quantity
+                    itemTotal = itemInfo.price * quantity;
+                } else if (itemInfo.unit === 'g*1000') {
+                    // For grams, the price is per 100g, so adjust for selected quantity (in grams)
+                    itemTotal = itemInfo.price * (quantity / 100);
+                } else if (itemInfo.unit === 'l') {
+                    // For liters, the price is per liter
+                    itemTotal = itemInfo.price * quantity;
+                }
+    
+                totalAmount += itemTotal;
             }
         }
         return totalAmount;
     };
+    
 
     const contextValue = { 
         getTotalCartAmount, 

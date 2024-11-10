@@ -15,6 +15,7 @@ const ProductDisplay = (props) => {
 
     // Function to handle adding product to cart
     const handleAddToCart = (productId) => {
+        // Use the custom amount if "Custom" is selected, otherwise use the selected option or default to 1
         const amount = selectedOption === "Custom" ? customAmount : selectedOption || 1;
 
         // Validate the selected amount with the stock
@@ -32,6 +33,7 @@ const ProductDisplay = (props) => {
             return;  // Prevent adding if quantity exceeds stock
         }
 
+        // Add the product to the cart
         addToCart(productId, amount);
 
         toast.success(`${product.name} has been added to your cart!`, {
@@ -58,13 +60,24 @@ const ProductDisplay = (props) => {
         }
     };
 
-    // Handle custom input change
-    const handleCustomAmountChange = (e) => setCustomAmount(e.target.value);
+    // Handle custom input change (divide input by 10 before storing)
+    const handleCustomAmountChange = (e) => {
+        const inputValue = e.target.value;
+        const adjustedValue = inputValue / 100;
+        setCustomAmount(adjustedValue);
+    };
+
+    const handleCustomAmountpChange = (e) => {
+        const inputValue = e.target.value;
+        const adjustedValue = inputValue;
+        setCustomAmount(adjustedValue);
+    };
 
     // Render dropdown based on product unit
     const renderDropdown = () => {
         switch (product.unit) {
             case 'g':
+            case 'kg':
                 return (
                     <>
                         <label>Select amount (grams):</label>
@@ -74,19 +87,20 @@ const ProductDisplay = (props) => {
                             disabled={showCustomInput}
                         >
                             <option value="">Choose...</option>
-                            <option value="100">100g</option>
-                            <option value="200">200g</option>
-                            <option value="500">500g</option>
-                            <option value="1000">1000g</option>
+                            <option value="1">100g</option>
+                            <option value="2">200g</option>
+                            <option value="5">500g</option>
+                            <option value="10">1000g</option>
                             <option value="Custom">Custom</option>
                         </select>
                         {showCustomInput && (
                             <input
                                 type="number"
-                                placeholder="Enter custom grams"
-                                value={customAmount}
+                                placeholder="Enter in grams"
+                                value={customAmount * 100} // Show original value in input
                                 onChange={handleCustomAmountChange}
                                 min="1"
+                                max="1000"
                                 className="custom-input"
                             />
                         )}
@@ -112,43 +126,16 @@ const ProductDisplay = (props) => {
                             <input
                                 type="number"
                                 placeholder="Enter custom pieces"
-                                value={customAmount}
-                                onChange={handleCustomAmountChange}
+                                value={customAmount} // Show original value in input
+                                onChange={handleCustomAmountpChange}
                                 min="1"
+                                max="30"
                                 className="custom-input"
                             />
                         )}
                     </>
                 );
-            case 'ml':
-                return (
-                    <>
-                        <label>Select amount (ml):</label>
-                        <select 
-                            onChange={handleDropdownChange} 
-                            value={selectedOption} 
-                            disabled={showCustomInput}
-                        >
-                            <option value="">Choose...</option>
-                            <option value="400">400ml</option>
-                            <option value="700">700ml</option>
-                            <option value="1000">1000ml</option>
-                            <option value="1500">1.5l</option>
-                            <option value="2000">2l</option>
-                            <option value="Custom">Custom</option>
-                        </select>
-                        {showCustomInput && (
-                            <input
-                                type="number"
-                                placeholder="Enter custom ml"
-                                value={customAmount}
-                                onChange={handleCustomAmountChange}
-                                min="1"
-                                className="custom-input"
-                            />
-                        )}
-                    </>
-                );
+            
             default:
                 return null;
         }
@@ -162,10 +149,14 @@ const ProductDisplay = (props) => {
                 </div>
             </div>
             <div className="productdisplay-right">
+            <h1>{product.name}</h1>
                 <div className="productdisplay-right-price">Rs. {product.price}.00</div>
-                <h4>Stock: {product.stock}</h4>
-                <h4>Unit: {product.unit}</h4>
-                <h1>{product.name}</h1>
+
+                <h4 className={product.stock > 0 ? 'in-stock' : 'out-of-stock'}>
+                {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+                </h4>
+
+                
 
                 {/* Conditional dropdown and input rendering */}
                 <div className="quantity-selector">

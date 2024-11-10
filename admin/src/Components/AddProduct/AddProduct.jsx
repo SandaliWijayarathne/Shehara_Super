@@ -117,7 +117,7 @@ const AddProduct = () => {
       
       {/* Product Price */}
       <div className="form-group">
-        <label>Price</label>
+        <label>Price/Unit</label>
         <input 
           value={productDetails.price} 
           onChange={changeHandler} 
@@ -171,9 +171,7 @@ const AddProduct = () => {
           className='unit-selector'
         >
           <option value="pcs">Pieces (pcs)</option>
-          <option value="kg">Kilograms (kg)</option>
-          <option value="g">Grams (g)</option>
-          <option value="ml">Milli Liters (ml)</option>
+          <option value="g*1000">Kilograms (g)</option>
           <option value="l">Liters (l)</option>
         </select>
       </div>
