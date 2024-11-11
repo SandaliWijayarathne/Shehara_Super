@@ -47,10 +47,9 @@ const ProductDisplay = ({ product }) => {
                         <label>Select amount (grams):</label>
                         <select onChange={handleDropdownChange} value={selectedOption}>
                             <option value="">Choose...</option>
-                            <option value="0.1">100g</option>
-                            <option value="0.2">200g</option>
-                            <option value="0.5">500g</option>
-                            <option value="1">1000g</option>
+                            <option value="1">1kg</option>
+                            <option value="2">2kg</option>
+                            <option value="5">5kg</option>
                             <option value="Custom">Custom</option>
                         </select>
                         {showCustomInput && (
