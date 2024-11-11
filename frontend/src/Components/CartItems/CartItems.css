@@ -22,14 +22,14 @@
     border-radius: 5px;
     overflow: hidden;
     background-color: #fff;
-    width: 70px;
+    width: 80px;
     height: 30px;
 }
 
 /* Quantity Display */
 .quantity-display {
     
-    width: 50px;
+    width: 65px;
     height: 30px;
     border: none;
     text-align: center;
@@ -265,6 +265,10 @@
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
+}
+
+.cartitems-delete-icon{
     cursor: pointer;
 }
 

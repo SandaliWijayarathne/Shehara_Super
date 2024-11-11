@@ -9,9 +9,10 @@ const ProductDisplay = ({ product }) => {
     const [selectedOption, setSelectedOption] = useState('');
     const [customAmount, setCustomAmount] = useState('');
     const [showCustomInput, setShowCustomInput] = useState(false);
+    const [displayPrice, setDisplayPrice] = useState(product.price);
 
     const handleAddToCart = (productId) => {
-        const amount = selectedOption === "Custom" ? Number(customAmount) : Number(selectedOption) || 1;
+        const amount = selectedOption === 'Custom' ? Number(customAmount) : Number(selectedOption) || 1;
         const unit = product.unit;
 
         if (amount > product.stock) {
@@ -26,16 +27,25 @@ const ProductDisplay = ({ product }) => {
     const handleDropdownChange = (e) => {
         const value = e.target.value;
         setSelectedOption(value);
-        if (value === "Custom") {
+        if (value === 'Custom') {
             setShowCustomInput(true);
         } else {
             setShowCustomInput(false);
             setCustomAmount('');
         }
+        updatePrice(value);
     };
 
     const handleCustomAmountChange = (e) => {
-        setCustomAmount(e.target.value / 100);
+        const customValue = e.target.value / 100;
+        setCustomAmount(customValue);
+        updatePrice(customValue);
+    };
+
+    const updatePrice = (value) => {
+        const amount = value === 'Custom' ? Number(customAmount) : Number(value) || 1;
+        const adjustedPrice = product.unit === 'kg' ? product.price * amount : product.price * amount;
+        setDisplayPrice(adjustedPrice.toFixed(2));
     };
 
     const renderDropdown = () => {
@@ -44,9 +54,14 @@ const ProductDisplay = ({ product }) => {
             case 'kg':
                 return (
                     <>
-                        <label>Select amount (grams):</label>
+<<<<<<< Updated upstream
+                        <label>Select amount:</label>
+=======
+                        <label>Select amount :</label>
+>>>>>>> Stashed changes
                         <select onChange={handleDropdownChange} value={selectedOption}>
                             <option value="">Choose...</option>
+                            <option value="0.5">0.5kg</option>
                             <option value="1">1kg</option>
                             <option value="2">2kg</option>
                             <option value="5">5kg</option>
@@ -78,7 +93,10 @@ const ProductDisplay = ({ product }) => {
                                 type="number"
                                 placeholder="Enter custom pieces"
                                 value={customAmount}
-                                onChange={(e) => setCustomAmount(e.target.value)}
+                                onChange={(e) => {
+                                    setCustomAmount(e.target.value);
+                                    updatePrice(e.target.value);
+                                }}
                             />
                         )}
                     </>
@@ -89,7 +107,7 @@ const ProductDisplay = ({ product }) => {
     };
 
     return (
-        <div className='product-display'>
+        <div className="product-display">
             <div className="product-display-left">
                 <img
                     src={product.image}
@@ -100,7 +118,7 @@ const ProductDisplay = ({ product }) => {
             </div>
             <div className="product-display-right">
                 <h1>{product.name}</h1>
-                <div className="product-display-price">Rs. {product.price}</div>
+                <div className="product-display-price">Rs. {displayPrice}</div>
                 <h4 className={product.stock > 0 ? 'in-stock' : 'out-of-stock'}>
                     {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
                 </h4>
