@@ -152,7 +152,7 @@ const AddProduct = () => {
           <option value="Spices">Spices</option>
           <option value="Household">Household</option>
           <option value="BabyProducts">Baby Products</option>
-          <option value="Canned">Canned Products</option>
+          <option value="Canned Products">Canned Products</option>
           <option value="Snacks">Snacks and Confectionary</option>
           <option value="Beverages">Beverages</option>
           <option value="FrozenFoods">Frozen Foods</option>

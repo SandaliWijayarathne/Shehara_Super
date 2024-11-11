@@ -965,7 +965,7 @@ let all_product = [
     image: SP16_img,
     Price: 300.0,
   },
-  //Canned Products
+  // Products
   {
     id: 126,
     name: "Nestle Milkmaid",

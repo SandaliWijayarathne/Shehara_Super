@@ -37,7 +37,7 @@ let new_collections = [
   },
   {
     id: 6,
-    name: "CannedProducts",
+    name: "Canned Products",
     image: p6_img,
   },
   {
