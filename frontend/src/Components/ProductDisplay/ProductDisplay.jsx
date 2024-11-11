@@ -54,7 +54,11 @@ const ProductDisplay = ({ product }) => {
             case 'kg':
                 return (
                     <>
+<<<<<<< Updated upstream
                         <label>Select amount:</label>
+=======
+                        <label>Select amount :</label>
+>>>>>>> Stashed changes
                         <select onChange={handleDropdownChange} value={selectedOption}>
                             <option value="">Choose...</option>
                             <option value="0.5">0.5kg</option>
