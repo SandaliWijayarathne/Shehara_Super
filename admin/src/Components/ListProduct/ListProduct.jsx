@@ -119,7 +119,9 @@ const ListProduct = () => {
 
                 <p>{product.category}</p>
                 <p>{product.stock}</p>
-                <p>{product.unit}</p>
+
+                {/* Display unit (set by admin or default) */}
+                <p>{product.unit || 'pcs'}</p>
                 
                 {/* Remove and Update Buttons */}
                 <DeleteOutlined

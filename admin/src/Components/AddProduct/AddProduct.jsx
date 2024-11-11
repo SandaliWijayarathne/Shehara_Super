@@ -12,7 +12,7 @@ const AddProduct = () => {
     image: "",
     category: "Vegetables",
     price: "",
-    description: "", // New field for product description
+    description: "",
     stock: "",
     unit: "kg"
   });
@@ -26,7 +26,18 @@ const AddProduct = () => {
 
   // Handler for input changes
   const changeHandler = (e) => {
-    setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // Update unit based on category selection
+    if (name === 'category') {
+      const defaultUnit = value.toLowerCase() === 'vegetables' || value.toLowerCase() === 'fruits' ? 'kg' : 'pcs';
+      setProductDetails({ ...productDetails, category: value, unit: defaultUnit });
+    } else if (name === 'unit') {
+      // Convert unit to lowercase
+      setProductDetails({ ...productDetails, unit: value.toLowerCase() });
+    } else {
+      setProductDetails({ ...productDetails, [name]: value });
+    }
   };
 
   // Function to add a new product
@@ -102,38 +113,38 @@ const AddProduct = () => {
     <div className='add-product'>
       {error && <p className="error">{error}</p>}
       <h1 className='add-product-title'>Add New Product</h1>
-      
+
       {/* Product Name */}
       <div className="form-group">
-        <label>Product Title</label>
-        <input 
-          value={productDetails.name} 
-          onChange={changeHandler} 
-          type="text" 
-          name='name' 
-          placeholder='Enter product title' 
+        <label>Product Name</label>
+        <input
+          value={productDetails.name}
+          onChange={changeHandler}
+          type="text"
+          name='name'
+          placeholder='Enter product name'
         />
       </div>
-      
+
       {/* Product Price */}
       <div className="form-group">
-        <label>Price/Unit</label>
-        <input 
-          value={productDetails.price} 
-          onChange={changeHandler} 
-          type="number" 
-          name='price' 
-          placeholder='Enter price' 
+        <label>Price per Unit</label>
+        <input
+          value={productDetails.price}
+          onChange={changeHandler}
+          type="number"
+          name='price'
+          placeholder='Enter price'
         />
       </div>
 
       {/* Product Category */}
       <div className="form-group">
         <label>Product Category</label>
-        <select 
-          value={productDetails.category} 
-          onChange={changeHandler} 
-          name='category' 
+        <select
+          value={productDetails.category}
+          onChange={changeHandler}
+          name='category'
           className='product-category-selector'
         >
           <option value="Vegetables">Vegetables</option>
@@ -144,7 +155,7 @@ const AddProduct = () => {
           <option value="Canned">Canned Products</option>
           <option value="Snacks">Snacks and Confectionary</option>
           <option value="Beverages">Beverages</option>
-          <option value="FrozenFoods">Frozen Food</option>
+          <option value="FrozenFoods">Frozen Foods</option>
           <option value="Fruits">Fruits</option>
         </select>
       </div>
@@ -152,38 +163,37 @@ const AddProduct = () => {
       {/* Product Stock */}
       <div className="form-group">
         <label>Stock Quantity/Weight</label>
-        <input 
-          value={productDetails.stock} 
-          onChange={changeHandler} 
-          type="number" 
-          name='stock' 
-          placeholder='Enter quantity or weight' 
+        <input
+          value={productDetails.stock}
+          onChange={changeHandler}
+          type="number"
+          name='stock'
+          placeholder='Enter stock quantity or weight'
         />
       </div>
 
       {/* Product Unit */}
       <div className="form-group">
         <label>Unit</label>
-        <select 
-          value={productDetails.unit} 
-          onChange={changeHandler} 
-          name='unit' 
+        <select
+          value={productDetails.unit}
+          onChange={changeHandler}
+          name='unit'
           className='unit-selector'
         >
+          <option value="kg">Kilograms (kg)</option>
           <option value="pcs">Pieces (pcs)</option>
-          <option value="g*1000">Kilograms (g)</option>
-          <option value="l">Liters (l)</option>
         </select>
       </div>
 
       {/* Product Description */}
       <div className="form-group">
         <label>Description</label>
-        <textarea 
-          value={productDetails.description} 
-          onChange={changeHandler} 
-          name='description' 
-          placeholder='Enter product description' 
+        <textarea
+          value={productDetails.description}
+          onChange={changeHandler}
+          name='description'
+          placeholder='Enter product description'
           rows="4"
         />
       </div>
@@ -194,12 +204,12 @@ const AddProduct = () => {
           <img src={image ? URL.createObjectURL(image) : upload_area} className='thumbnail-img' alt="Upload Area" />
           <p>Upload Product Image</p>
         </label>
-        <input 
-          onChange={imageHandler} 
-          type="file" 
-          name='image' 
-          id='file-input' 
-          hidden 
+        <input
+          onChange={imageHandler}
+          type="file"
+          name='image'
+          id='file-input'
+          hidden
         />
       </div>
 
