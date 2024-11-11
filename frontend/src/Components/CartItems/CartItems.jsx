@@ -16,11 +16,11 @@ const CartItems = () => {
     } = useContext(ShopContext);
     const navigate = useNavigate();
 
-    // Calculate subtotal
+    // Calculate subtotal with formatted value
     const subtotal = all_product.reduce((acc, product) => {
         const cartItem = cartItems[product.id];
         if (cartItem && cartItem.quantity > 0) {
-            return acc + cartItem.quantity * product.price;
+            return acc + product.price * cartItem.quantity;
         }
         return acc;
     }, 0);
@@ -58,7 +58,7 @@ const CartItems = () => {
                                         className="carticon-product-icon"
                                     />
                                     <p>{product.name}</p>
-                                    <p>Rs.{product.price}</p>
+                                    <p>Rs.{product.price.toFixed(1)}</p>
 
                                     {/* Updated Quantity Input with Spinner Buttons */}
                                     <div className="cartitems-quantity-input">
@@ -66,8 +66,8 @@ const CartItems = () => {
                                             type="text"
                                             value={
                                                 product.unit === 'g'
-                                                    ? `${cartItem.quantity * 100}g`
-                                                    : `${cartItem.quantity} ${product.unit || 'pcs'}`
+                                                    ? `${(cartItem.quantity * 100).toFixed(1)}g`
+                                                    : `${cartItem.quantity.toFixed(1)} ${product.unit || 'pcs'}`
                                             }
                                             readOnly
                                             className="quantity-display"
@@ -75,20 +75,17 @@ const CartItems = () => {
                                         <div className="spinner-buttons">
                                             <button
                                                 className="quantity-button increase-button"
-                                                onClick={() =>
-                                                    increaseQuantity(product.id, product.unit)
-                                                }
+                                                onClick={() => increaseQuantity(product.id, product.unit)}
                                             />
                                             <button
                                                 className="quantity-button decrease-button"
-                                                onClick={() =>
-                                                    decreaseQuantity(product.id, product.unit)
-                                                }
+                                                onClick={() => decreaseQuantity(product.id, product.unit)}
                                             />
                                         </div>
                                     </div>
 
-                                    <p>Rs.{product.price * cartItem.quantity}</p>
+                                    {/* Total price formatted to one decimal place */}
+                                    <p>Rs.{(product.price * cartItem.quantity).toFixed(1)}</p>
 
                                     {/* Delete Button */}
                                     <img
@@ -109,7 +106,7 @@ const CartItems = () => {
                             <div>
                                 <div className="cartitems-total-item">
                                     <p>Subtotal</p>
-                                    <p>Rs.{subtotal}</p>
+                                    <p>Rs.{subtotal.toFixed(1)}</p>
                                 </div>
                                 <hr />
                                 <div className="cartitems-total-item">
@@ -119,7 +116,7 @@ const CartItems = () => {
                                 <hr />
                                 <div className="cartitems-total-item">
                                     <h3>Total</h3>
-                                    <h3>Rs.{subtotal}</h3>
+                                    <h3>Rs.{subtotal.toFixed(1)}</h3>
                                 </div>
                             </div>
                             <button
