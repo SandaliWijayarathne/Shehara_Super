@@ -15,7 +15,7 @@ app.use(express.static('public'))
 app.use(express.json());
 app.use(cors({ origin: '*' }));
 
-const URL ="localhost";
+const URL ="13.51.121.50";
 
 // Database connection with MongoDB
 mongoose.connect("mongodb+srv://sanda:TVRS1234%23@cluster0.r6puny8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
@@ -191,8 +191,6 @@ app.post('/create-checkout-session', async (req, res) => {
 });
 
 
-
-
 // Product Schema
 const Product = mongoose.model("Product", {
     id: { type: Number, required: true },
@@ -202,7 +200,28 @@ const Product = mongoose.model("Product", {
     price: { type: Number, required: true },
     date: { type: Date, default: Date.now },
     available: { type: Boolean, default: true },
-    discount:{type: Number,default: 0}
+    description: { type: String, default: "This is a quality product" },
+    discount: { type: Number, default: 0 },
+    stock: { type: Number, required: true, default: 200 },
+    unit: { type: String, enum: ["pcs", "kg", "g"], required: true, default: "kg" },
+});
+
+
+// Update product stock
+app.post("/update-stock", async (req, res) => {
+    const { items } = req.body; // items should be an array of { id, quantity }
+
+    try {
+        for (let item of items) {
+            await Product.updateOne(
+                { id: item.id },
+                { $inc: { stock: -item.quantity } }  // Reduce stock
+            );
+        }
+        res.status(200).send("Stock updated successfully.");
+    } catch (error) {
+        res.status(500).send("Error updating stock.");
+    }
 });
 
 // Update Product Discount
@@ -234,11 +253,13 @@ app.put('/updatediscount/:id', async (req, res) => {
 });
 
 //add product
-
 app.post('/addproduct', async (req, res) => {
     try {
         let products = await Product.find({});
         let id = products.length > 0 ? products[products.length - 1].id + 1 : 1;
+
+        // Convert unit to lowercase before saving
+        const unit = req.body.unit ? req.body.unit.toLowerCase() : 'pcs';
 
         const product = new Product({
             id: id,
@@ -246,8 +267,10 @@ app.post('/addproduct', async (req, res) => {
             image: req.body.image,
             category: req.body.category,
             price: req.body.price,
-            discount: req.body.discount || 0, // Ensure discount is included
-            description:req.body.description || "Quality Product"
+            discount: req.body.discount || 0,
+            description: req.body.description,
+            stock: req.body.stock,
+            unit: unit, // Save unit in lowercase
         });
 
         await product.save();
@@ -257,6 +280,28 @@ app.post('/addproduct', async (req, res) => {
     } catch (error) {
         console.error("Error saving product:", error);
         res.status(500).json({ error: "Failed to save product" });
+    }
+});
+
+// Delete from Cart
+app.post('/deletefromcart', fetchUser, async (req, res) => {
+    try {
+        const { itemId } = req.body;
+        console.log("Deleting item:", itemId);
+
+        let userData = await Users.findOne({ _id: req.user.id });
+
+        // Remove the item completely from the cart
+        if (userData.cartData[itemId]) {
+            delete userData.cartData[itemId];
+        }
+
+        // Update the cart data in the database
+        await Users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
+        res.send("Item deleted from cart");
+    } catch (error) {
+        console.error("Error deleting from cart:", error);
+        res.status(500).json({ error: "Failed to delete item from cart" });
     }
 });
 
@@ -398,14 +443,15 @@ const Users = mongoose.model('Users', {
     name: { type: String },
     email: { type: String, unique: true },
     password: { type: String },
-    cartData: { type: Object },
+    cartData: { type: Object, default: {} },
     address: { type: String },
     contactNumber: { type: String },
     cardNumber: { type: String },
     profileImage: { type: String },
-    orderNumber: {type:String},
+    orderNumber: { type: String },
     date: { type: Date, default: Date.now },
 });
+
 
 // Register User
 app.post('/signup', async (req, res) => {
@@ -553,44 +599,79 @@ app.get('/newcollections', async (req, res) => {
 // Add to Cart
 app.post('/addtocart', fetchUser, async (req, res) => {
     try {
-        console.log("Added", req.body.itemId);
+        const { itemId, quantity, unit } = req.body;
+        console.log("Added", itemId, "Quantity:", quantity, "Unit:", unit);
+
         let userData = await Users.findOne({ _id: req.user.id });
-        userData.cartData[req.body.itemId] += 1;
+
+        // Initialize cart item if not present
+        if (!userData.cartData[itemId]) {
+            userData.cartData[itemId] = { quantity: 0, unit: unit };
+        }
+
+        // Update the quantity and unit
+        userData.cartData[itemId].quantity += quantity;
+        userData.cartData[itemId].unit = unit;
+
+        // Update the cart data in the database
         await Users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
-        res.send("Added");
+        res.send("Added to cart");
     } catch (error) {
         console.error("Error adding to cart:", error);
         res.status(500).json({ error: "Failed to add to cart" });
     }
 });
 
+
+
 // Remove from Cart
 app.post('/removefromcart', fetchUser, async (req, res) => {
     try {
-        console.log("Removed", req.body.itemId);
+        const { itemId } = req.body;
+        console.log("Removed", itemId);
+
         let userData = await Users.findOne({ _id: req.user.id });
-        if (userData.cartData[req.body.itemId] > 0) {
-            userData.cartData[req.body.itemId] -= 1;
+
+        // Decrease the quantity, but keep the unit unchanged
+        if (userData.cartData[itemId] && userData.cartData[itemId].quantity > 0) {
+            userData.cartData[itemId].quantity -= 1;
         }
+
+        // If the quantity reaches 0, remove the item from the cart
+        if (userData.cartData[itemId].quantity <= 0) {
+            delete userData.cartData[itemId];
+        }
+
         await Users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
-        res.send("Removed");
+        res.send("Removed from cart");
     } catch (error) {
         console.error("Error removing from cart:", error);
         res.status(500).json({ error: "Failed to remove from cart" });
     }
 });
 
+
 // Get Cart Data
 app.post('/getcart', fetchUser, async (req, res) => {
     try {
         console.log("GetCart");
         let userData = await Users.findOne({ _id: req.user.id });
-        res.json(userData.cartData);
+        const cartData = userData.cartData;
+
+        // Format the response to include quantity and unit for each item
+        const cartItems = Object.entries(cartData).map(([itemId, { quantity, unit }]) => ({
+            id: itemId,
+            quantity,
+            unit,
+        }));
+
+        res.json(cartItems);
     } catch (error) {
         console.error("Error fetching cart data:", error);
         res.status(500).json({ error: "Failed to fetch cart data" });
     }
 });
+
 
 //create order
 

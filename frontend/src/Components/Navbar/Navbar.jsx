@@ -3,12 +3,12 @@ import './Navbar.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaUserCircle } from 'react-icons/fa';
 import logo from '../Assets/logo.png';
-import Dropdown from '../Assets/dropdown_icon.png'; 
+import Dropdown from '../Assets/dropdown_icon.png';
 import { ShopContext } from '../../Context/ShopContext';
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for menu toggle
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { cartCount } = useContext(ShopContext);
 
@@ -29,10 +29,10 @@ const Navbar = () => {
   };
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen); // Toggle menu visibility
+    setIsMenuOpen(!isMenuOpen);
   };
 
-  const isLoggedIn = !!localStorage.getItem('auth-token'); // Check if user is logged in
+  const isLoggedIn = !!localStorage.getItem('auth-token');
 
   const handleLogout = () => {
     localStorage.removeItem('auth-token');

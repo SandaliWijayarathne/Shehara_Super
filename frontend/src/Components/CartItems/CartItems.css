@@ -1,3 +1,4 @@
+/* Main Cart Items Container */
 .cartitems-container {
     margin: 120px auto;
     padding: 20px;
@@ -13,7 +14,86 @@
     border: none;
 }
 
-.cartitems-header, .cartitems-product {
+/* Quantity Input Container */
+.cartitems-quantity-input {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #fff;
+    width: 70px;
+    height: 30px;
+}
+
+/* Quantity Display */
+.quantity-display {
+    
+    width: 50px;
+    height: 30px;
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+/* Spinner Buttons Container */
+.spinner-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 15px;
+    height: 15px;
+}
+
+/* Increase and Decrease Button Styles */
+.quantity-button {
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    font-size: 6px;
+    line-height: 1;
+    padding: 0;
+}
+
+/* Increase Button */
+.increase-button {
+    margin-top: 2px;
+}
+
+.increase-button::before {
+    content: '▲';
+    font-size: 8px;
+    color: #333;
+    line-height: -1;
+}
+
+/* Decrease Button */
+.decrease-button {
+    margin-top: -15px;
+}
+
+.decrease-button::before {
+    content: '▼';
+    font-size: 8px;
+    color: #333;
+    line-height: -1;
+}
+
+/* Hover effect for buttons */
+.quantity-button:hover {
+    background-color: #e6f2ff;
+}
+
+/* Cart Item Styles */
+.cartitems-header,
+.cartitems-product {
     display: grid;
     grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 0.5fr;
     align-items: center;
@@ -59,32 +139,23 @@
 }
 
 .cartitems-quantity {
-    width: 40px; 
-    height: 30px; 
+    width: 60px;
+    height: 30px;
     background: #e6f2ff;
     color: #333;
     border-radius: 5px;
     text-align: center;
     font-size: 16px;
-    border: 1px solid #00ff0d; 
-    line-height: 30px; 
-    margin: 0 auto; 
+    border: 1px solid #00ff0d;
+    line-height: 30px;
+    margin: 0 auto;
     display: flex;
-    align-items: center; 
-    justify-content: center; 
-    box-sizing: border-box; 
-}
-
-
-.cartitems-format {
-    display: grid;
-    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 0.5fr;
     align-items: center;
-    padding: 15px 0;
-    gap: 20px;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
-
+/* Summary Section */
 .cartitems-summary {
     margin-top: 50px;
     display: flex;
@@ -107,6 +178,7 @@
     padding: 10px 0;
 }
 
+/* Checkout Button */
 .checkout-button {
     width: 100%;
     height: 50px;
@@ -126,8 +198,10 @@
     background: #0056b3;
 }
 
+/* Responsive Styles */
 @media (max-width: 768px) {
-    .cartitems-header, .cartitems-product {
+    .cartitems-header,
+    .cartitems-product {
         grid-template-columns: 0.5fr 1.5fr 1fr 1fr 1fr 0.5fr;
         font-size: 16px;
     }
@@ -138,21 +212,21 @@
     }
 }
 
-/* Popup container */
+/* Popup Container */
 .address-popup-container {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* dark overlay */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
 
-/* Popup box */
+/* Popup Box */
 .address-popup {
     background-color: white;
     width: 500px;
@@ -180,13 +254,14 @@
     font-size: 14px;
 }
 
-/* Popup buttons */
+/* Popup Buttons */
 .popup-buttons {
     display: flex;
     justify-content: space-between;
 }
 
-.popup-cancel-btn, .popup-submit-btn {
+.popup-cancel-btn,
+.popup-submit-btn {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;

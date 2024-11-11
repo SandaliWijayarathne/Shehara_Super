@@ -15,7 +15,7 @@
 
 .listproduct-format-main {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     width: 100%;
     padding: 8px 0;
     color: #333;
@@ -28,7 +28,7 @@
 
 .listproduct-format {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
     padding: 8px;
     font-weight: 400;
@@ -106,22 +106,46 @@
     font-weight: 500;
 }
 
+/* Modal Footer */
 .modal-footer {
     display: flex;
     justify-content: left;
-  }
-  
-  .modal-footer .ant-btn {
+}
+
+.modal-footer .ant-btn {
     margin: 0 8px; 
-  }
-  
-  .modal-ok-button {
+}
+
+.modal-ok-button {
     background-color: #007bff; 
     color: white;
-  }
-  
-  .modal-cancel-button {
+}
+
+.modal-cancel-button {
     background-color: #f0f0f0; 
     color: #333;
-  }
-  
+}
+
+/* New column styles */
+.listproduct-format-main p {
+    font-size: 14px;
+    text-align: center;
+}
+
+.listproduct-format p {
+    text-align: center;
+    font-size: 13px;
+}
+
+.listproduct-format-main p:nth-child(7),
+.listproduct-format p:nth-child(7) {
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.listproduct-format-main p:nth-child(8),
+.listproduct-format p:nth-child(8) {
+    font-weight: 500;
+    font-size: 13px;
+}
+

@@ -14,7 +14,7 @@ const Selection = () => {
       <Link to="/category/Household">Household</Link>
       <Link to="/category/Snacks">Snacks & Confectionary</Link>
       <Link to="/category/Spices">Spices</Link>
-      <Link to="/category/Canned">Canned Foods</Link>
+      <Link to="/category/Canned Products">Canned Foods</Link>
     </nav>
   );
 };
