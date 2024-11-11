@@ -4,7 +4,6 @@ import './CartItems.css';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
 
-
 const CartItems = () => {
     const {
         getTotalCartAmount,
@@ -40,7 +39,7 @@ const CartItems = () => {
             ) : (
                 <>
                     <div className="cartitems-header">
-                        <p>Products</p>
+                        <p>Product</p>
                         <p>Title</p>
                         <p>Price</p>
                         <p>Quantity</p>
@@ -61,29 +60,32 @@ const CartItems = () => {
                                     <p>{product.name}</p>
                                     <p>Rs.{product.price}</p>
 
-                                    {/* Quantity Controls */}
-                                    <div className="cartitems-quantity-controls">
-                                        <button
-                                            className="quantity-button"
-                                            onClick={() =>
-                                                decreaseQuantity(product.id, product.unit)
+                                    {/* Updated Quantity Input with Spinner Buttons */}
+                                    <div className="cartitems-quantity-input">
+                                        <input
+                                            type="text"
+                                            value={
+                                                product.unit === 'g'
+                                                    ? `${cartItem.quantity * 100}g`
+                                                    : `${cartItem.quantity} ${product.unit || 'pcs'}`
                                             }
-                                        >
-                                            -
-                                        </button>
-                                        <span className="cartitems-quantity">
-                                            {product.unit === 'g'
-                                                ? `${cartItem.quantity * 100}g`
-                                                : `${cartItem.quantity} ${product.unit || 'pcs'}`}
-                                        </span>
-                                        <button
-                                            className="quantity-button"
-                                            onClick={() =>
-                                                increaseQuantity(product.id, product.unit)
-                                            }
-                                        >
-                                            +
-                                        </button>
+                                            readOnly
+                                            className="quantity-display"
+                                        />
+                                        <div className="spinner-buttons">
+                                            <button
+                                                className="quantity-button increase-button"
+                                                onClick={() =>
+                                                    increaseQuantity(product.id, product.unit)
+                                                }
+                                            />
+                                            <button
+                                                className="quantity-button decrease-button"
+                                                onClick={() =>
+                                                    decreaseQuantity(product.id, product.unit)
+                                                }
+                                            />
+                                        </div>
                                     </div>
 
                                     <p>Rs.{product.price * cartItem.quantity}</p>
