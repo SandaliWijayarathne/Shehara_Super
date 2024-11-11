@@ -18,7 +18,6 @@ const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState(getDefaultCart());
     const [cartCount, setCartCount] = useState(0);
 
-    // Fetch all products from the backend
     const fetchAllProducts = async () => {
         try {
             const response = await fetch(`http://${URL}:4000/allproducts`);
@@ -39,7 +38,6 @@ const ShopContextProvider = (props) => {
         fetchAllProducts();
     }, []);
 
-    // Update the cart count based on unique products
     const updateCartCount = (cart) => {
         let count = 0;
         for (const item in cart) {
@@ -50,7 +48,6 @@ const ShopContextProvider = (props) => {
         setCartCount(count);
     };
 
-    // Add item to the cart with quantity and unit
     const addToCart = (itemId, quantity = 1, unit = '') => {
         setCartItems((prev) => {
             const updatedCart = {
@@ -77,13 +74,11 @@ const ShopContextProvider = (props) => {
         }
     };
 
-    // Increase item quantity
     const increaseQuantity = (itemId, unit) => {
         const increment = unit === 'g' ? 0.1 : 1;
         addToCart(itemId, increment, unit);
     };
 
-    // Decrease item quantity
     const decreaseQuantity = (itemId, unit) => {
         const decrement = unit === 'g' ? 0.1 : 1;
         setCartItems((prev) => {
@@ -118,7 +113,6 @@ const ShopContextProvider = (props) => {
         }
     };
 
-    // Delete item from the cart
     const deleteFromCart = (itemId) => {
         setCartItems((prev) => {
             const updatedCart = { ...prev };
@@ -140,13 +134,11 @@ const ShopContextProvider = (props) => {
         }
     };
 
-    // Clear the entire cart
     const clearCart = () => {
         setCartItems(getDefaultCart());
         setCartCount(0);
     };
 
-    // Calculate the total cart amount
     const getTotalCartAmount = () => {
         let totalAmount = 0;
         for (const item in cartItems) {
@@ -159,7 +151,6 @@ const ShopContextProvider = (props) => {
         return totalAmount;
     };
 
-    // Get cart data from the backend
     const fetchCartData = async () => {
         if (localStorage.getItem('auth-token')) {
             try {
