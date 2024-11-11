@@ -134,15 +134,18 @@
 
 .listproduct-format p {
     text-align: center;
+    font-size: 13px;
 }
 
 .listproduct-format-main p:nth-child(7),
 .listproduct-format p:nth-child(7) {
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 13px;
 }
 
 .listproduct-format-main p:nth-child(8),
 .listproduct-format p:nth-child(8) {
-    font-weight: 600;
+    font-weight: 500;
+    font-size: 13px;
 }
 
