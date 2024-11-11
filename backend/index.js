@@ -206,7 +206,22 @@ const Product = mongoose.model("Product", {
     unit: { type: String, enum: ["pcs", "kg", "g", "ml","l"], required: true, default:"kg" },
 });
 
+// Update product stock
+app.post("/update-stock", async (req, res) => {
+    const { items } = req.body; // items should be an array of { id, quantity }
 
+    try {
+        for (let item of items) {
+            await Product.updateOne(
+                { id: item.id },
+                { $inc: { stock: -item.quantity } }  // Reduce stock
+            );
+        }
+        res.status(200).send("Stock updated successfully.");
+    } catch (error) {
+        res.status(500).send("Error updating stock.");
+    }
+});
 
 // Update Product Discount
 app.put('/updatediscount/:id', async (req, res) => {

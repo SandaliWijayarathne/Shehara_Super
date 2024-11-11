@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import './Success.css';
 
 const Success = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
-  const [otp, setOtp] = useState(''); // State to store the OTP
+  const navigate = useNavigate();
+  const [otp, setOtp] = useState(''); 
 
   // Function to generate a random 6-digit OTP
   const generateOtp = () => {
@@ -14,10 +14,31 @@ const Success = () => {
 
   useEffect(() => {
     generateOtp(); // Generate OTP when the component mounts
+
+    // Simulate purchased items
+    const purchasedItems = [
+      { id: "product1", quantity: 2 },
+      { id: "product2", quantity: 1 },
+    ];
+
+    // Call the backend to update stock after a successful purchase
+    fetch("http://localhost:4000/update-stock", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: purchasedItems }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to update stock");
+      }
+      return response.json();
+    })
+    .then(data => console.log("Stock updated:", data))
+    .catch(error => console.error("Error updating stock:", error));
   }, []);
 
   const handleContinueShopping = () => {
-    // Navigate to the /allproducts endpoint
+    // Navigate to the home page or all products page
     navigate('/');
   };
 

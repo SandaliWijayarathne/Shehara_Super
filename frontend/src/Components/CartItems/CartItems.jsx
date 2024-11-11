@@ -4,24 +4,27 @@ import './CartItems.css';
 import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
 
-const URL ="localhost";
+const URL = "localhost";
 
 const CartItems = () => {
     const { getTotalCartAmount, all_product, cartItems, removeFromCart } = useContext(ShopContext);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [isAddressPopupOpen, setIsAddressPopupOpen] = useState(false); // state to control popup
-    const [address, setAddress] = useState(''); // state to store user's address
+    const [isAddressPopupOpen, setIsAddressPopupOpen] = useState(false);
+    const [address, setAddress] = useState('');
     const navigate = useNavigate();
+
+    // Calculate subtotal
+    const subtotal = all_product.reduce((acc, product) => {
+        return acc + (cartItems[product.id] || 0) * product.price;
+    }, 0);
 
     const handleCheckout = () => {
         if (!address) {
-            // If address is not provided, show the address popup
             setIsAddressPopupOpen(true);
             return;
         }
 
-        // Prepare the items in the cart for the checkout session
         const items = all_product
             .filter(product => cartItems[product.id] > 0)
             .map(product => ({
@@ -39,7 +42,7 @@ const CartItems = () => {
             },
             body: JSON.stringify({
                 items: items,
-                address: address, // Send the address as part of the checkout data
+                address: address,
             }),
         })
             .then((res) => {
@@ -47,7 +50,6 @@ const CartItems = () => {
                 return res.json().then((json) => Promise.reject(json));
             })
             .then(({ url }) => {
-                // Redirect to the payment page
                 window.location = url;
             })
             .catch((e) => {
@@ -70,21 +72,20 @@ const CartItems = () => {
                 <p>Remove</p>
             </div>
             <hr />
-            {all_product.map((e) => {
-                if (cartItems[e.id] > 0) {
+            {all_product.map((product) => {
+                const quantity = cartItems[product.id];
+                if (quantity > 0) {
                     return (
-                        <div key={e.id} className="cartitems-product">
-                            <img src={e.image} alt={e.name} className="carticon-product-icon" />
-                            <p>{e.name}</p>
-                            <p>Rs.{e.price}</p>
-                            <button className="cartitems-quantity">{cartItems[e.id]}</button>
-                            <p>Rs.{e.price * cartItems[e.id]}</p>
+                        <div key={product.id} className="cartitems-product">
+                            <img src={product.image} alt={product.name} className="carticon-product-icon" />
+                            <p>{product.name}</p>
+                            <p>Rs.{product.price}</p>
+                            <span className="cartitems-quantity">{quantity}</span>
+                            <p>Rs.{product.price * quantity}</p>
                             <img
                                 className="cartitems-remove-icon"
                                 src={remove_icon}
-                                onClick={() => {
-                                    removeFromCart(e.id);
-                                }}
+                                onClick={() => removeFromCart(product.id)}
                                 alt="Remove item"
                             />
                         </div>
@@ -92,13 +93,14 @@ const CartItems = () => {
                 }
                 return null;
             })}
+
             <div className="cartitems-summary">
                 <div className="cartitems-total">
                     <h1>Order Summary</h1>
                     <div>
                         <div className="cartitems-total-item">
                             <p>Subtotal</p>
-                            <p>Rs.{getTotalCartAmount()}</p>
+                            <p>Rs.{subtotal}</p>
                         </div>
                         <hr />
                         <div className="cartitems-total-item">
@@ -108,7 +110,7 @@ const CartItems = () => {
                         <hr />
                         <div className="cartitems-total-item">
                             <h3>Total</h3>
-                            <h3>Rs.{getTotalCartAmount()}</h3>
+                            <h3>Rs.{subtotal}</h3>
                         </div>
                     </div>
                     <button
@@ -122,12 +124,10 @@ const CartItems = () => {
                 </div>
             </div>
 
-            {/* Updated Address Popup */}
             {isAddressPopupOpen && (
                 <div className="address-popup-container">
                     <div className="address-popup">
                         <h2>Enter Your Address</h2>
-                        <p>Please provide your delivery address for the order.</p>
                         <textarea
                             className="address-input"
                             placeholder="Enter your delivery address"
@@ -135,10 +135,7 @@ const CartItems = () => {
                             onChange={(e) => setAddress(e.target.value)}
                         />
                         <div className="popup-buttons">
-                            <button 
-                                className="popup-cancel-btn" 
-                                onClick={() => setIsAddressPopupOpen(false)}
-                            >
+                            <button className="popup-cancel-btn" onClick={() => setIsAddressPopupOpen(false)}>
                                 Cancel
                             </button>
                             <button
